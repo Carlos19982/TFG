@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,600;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Rubik:ital,wght@0,600;1,600&display=swap');
+
+:root {
+    /* Colores originales */
+    --black: #333333;
+    --white: #EDEDED;
+    --silver: #CCCCCC;
+    --red: #D50000;
+    --red-light: #FF073A;
+    --red-dark: #9E0000;
+    --yellow: #FFD700;
+    --yellow-gold: #FFA500; /* No usado aún, pero definido */
+}
+
+.unique-font {
+    font-family: "Rubik Dirt", system-ui;
+}
+
+.regular-font {
+    font-family: "Rubik", sans-serif;
+}
+
+body {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: "Rubik", sans-serif; /* Establecer fuente base */
+}
+
+/* Encabezado */
+.navbar {
+    background-color: var(--black);
+    border-bottom: 0.125rem solid var(--red);
+    padding-top: 0.5rem; /* Ajuste ligero padding */
+    padding-bottom: 0.5rem; /* Ajuste ligero padding */
+}
+
+.logo-header {
+    /* width: 35%; */ /* Usar max-width es más seguro para responsividad */
+    max-width: 150px; /* O el tamaño que prefieras */
+    height: auto;
+}
+
+.navbar-nav {
+    gap: 1rem; /* Reducir un poco el gap si es mucho */
+}
+
+.nav-link {
+    color: var(--white);
+    font-weight: 600; /* Hacer links un poco más bold */
+    padding: 0.5rem 1rem; /* Dar padding explícito para el hover */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+    border-radius: 5px; /* Redondear bordes para el hover */
+    text-transform: uppercase; /* Opcional: Todo mayúsculas */
+}
+
+.nav-item:hover .nav-link,
+.nav-link:hover,
+.nav-link.active { /* Estilo para el link activo también */
+    background-color: var(--red);
+    color: var(--white); /* Cambiar a blanco o negro según prefieras sobre rojo */
+}
+
+/* Estilos para el botón toggler (móvil) */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5); /* Color del borde del botón */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(237, 237, 237, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* Ícono hamburguesa blanco */
+}
+
+
+/* Secciones generales (si las necesitas para otras páginas) */
+.hero-section,
+.features-section,
+.join-section {
+    /* font-family: 'rubik'; */ /* Ya está en body */
+    /* border: 1px outset var(--silver); */
+    /* box-shadow: 0 0.0625rem 0.125rem var(--silver); */
+    border-radius: 0.625rem;
+    text-align: center;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem; /* Añadir padding general a secciones */
+}
+
+.first-title {
+    font-family: "Rubik Dirt", system-ui;
+}
+
+/* Estilos específicos para imágenes dentro de títulos (si se usan) */
+.section-title-div {
+    padding: 0;
+    margin-bottom: 2rem; /* Espacio debajo del contenedor del título */
+}
+
+.section-title-img {
+    max-width: 100%;
+    height: auto;
+    /* Puedes añadir más estilos si usas imágenes como títulos */
+}
+
+.section-title {
+    color: var(--red);
+    margin-bottom: 1rem; /* Espacio debajo del texto del título */
+}
+
+.img-fluid {
+     max-width: 100%; /* Esto ya lo hace Bootstrap */
+     height: auto; /* Esto ya lo hace Bootstrap */
+}
+
+/* Estilo para imagen de héroe (si la usas en otra parte) */
+.hero-img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 2rem; /* Ejemplo de espacio */
+}
+
+/* ============ ESTILOS SECCIÓN NOSOTROS ============ */
+
+.nosotros-section {
+    padding-top: 3rem; /* Espacio superior */
+    padding-bottom: 1rem; /* Reducir padding inferior para compensar el mb-5 del último miembro */
+    /* Hereda color y fondo del body, lo cual está bien */
+}
+
+/* Estilo para el título de la sección 'Nuestro Equipo' */
+.nosotros-section .section-title {
+    color: var(--red); /* Usa tu variable de color rojo */
+    margin-bottom: 3rem; /* Espacio debajo del título */
+    font-size: 2.5rem; /* Tamaño del título de sección */
+    /* Si no usas 'first-title', puedes añadirle el font-family aquí */
+    /* font-family: "Rubik Dirt", system-ui; */
+}
+
+.team-member {
+   /* Bootstrap row se encarga del layout principal */
+   /* Puedes añadir un borde o fondo si quieres separar visualmente cada miembro */
+    border-bottom: 1px solid var(--silver);
+    padding-bottom: 3rem;
+    margin-bottom: 3rem !important; /* Asegura el espacio entre miembros */
+}
+.team-member:last-child {
+    border-bottom: none; /* Quitar borde al último */
+    margin-bottom: 0 !important; /* Quitar margen inferior al último */
+    padding-bottom: 0; /* Quitar padding inferior al último */
+}
+
+
+.member-visual {
+    /* Contenedor de imagen y nombre */
+    /* Bootstrap col-md-3 maneja el ancho en pantallas medianas y grandes */
+}
+
+.member-photo {
+    max-width: 180px; /* Aumentar tamaño foto */
+    height: 180px; /* Fijar altura para asegurar círculo perfecto con aspect-ratio */
+    border-radius: 50%; /* Foto circular */
+    border: 5px solid var(--red-light); /* Borde más grueso */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+    aspect-ratio: 1 / 1; /* Fuerza a que sea cuadrada antes del border-radius */
+    margin-left: auto; /* Centrar en su columna si es necesario */
+    margin-right: auto; /* Centrar en su columna si es necesario */
+    display: block; /* Para que márgenes automáticos funcionen */
+    background-color: var(--silver); /* Fondo por si la imagen no carga */
+}
+
+.member-name {
+    font-family: "Rubik", sans-serif; /* O 'Rubik Dirt' si prefieres */
+    font-weight: 600; /* Semi-bold */
+    color: var(--yellow); /* Color destacado para el nombre */
+    margin-top: 1rem; /* Espacio sobre el nombre */
+    font-size: 1.4rem; /* Tamaño del nombre más grande */
+}
+
+.member-info {
+    /* Contenedor para los párrafos de texto */
+    /* Bootstrap col-md-9 maneja el ancho */
+    text-align: left; /* Alinea el texto a la izquierda en desktop */
+    color: var(--white); /* Texto más claro que silver */
+    padding-left: 2rem; /* Añadir espacio a la izquierda del texto */
+}
+
+.member-info p {
+    font-family: "Rubik", sans-serif; /* Fuente regular */
+    line-height: 1.7; /* Aumentar espaciado entre líneas */
+    margin-bottom: 1.2rem; /* Espacio entre párrafos */
+    font-size: 1rem; /* Tamaño de fuente estándar */
+}
+
+.member-info p:last-child {
+    margin-bottom: 0; /* Quita margen inferior al último párrafo */
+}
+
+/* Footer */
+.footer-top {
+    background-color: var(--red);
+    padding: 1rem 0; /* Aumentar padding vertical */
+    display: flex; /* Usar flexbox para alinear mejor los logos */
+    justify-content: center; /* Centrar logos horizontalmente */
+    align-items: center; /* Centrar logos verticalmente */
+    flex-wrap: wrap; /* Permitir que los logos bajen si no caben */
+    gap: 2rem; /* Espacio entre logos */
+}
+
+.img-footer-partner { /* Estilo específico para logos del footer */
+    max-height: 4.5rem; /* Reducir altura ligeramente si es necesario */
+    width: auto; /* Ancho automático para mantener proporción */
+    /* margin: 0 3rem; Quitamos márgenes laterales fijos, usamos gap */
+}
+
+.footer-bottom {
+    background-color: var(--black);
+    color: var(--white);
+    padding: 1.5rem 0; /* Aumentar padding */
+    text-align: center;
+}
+
+.social-icons {
+    margin-bottom: 1rem; /* Espacio debajo de los iconos */
+}
+
+.social-icons a {
+    color: var(--yellow);
+    margin: 0 0.8rem; /* Aumentar espacio entre iconos */
+    font-size: 1.8rem; /* Iconos más grandes */
+    transition: color 0.3s ease; /* Transición suave al pasar el ratón */
+}
+.social-icons a:hover {
+    color: var(--red-light); /* Cambiar color al pasar el ratón */
+}
+
+.footer-bottom p {
+    margin: 0; /* Quitar margen por defecto del párrafo */
+    font-size: 0.9rem;
+    color: var(--silver); /* Texto de copyright un poco más tenue */
+}
+
+/* Ajustes para pantallas pequeñas (Bootstrap se encarga de apilar columnas) */
+@media (max-width: 767.98px) {
+    .navbar-nav {
+        text-align: center; /* Centrar links en menú móvil */
+        margin-top: 1rem; /* Espacio sobre los links en móvil */
+        gap: 0.5rem; /* Reducir gap en móvil */
+    }
+    .nav-link {
+        display: inline-block; /* Para que el fondo hover funcione bien centrado */
+        padding: 0.8rem 1rem; /* Ajustar padding en móvil */
+    }
+
+    .logo-header {
+        max-width: 120px; /* Logo más pequeño en móvil */
+    }
+
+    .nosotros-section .section-title {
+        font-size: 2rem; /* Título de sección más pequeño en móvil */
+    }
+
+    .team-member {
+        /* En móvil, las columnas se apilan. Centramos todo */
+        text-align: center;
+        padding-bottom: 2rem; /* Ajustar padding */
+        margin-bottom: 2rem !important; /* Ajustar margen */
+    }
+    .member-info {
+        text-align: center; /* Centra también la info en móvil */
+        margin-top: 1.5rem; /* Añade espacio entre la foto/nombre y el texto */
+        padding-left: 0; /* Quitar padding izquierdo en móvil */
+    }
+    .member-visual {
+        margin-bottom: 1rem; /* Espacio si la info va debajo */
+    }
+    .member-photo {
+        max-width: 150px; /* Foto un poco más pequeña en móvil */
+        height: 150px;
+    }
+     .member-name {
+        font-size: 1.2rem; /* Nombre más pequeño en móvil */
+     }
+
+    .footer-top {
+        padding: 1rem 0.5rem;
+        gap: 1rem; /* Reducir gap en móvil */
+    }
+    .img-footer-partner {
+        max-height: 3.5rem; /* Logos más pequeños en móvil */
+    }
+    .social-icons a {
+        font-size: 1.5rem; /* Iconos sociales más pequeños */
+        margin: 0 0.5rem;
+    }
+}
+/* --- Añadir o modificar en STYLES.CSS --- */
+
+.member-info ul {
+    list-style-type: disc; /* Tipo de viñeta: disc, circle, square, none */
+    padding-left: 1.5rem;  /* Ajusta la indentación si es necesario */
+    margin-top: 1rem;      /* Espacio entre el párrafo anterior y la lista */
+    margin-bottom: 0;      /* Quitar margen inferior si el contenedor ya lo tiene */
+    color: var(--white);   /* Asegurar color del texto */
+    font-family: "Rubik", sans-serif; /* Asegurar fuente */
+}
+
+.member-info li {
+    margin-bottom: 0.6rem; /* Espacio entre elementos de la lista */
+    line-height: 1.7;     /* Ajustar altura de línea si es necesario */
+}
+
+/* Ajustar el margen del párrafo que precede a la lista si es necesario */
+.member-info p:first-child {
+    margin-bottom: 1rem; /* Ajusta este valor según necesites espacio antes de la UL */
+}
+
+/* --- Ajustes en Media Query para móvil (opcional) --- */
+@media (max-width: 767.98px) {
+    .member-info ul {
+        padding-left: 1rem; /* Menos indentación en móvil */
+        text-align: left;  /* Forzar texto a la izquierda en la lista aunque el contenedor esté centrado */
+        display: inline-block; /* Para que text-align:left funcione en contenedor centrado */
+    }
+}
+/* Ajustes adicionales si se ven mal en pantallas intermedias (tablets) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .member-info {
+        padding-left: 1rem; /* Reducir padding izquierdo en tablets */
+    }
+    .navbar-nav {
+        gap: 0.5rem; /* Reducir gap en tablets si es necesario */
+    }
+}
