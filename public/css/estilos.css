@@ -107,6 +107,7 @@ body {
     color: var(--white);
 }
 
+
 .li-plantilla:hover {
     border-radius: 7%;
     background-color: var(--red);
@@ -161,7 +162,10 @@ body {
     display: block; /* Para que márgenes automáticos funcionen */
     background-color: var(--silver); /* Fondo por si la imagen no carga */
 }
-
+.member-photo:hover{
+    box-shadow: 0 0 15px 4px rgba(255, 0, 0, 0.5), 0 0 25px 8px rgba(255, 255, 0, 0.4); /* rojo y amarillo */
+    transform: scale(1.05);
+}
 .member-name {
     font-family: "Rubik", sans-serif; /* O 'Rubik Dirt' si prefieres */
     font-weight: 600; /* Semi-bold */
@@ -338,4 +342,37 @@ body {
     .competition-name {
         font-size: 0.9rem; /* Slightly smaller text on tablets if needed */
     }
+}
+/* ----------------------------------------------Aqui empieza INFORMACION AL PULSAR */
+
+/* --- Añadir en informacion.css --- */
+
+.content-box {
+    background-color: #444; /* Fondo gris oscuro (o el que prefieras, puedes usar var(--black) o algo intermedio) */
+    padding: 1.5rem;       /* Padding interno (equivale a p-4 de Bootstrap) */
+    border-radius: 0.375rem; /* Bordes redondeados (equivale a .rounded de Bootstrap) */
+    height: 100%;          /* Intenta que ambas cajas ocupen toda la altura de su columna */
+    display: flex;         /* Usar flexbox para mejor control interno */
+    flex-direction: column; /* Apilar el contenido verticalmente dentro de la caja */
+}
+
+/* Opcional: Estilos específicos para la imagen dentro de la caja izquierda */
+.content-box .img-fluid {
+    margin-bottom: 1rem; /* Espacio entre la imagen y el párrafo debajo */
+
+}
+
+/* Opcional: Para centrar el contenido de la caja izquierda si lo deseas */
+.content-box.text-center-content {
+    align-items: center; /* Centra horizontalmente (porque flex-direction es column) */
+    text-align: center;  /* Centra el texto */
+}
+
+/* Hack leve para ayudar a que height: 100% funcione mejor en columnas Bootstrap */
+.row > [class^="col-"] {
+    display: flex;
+    flex-direction: column;
+}
+.row > [class^="col-"] > .content-box {
+    flex-grow: 1; /* Permite que la caja crezca para llenar el espacio vertical de la columna */
 }

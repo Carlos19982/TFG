@@ -10,12 +10,12 @@
 
       <!-- Card 1 -->
       <div class="col-12 col-md-4">
-        <a href="#" class="event-link" aria-label="Detalles Competición 1"> <!-- Link wraps the card, replace # -->
+        <a href="{{ route('calendario.informacion') }}" class="event-link" aria-label="Detalles Competición 1"> <!-- Link wraps the card, replace # -->
           <div class="card h-100"> <!-- Added Bootstrap card class and h-100 for equal height -->
             <!-- IMPORTANT: Replace with your actual image path -->
-            <img src="./ImagenesP/Imagen1.png" class="card-img-top" alt="Imagen Competición 1">
+            <img src="{{ asset('img/Oran.png')}}" class="card-img-top" alt="Imagen Competición 1">
             <div class="card-footer">
-              <p class="competition-name text-center mb-0">Nombre Competición 1</p>
+              <p class="competition-name text-center mb-0">Oran Park</p>
             </div>
           </div>
         </a>
@@ -26,7 +26,7 @@
         <a href="#" class="event-link" aria-label="Detalles Competición 2">
           <div class="card h-100">
             <!-- IMPORTANT: Replace with your actual image path -->
-            <img src="./ImagenesP/Imagen1.png" class="card-img-top" alt="Imagen Competición 2">
+            <img src="{{ asset('img/Oran.png')}}" class="card-img-top" alt="Imagen Competición 2">
             <div class="card-footer">
               <p class="competition-name text-center mb-0">Nombre Competición 2</p>
             </div>
@@ -39,7 +39,7 @@
         <a href="#" class="event-link" aria-label="Detalles Competición 3">
           <div class="card h-100">
             <!-- IMPORTANT: Replace with your actual image path -->
-            <img src="./ImagenesP/Imagen1.png" class="card-img-top" alt="Imagen Competición 3">
+            <img src="{{ asset('img/Oran.png')}}" class="card-img-top" alt="Imagen Competición 3">
             <div class="card-footer">
               <p class="competition-name text-center mb-0">Nombre Competición 3</p>
             </div>
@@ -52,7 +52,7 @@
         <a href="#" class="event-link" aria-label="Detalles Competición 4">
           <div class="card h-100">
             <!-- IMPORTANT: Replace with your actual image path -->
-            <img src="./ImagenesP/Imagen1.png" class="card-img-top" alt="Imagen Competición 4">
+            <img src="{{ asset('img/Oran.png')}}" class="card-img-top" alt="Imagen Competición 4">
             <div class="card-footer">
               <p class="competition-name text-center mb-0">Nombre Competición 4</p>
             </div>
@@ -65,7 +65,7 @@
         <a href="#" class="event-link" aria-label="Detalles Competición 5">
           <div class="card h-100">
             <!-- IMPORTANT: Replace with your actual image path -->
-            <img src="./ImagenesP/Imagen1.png" class="card-img-top" alt="Imagen Competición 5">
+            <img src="{{ asset('img/Oran.png')}}" class="card-img-top" alt="Imagen Competición 5">
             <div class="card-footer">
               <p class="competition-name text-center mb-0">Nombre Competición 5</p>
             </div>
@@ -78,7 +78,7 @@
         <a href="#" class="event-link" aria-label="Detalles Competición 6">
           <div class="card h-100">
             <!-- IMPORTANT: Replace with your actual image path -->
-            <img src="./ImagenesP/Imagen1.png" class="card-img-top" alt="Imagen Competición 6">
+            <img src="{{ asset('img/Oran.png')}}" class="card-img-top" alt="Imagen Competición 6">
             <div class="card-footer">
               <p class="competition-name text-center mb-0">Nombre Competición 6</p>
             </div>

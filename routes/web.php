@@ -12,6 +12,10 @@ Route::get('/home', function () {
 Route::get('/calendario', function () {
     return view('calendario');
 });
+Route::get('/calendario/informacion', function () {
+    return view('informacion');
+})->name('calendario.informacion');
+
 Route::get('/pilotos', function () {
     return view('pilotos');
 });
