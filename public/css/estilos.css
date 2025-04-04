@@ -10,7 +10,7 @@
     --red-light: #FF073A;
     --red-dark: #9E0000;
     --yellow: #FFD700;
-    --yellow-gold: #FFA500; /* No usado aún, pero definido */
+    --yellow-gold: #FFA500;
 }
 
 .unique-font {
@@ -24,101 +24,99 @@
 body {
     background-color: var(--black);
     color: var(--white);
-    font-family: "Rubik", sans-serif; /* Establecer fuente base */
 }
 
 /* Encabezado */
 .navbar {
     background-color: var(--black);
     border-bottom: 0.125rem solid var(--red);
-    padding-top: 0.5rem; /* Ajuste ligero padding */
-    padding-bottom: 0.5rem; /* Ajuste ligero padding */
 }
 
-.logo-header {
-    /* width: 35%; */ /* Usar max-width es más seguro para responsividad */
-    max-width: 150px; /* O el tamaño que prefieras */
-    height: auto;
-}
-
-.navbar-nav {
-    gap: 1rem; /* Reducir un poco el gap si es mucho */
-}
-
-.nav-link {
-    color: var(--white);
-    font-weight: 600; /* Hacer links un poco más bold */
-    padding: 0.5rem 1rem; /* Dar padding explícito para el hover */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
-    border-radius: 5px; /* Redondear bordes para el hover */
-    text-transform: uppercase; /* Opcional: Todo mayúsculas */
-}
-
-.nav-item:hover .nav-link,
-.nav-link:hover,
-.nav-link.active { /* Estilo para el link activo también */
-    background-color: var(--red);
-    color: var(--white); /* Cambiar a blanco o negro según prefieras sobre rojo */
-}
-
-/* Estilos para el botón toggler (móvil) */
-.navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.5); /* Color del borde del botón */
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(237, 237, 237, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* Ícono hamburguesa blanco */
-}
-
-
-/* Secciones generales (si las necesitas para otras páginas) */
+/* Secciones centradas */
 .hero-section,
 .features-section,
 .join-section {
-    /* font-family: 'rubik'; */ /* Ya está en body */
+    font-family: 'rubik';
     /* border: 1px outset var(--silver); */
-    /* box-shadow: 0 0.0625rem 0.125rem var(--silver); */
+    /* box-shadow: 0 0.0625rem 0.125rem var(--silver);  */
     border-radius: 0.625rem;
+    /* Ancho máximo para centrar mejor */
     text-align: center;
+    /* Contenido centrado */
     display: flex;
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
-    padding: 3rem 1rem; /* Añadir padding general a secciones */
 }
 
 .first-title {
     font-family: "Rubik Dirt", system-ui;
 }
 
-/* Estilos específicos para imágenes dentro de títulos (si se usan) */
 .section-title-div {
     padding: 0;
-    margin-bottom: 2rem; /* Espacio debajo del contenedor del título */
 }
 
 .section-title-img {
-    max-width: 100%;
-    height: auto;
-    /* Puedes añadir más estilos si usas imágenes como títulos */
+    display: flex;
+    justify-items: center;
+    align-items: center;
 }
 
 .section-title {
     color: var(--red);
-    margin-bottom: 1rem; /* Espacio debajo del texto del título */
 }
 
-.img-fluid {
-     max-width: 100%; /* Esto ya lo hace Bootstrap */
-     height: auto; /* Esto ya lo hace Bootstrap */
-}
 
-/* Estilo para imagen de héroe (si la usas en otra parte) */
+
 .hero-img {
     max-width: 100%;
-    height: auto;
-    margin-top: 2rem; /* Ejemplo de espacio */
 }
+
+/* Footer */
+.footer-top {
+    background-color: var(--red);
+    /* Franja roja */
+    padding: 0.625rem 0;
+}
+
+.footer-top img {
+    max-height: 5rem;
+    margin: 0 3rem;
+}
+
+.footer-bottom {
+    background-color: var(--black);
+    /* Fondo negro */
+    color: var(--white);
+    padding: 0.9375rem 0;
+    text-align: center;
+}
+
+.social-icons i {
+    color: var(--yellow);
+    margin: 0 0.625rem;
+    font-size: 1.25rem;
+}
+
+.logo-header {
+    width: 35%;
+}
+
+.nav-link{
+    color: var(--white);
+}
+
+.li-plantilla:hover {
+    border-radius: 7%;
+    background-color: var(--red);
+    color: var(--black);
+}
+
+.navbar-nav {
+    gap: 2rem;
+}
+/* ------------------------------------------AQUI COMIENZA PILOTOS.CSS */
 
 /* ============ ESTILOS SECCIÓN NOSOTROS ============ */
 
@@ -150,11 +148,6 @@ body {
     padding-bottom: 0; /* Quitar padding inferior al último */
 }
 
-
-.member-visual {
-    /* Contenedor de imagen y nombre */
-    /* Bootstrap col-md-3 maneja el ancho en pantallas medianas y grandes */
-}
 
 .member-photo {
     max-width: 180px; /* Aumentar tamaño foto */
@@ -196,69 +189,12 @@ body {
     margin-bottom: 0; /* Quita margen inferior al último párrafo */
 }
 
-/* Footer */
-.footer-top {
-    background-color: var(--red);
-    padding: 1rem 0; /* Aumentar padding vertical */
-    display: flex; /* Usar flexbox para alinear mejor los logos */
-    justify-content: center; /* Centrar logos horizontalmente */
-    align-items: center; /* Centrar logos verticalmente */
-    flex-wrap: wrap; /* Permitir que los logos bajen si no caben */
-    gap: 2rem; /* Espacio entre logos */
-}
 
-.img-footer-partner { /* Estilo específico para logos del footer */
-    max-height: 4.5rem; /* Reducir altura ligeramente si es necesario */
-    width: auto; /* Ancho automático para mantener proporción */
-    /* margin: 0 3rem; Quitamos márgenes laterales fijos, usamos gap */
-}
-
-.footer-bottom {
-    background-color: var(--black);
-    color: var(--white);
-    padding: 1.5rem 0; /* Aumentar padding */
-    text-align: center;
-}
-
-.social-icons {
-    margin-bottom: 1rem; /* Espacio debajo de los iconos */
-}
-
-.social-icons a {
-    color: var(--yellow);
-    margin: 0 0.8rem; /* Aumentar espacio entre iconos */
-    font-size: 1.8rem; /* Iconos más grandes */
-    transition: color 0.3s ease; /* Transición suave al pasar el ratón */
-}
-.social-icons a:hover {
-    color: var(--red-light); /* Cambiar color al pasar el ratón */
-}
-
-.footer-bottom p {
-    margin: 0; /* Quitar margen por defecto del párrafo */
-    font-size: 0.9rem;
-    color: var(--silver); /* Texto de copyright un poco más tenue */
-}
 
 /* Ajustes para pantallas pequeñas (Bootstrap se encarga de apilar columnas) */
 @media (max-width: 767.98px) {
-    .navbar-nav {
-        text-align: center; /* Centrar links en menú móvil */
-        margin-top: 1rem; /* Espacio sobre los links en móvil */
-        gap: 0.5rem; /* Reducir gap en móvil */
-    }
-    .nav-link {
-        display: inline-block; /* Para que el fondo hover funcione bien centrado */
-        padding: 0.8rem 1rem; /* Ajustar padding en móvil */
-    }
+   
 
-    .logo-header {
-        max-width: 120px; /* Logo más pequeño en móvil */
-    }
-
-    .nosotros-section .section-title {
-        font-size: 2rem; /* Título de sección más pequeño en móvil */
-    }
 
     .team-member {
         /* En móvil, las columnas se apilan. Centramos todo */
@@ -282,20 +218,7 @@ body {
         font-size: 1.2rem; /* Nombre más pequeño en móvil */
      }
 
-    .footer-top {
-        padding: 1rem 0.5rem;
-        gap: 1rem; /* Reducir gap en móvil */
-    }
-    .img-footer-partner {
-        max-height: 3.5rem; /* Logos más pequeños en móvil */
-    }
-    .social-icons a {
-        font-size: 1.5rem; /* Iconos sociales más pequeños */
-        margin: 0 0.5rem;
-    }
 }
-/* --- Añadir o modificar en STYLES.CSS --- */
-
 .member-info ul {
     list-style-type: disc; /* Tipo de viñeta: disc, circle, square, none */
     padding-left: 1.5rem;  /* Ajusta la indentación si es necesario */
@@ -328,7 +251,91 @@ body {
     .member-info {
         padding-left: 1rem; /* Reducir padding izquierdo en tablets */
     }
-    .navbar-nav {
-        gap: 0.5rem; /* Reducir gap en tablets si es necesario */
+    
+}
+/* -------------------------AQUI COMIENZA CALENDARIO.CSS */
+
+
+/* --- STYLES FOR CALENDARIO SECTION --- */
+
+
+.calendario-section .section-title {
+    /* Reusing general styles, ensure they are defined */
+    color: var(--red);
+    margin-bottom: 3rem; /* Adjusted spacing */
+    font-size: 2.5rem;
+    font-family: "Rubik Dirt", system-ui; /* Using unique font */
+}
+
+/* Style for the link wrapping the card */
+.event-link {
+    display: block; /* Makes the link behave like a block element */
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Ensures text color is inherited */
+    height: 100%; /* Ensure link takes full height of column for h-100 card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+}
+
+/* Style for the Bootstrap card */
+.calendario-section .card {
+    background-color: #404040; /* Slightly adjusted card background */
+    border: 1px solid var(--silver);
+    border-radius: 8px; /* Rounded corners for the card */
+    overflow: hidden; /* Ensures image corners are clipped */
+    height: 100%; /* Takes full height from parent if specified (like h-100) */
+    /* The transition effect will be applied ON the card, triggered by link hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Style for the image inside the card */
+.calendario-section .card-img-top {
+    /* Bootstrap's card-img-top handles width/height well */
+    /* Optional: Add fixed aspect ratio if all images should match */
+    /* aspect-ratio: 16 / 9; */
+    /* aspect-ratio: 4 / 3; */
+    /* aspect-ratio: 1 / 1; /* for square images */
+    object-fit: cover; /* Ensures image covers area without distortion if aspect ratio is set */
+}
+
+/* Style for the card footer */
+.calendario-section .card-footer {
+    background-color: #383838; /* Darker footer background */
+    border-top: 1px solid var(--silver); /* Separator line */
+    padding: 0.75rem 1rem; /* Default Bootstrap padding, adjust if needed */
+}
+
+/* Style for the competition name text in the footer */
+.competition-name {
+    color: var(--yellow); /* Yellow text for emphasis */
+    font-weight: 600; /* Semi-bold */
+    font-size: 1rem; /* Adjust size as needed */
+    /* text-transform: uppercase; */ /* Optional: Make text uppercase */
+    /* margin-bottom: 0; /* Already set with mb-0 class in HTML */
+}
+
+/* Hover effect - Applied TO the card WHEN the link is hovered */
+.event-link:hover .card {
+    transform: translateY(-6px); /* Slightly increased lift effect */
+    box-shadow: 0 10px 25px rgba(213, 0, 0, 0.4); /* Enhanced red glow shadow */
+}
+
+
+/* --- Media Queries for Responsiveness --- */
+
+/* Adjustments for smaller screens */
+@media (max-width: 767.98px) {
+   
+
+    .calendario-section .section-title {
+        font-size: 2rem; /* Smaller title on mobile */
+    }
+
+}
+
+/* Adjustments for tablets */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    
+    .competition-name {
+        font-size: 0.9rem; /* Slightly smaller text on tablets if needed */
     }
 }

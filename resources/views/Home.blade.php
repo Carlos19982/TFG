@@ -11,10 +11,10 @@
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa accusantium perspiciatis laudantium pariatur. Reiciendis fugiat doloribus voluptate enim accusamus beatae delectus eius ullam, explicabo vitae, corrupti odit. Magnam, architecto iste?
                             Nobis eos molestias, error quo rerum, iure ex obcaecati dolores suscipit minus dignissimos. Laudantium quisquam blanditiis velit ad repellat neque expt.
                         </p>
-                        <img src="C:\\Clase\TFG\tfg\TFG\resources\img\coche 1.svg" alt="Auto en pista" class="hero-img">
+                        <img src="{{ asset('img\LOGONACHOSINFONDO 1.svg') }}" alt="Momo Tires Logo " class="hero-img">
                     </div>
                     <div class="section-title-img col-lg-6">
-                        <img src="../resources/img/coche 1.svg" alt="Momo Tires Logo" class="img-fluid">
+                        <img src="{{ asset('img\coche 1.svg') }}" alt="Auto en pista" class="img-fluid">
                     </div>
                 </div>
             </div>

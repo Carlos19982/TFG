@@ -14,7 +14,7 @@
     {{-- CSS Global de tu aplicación (usando Vite o Mix) --}}
     {{-- @vite(['resources/css/app.css']) --}}
     {{-- O si no usas Vite/Mix --}}
-   <link rel="stylesheet" href="{{ asset('../resources/css/estilos.css') }}"> 
+   <link rel="stylesheet" href="{{ asset('css/estilos.css') }}"> 
 
 
     {{-- Sección para estilos CSS específicos de cada página --}}
@@ -25,15 +25,15 @@
     {{-- Barra de Navegación (como en el ejemplo anterior) --}}
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="{{ asset('../resources/img/ZRTSINFONDO 1.svg') }}" alt="Momo Tires Logo" class="img-fluid logo-header"> {{-- Asumiendo que está en public/img/ --}}
+            <a class="navbar-brand" href="{{ url('/home') }}">
+                <img src="{{ asset('img/ZRTSINFONDO 1.svg') }}" alt="Momo Tires Logo" class="img-fluid logo-header"> {{-- Asumiendo que está en public/img/ --}}
             </a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">NOSOTROS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">CALENDARIO</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">GALERÍA</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">ÚNETE</a></li>
+                    <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/pilotos') }}">PILOTOS</a></li>
+                    <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/calendario') }}">CALENDARIO</a></li>
+                    <li class="nav-item li-plantilla"><a class="nav-link" href="#">GALERÍA</a></li>
+                    <li class="nav-item li-plantilla"><a class="nav-link" href="#">ÚNETE</a></li>
                 </ul>
             </div>
         </div>
@@ -48,9 +48,9 @@
     <footer>
         <div class="footer-top text-center">
             {{-- Usa asset() para las imágenes. Ajusta la ruta si es necesario (ej: 'img/...') --}}
-            <img src="{{ asset('../resources/img/PatroMomo.svg') }}" alt="MOMO Tires Logo" class="img-footer-partner">
-            <img src="{{ asset('../resources/img/PatroillanDommarco.svg') }}" alt="Logo Ilian Domi" class="img-footer-partner">
-            <img src="{{ asset('../resources/img/PatroTheMechtCat.svg') }}" alt="Logo The Mech Cat" class="img-footer-partner">
+            <img src="{{ asset('img/PatroMomo.svg') }}" alt="MOMO Tires Logo" class="img-footer-partner">
+            <img src="{{ asset('img/PatroillanDommarco.svg') }}" alt="Logo Ilian Domi" class="img-footer-partner">
+            <img src="{{ asset('img/PatroTheMechtCat.svg') }}" alt="Logo The Mech Cat" class="img-footer-partner">
         </div>
         <div class="footer-bottom">
             <div class="container">
