@@ -32,6 +32,9 @@ class PilotosResource extends Resource
                 Forms\Components\TextInput::make('Descripcion')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('Imagen')
+                    ->required()
+                    ->maxLength(250),
             ]);
     }
 
@@ -44,6 +47,8 @@ class PilotosResource extends Resource
                 Tables\Columns\TextColumn::make('Apellidos')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('Descripcion')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('Imagen')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

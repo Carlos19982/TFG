@@ -16,7 +16,8 @@ class Pilotos extends Model
     protected $fillable = [
         'nombre',
         'apellidos',
-        'Descripcion'
+        'Descripcion',
+        'Imagen'
     ];
 
     public function eventos(): BelongsToMany
