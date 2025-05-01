@@ -5,7 +5,7 @@
 <!-- =========== SECCIÓN NOSOTROS =========== -->
 <section id="nosotros" class="container my-5 nosotros-section">
   <div class="text-center mb-5 section-title-div">
-    <h2 class="section-title first-title">NUESTRO EQUIPO</h2>
+    <h1 class="section-title first-title">NUESTRO EQUIPO</h1>
   </div>
 
   <!-- Miembro 1: Carlos Blanco Hidalgo (Layout Estándar) -->

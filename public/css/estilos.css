@@ -1,6 +1,8 @@
+/* === IMPORTACIONES DE FUENTES (Deben ir al principio) === */
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,600;1,600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Rubik:ital,wght@0,600;1,600&display=swap');
 
+/* === VARIABLES CSS GLOBALES === */
 :root {
     /* Colores originales */
     --black: #333333;
@@ -13,6 +15,7 @@
     --yellow-gold: #FFA500;
 }
 
+/* === CLASES DE FUENTES GLOBALES === */
 .unique-font {
     font-family: "Rubik Dirt", system-ui;
 }
@@ -21,32 +24,188 @@
     font-family: "Rubik", sans-serif;
 }
 
+/* === ESTILOS BASE DEL BODY === */
 body {
     background-color: var(--black);
     color: var(--white);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Rubik", sans-serif;
+    margin: 0;
+    line-height: 1.6;
 }
 
-/* Encabezado */
+/* === ESTILOS CONTENIDO PRINCIPAL === */
+main.container {
+    flex-grow: 1;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+/* === ENCABEZADO (NAVBAR) === */
 .navbar {
     background-color: var(--black);
     border-bottom: 0.125rem solid var(--red);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    position: relative; /* Añadido para contexto de posicionamiento si es necesario */
 }
 
-/* Secciones centradas */
+/* --- ESTILO DEL CONTENEDOR NAVBAR --- */
+/* Aplica Flexbox al contenedor DIRECTO dentro de la navbar */
+.navbar > .container,
+.navbar > .container-fluid {
+    display: flex;
+    /* QUITAMOS flex-wrap: nowrap; de aquí */
+    justify-content: space-between; /* EMPUJA LOGO IZQ, RESTO DER */
+    align-items: center; /* Alinea verticalmente */
+}
+/* --- FIN ESTILO CONTENEDOR NAVBAR --- */
+
+.logo-header {
+    max-height: 50px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.nav-link {
+    color: var(--white);
+    font-family: "Rubik", sans-serif;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.li-plantilla {
+     transition: background-color 0.2s ease-in-out;
+     border-radius: 7%;
+}
+.li-plantilla:hover {
+    background-color: var(--red);
+}
+.li-plantilla:hover .nav-link {
+     color: var(--black);
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+    z-index: 10; /* Asegurar que esté sobre otros elementos si hay solapamiento */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(237, 237, 237, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Comportamiento del div colapsable */
+.navbar-collapse {
+    /* No necesita flex-basis: 100% aquí, Bootstrap lo maneja */
+    flex-grow: 1;
+    align-items: center;
+    width: 100%; /* Asegurar ancho completo cuando es visible */
+}
+
+/* --- Media Queries para Navbar --- */
+
+/* Estilos del menú colapsado (Móvil) */
+@media (max-width: 991.98px) {
+    /* --- AJUSTE CLAVE MÓVIL --- */
+    .navbar > .container,
+    .navbar > .container-fluid {
+        flex-wrap: wrap; /* PERMITE QUE EL navbar-collapse BAJE A LA SIGUIENTE LÍNEA */
+    }
+    /* --- FIN AJUSTE CLAVE MÓVIL --- */
+
+    .navbar-collapse {
+        /* Estilos visuales del menú desplegado */
+        background-color: rgba(0, 0, 0, 0.9); /* Ligeramente más opaco */
+        border-top: 1px solid var(--red);
+        margin-top: 0.5rem; /* Espacio entre toggler y menú */
+        padding: 1rem 0;
+        backdrop-filter: blur(5px);
+        width: 100%; /* Doble confirmación de ancho completo */
+        order: 3; /* Asegura que vaya después del logo (1) y toggler (2) en el flujo flex wrap */
+        /* Quitar cualquier posicionamiento absoluto si lo hubiera */
+        position: static;
+    }
+    .navbar-nav {
+        text-align: center;
+        width: 100%;
+    }
+    .navbar-nav .nav-item.li-plantilla {
+        width: 100%;
+        border-bottom: 1px solid rgba(204, 204, 204, 0.2);
+    }
+     .navbar-nav .nav-item.li-plantilla:last-child {
+         border-bottom: none;
+     }
+    .navbar-nav .nav-item.li-plantilla .nav-link {
+        padding: 0.9rem 1rem;
+        display: block;
+        width: 100%;
+    }
+    .li-plantilla:hover {
+       background-color: var(--red);
+    }
+    .li-plantilla:hover .nav-link {
+       color: var(--black);
+    }
+}
+
+/* Estilos del menú expandido (Desktop) */
+@media (min-width: 992px) {
+    /* --- AJUSTE CLAVE DESKTOP --- */
+    .navbar > .container,
+    .navbar > .container-fluid {
+         flex-wrap: nowrap; /* ASEGURA QUE TODO QUEDE EN UNA LÍNEA EN DESKTOP */
+    }
+     /* --- FIN AJUSTE CLAVE DESKTOP --- */
+
+    .navbar-collapse {
+        display: flex !important; /* Fuerza display flex */
+        flex-basis: auto; /* Ancho automático */
+        width: auto; /* Ancho automático */
+        order: 0; /* Resetear orden */
+        background-color: transparent; /* Sin fondo especial */
+        border-top: none; /* Sin borde */
+        margin-top: 0; /* Sin margen */
+        padding: 0; /* Sin padding extra */
+        backdrop-filter: none; /* Sin blur */
+    }
+    .navbar-nav {
+       margin-left: auto !important; /* EMPUJA LOS LINKS A LA DERECHA */
+       flex-direction: row; /* Links en fila */
+       gap: 1rem; /* Espacio entre LIs */
+       width: auto; /* Ancho automático */
+       text-align: left; /* Alinear texto a la izquierda por defecto */
+    }
+     .li-plantilla {
+         border-radius: 7%;
+         width: auto; /* Ancho automático */
+         border-bottom: none; /* Sin borde inferior */
+     }
+     .navbar-nav .nav-item.li-plantilla .nav-link {
+        padding: 0.5rem 1rem; /* Padding normal de desktop */
+        display: inline-block; /* Comportamiento normal */
+        width: auto;
+    }
+}
+
+
+/* === ESTILOS GENERALES DE SECCIONES === */
 .hero-section,
 .features-section,
 .join-section {
-    font-family: 'rubik';
-    /* border: 1px outset var(--silver); */
-    /* box-shadow: 0 0.0625rem 0.125rem var(--silver);  */
     border-radius: 0.625rem;
-    /* Ancho máximo para centrar mejor */
     text-align: center;
-    /* Contenido centrado */
     display: flex;
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    font-family: "Rubik", sans-serif;
 }
 
 .first-title {
@@ -59,320 +218,341 @@ body {
 
 .section-title-img {
     display: flex;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
 }
 
 .section-title {
     color: var(--red);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
 }
-
-
-
 .hero-img {
     max-width: 100%;
+    height: auto;
 }
 
-/* Footer */
+/* === FOOTER === */
+footer {
+    margin-top: auto;
+    background-color: var(--black);
+    color: var(--white);
+}
+
 .footer-top {
     background-color: var(--red);
-    /* Franja roja */
-    padding: 0.625rem 0;
+    padding: 1.2rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.footer-top img {
-    max-height: 5rem;
-    margin: 0 3rem;
+.img-footer-partner {
+    max-height: 50px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(50%) brightness(1.1);
+    transition: filter 0.3s ease;
+}
+.img-footer-partner:hover {
+    filter: grayscale(0%) brightness(1);
 }
 
 .footer-bottom {
-    background-color: var(--black);
-    /* Fondo negro */
-    color: var(--white);
-    padding: 0.9375rem 0;
+    padding: 1.5rem 1rem;
     text-align: center;
 }
 
-.social-icons i {
+.social-icons a {
     color: var(--yellow);
-    margin: 0 0.625rem;
-    font-size: 1.25rem;
+    margin: 0 0.75rem;
+    font-size: 1.6rem;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.social-icons a:hover {
+    color: var(--red-light);
+    transform: scale(1.1);
 }
 
-.logo-header {
-    width: 35%;
+.footer-bottom p {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: var(--silver);
 }
 
-.nav-link{
-    color: var(--white);
-}
-
-
-.li-plantilla:hover {
-    border-radius: 7%;
-    background-color: var(--red);
-    color: var(--black);
-}
-
-.navbar-nav {
-    gap: 2rem;
-}
-/* ------------------------------------------AQUI COMIENZA PILOTOS.CSS */
-
-/* ============ ESTILOS SECCIÓN NOSOTROS ============ */
-
+/* === ESTILOS PÁGINA PILOTOS (.nosotros-section) === */
 .nosotros-section {
-    padding-top: 3rem; /* Espacio superior */
-    padding-bottom: 1rem; /* Reducir padding inferior para compensar el mb-5 del último miembro */
-    /* Hereda color y fondo del body, lo cual está bien */
+    padding-top: 3rem;
+    padding-bottom: 1rem;
 }
 
-/* Estilo para el título de la sección 'Nuestro Equipo' */
 .nosotros-section .section-title {
-    color: var(--red); /* Usa tu variable de color rojo */
-    margin-bottom: 3rem; /* Espacio debajo del título */
-    font-size: 2.5rem; /* Tamaño del título de sección */
-    /* Si no usas 'first-title', puedes añadirle el font-family aquí */
-    /* font-family: "Rubik Dirt", system-ui; */
+    margin-bottom: 3rem;
 }
 
 .team-member {
-   /* Bootstrap row se encarga del layout principal */
-   /* Puedes añadir un borde o fondo si quieres separar visualmente cada miembro */
-    border-bottom: 1px solid var(--silver);
+    border-bottom: 1px solid rgba(204, 204, 204, 0.3);
     padding-bottom: 3rem;
-    margin-bottom: 3rem !important; /* Asegura el espacio entre miembros */
+    margin-bottom: 3rem !important;
 }
 .team-member:last-child {
-    border-bottom: none; /* Quitar borde al último */
-    margin-bottom: 0 !important; /* Quitar margen inferior al último */
-    padding-bottom: 0; /* Quitar padding inferior al último */
+    border-bottom: none;
+    margin-bottom: 0 !important;
+    padding-bottom: 0;
 }
 
+.member-visual {
+     text-align: center;
+}
 
 .member-photo {
-    max-width: 180px; /* Aumentar tamaño foto */
-    height: 180px; /* Fijar altura para asegurar círculo perfecto con aspect-ratio */
-    border-radius: 50%; /* Foto circular */
-    border: 5px solid var(--red-light); /* Borde más grueso */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
-    aspect-ratio: 1 / 1; /* Fuerza a que sea cuadrada antes del border-radius */
-    margin-left: auto; /* Centrar en su columna si es necesario */
-    margin-right: auto; /* Centrar en su columna si es necesario */
-    display: block; /* Para que márgenes automáticos funcionen */
-    background-color: var(--silver); /* Fondo por si la imagen no carga */
+    max-width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 5px solid var(--red-light);
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto 1rem auto;
+    display: block;
+    background-color: var(--silver);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.member-photo:hover{
-    box-shadow: 0 0 15px 4px rgba(255, 0, 0, 0.5), 0 0 25px 8px rgba(255, 255, 0, 0.4); /* rojo y amarillo */
+.member-photo:hover {
+    box-shadow: 0 0 15px 4px rgba(255, 7, 58, 0.6), /* --red-light */
+                0 0 25px 8px rgba(255, 215, 0, 0.5); /* --yellow */
     transform: scale(1.05);
 }
+
 .member-name {
-    font-family: "Rubik", sans-serif; /* O 'Rubik Dirt' si prefieres */
-    font-weight: 600; /* Semi-bold */
-    color: var(--yellow); /* Color destacado para el nombre */
-    margin-top: 1rem; /* Espacio sobre el nombre */
-    font-size: 1.4rem; /* Tamaño del nombre más grande */
+    font-family: "Rubik", sans-serif;
+    font-weight: 600;
+    color: var(--yellow);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    text-align: center;
 }
 
 .member-info {
-    /* Contenedor para los párrafos de texto */
-    /* Bootstrap col-md-9 maneja el ancho */
-    text-align: left; /* Alinea el texto a la izquierda en desktop */
-    color: var(--white); /* Texto más claro que silver */
-    padding-left: 2rem; /* Añadir espacio a la izquierda del texto */
+    text-align: left;
+    color: var(--white);
 }
 
 .member-info p {
-    font-family: "Rubik", sans-serif; /* Fuente regular */
-    line-height: 1.7; /* Aumentar espaciado entre líneas */
-    margin-bottom: 1.2rem; /* Espacio entre párrafos */
-    font-size: 1rem; /* Tamaño de fuente estándar */
+    font-family: "Rubik", sans-serif;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
 }
-
 .member-info p:last-child {
-    margin-bottom: 0; /* Quita margen inferior al último párrafo */
+    margin-bottom: 0;
 }
 
-
-
-/* Ajustes para pantallas pequeñas (Bootstrap se encarga de apilar columnas) */
-@media (max-width: 767.98px) {
-   
-
-
-    .team-member {
-        /* En móvil, las columnas se apilan. Centramos todo */
-        text-align: center;
-        padding-bottom: 2rem; /* Ajustar padding */
-        margin-bottom: 2rem !important; /* Ajustar margen */
-    }
-    .member-info {
-        text-align: center; /* Centra también la info en móvil */
-        margin-top: 1.5rem; /* Añade espacio entre la foto/nombre y el texto */
-        padding-left: 0; /* Quitar padding izquierdo en móvil */
-    }
-    .member-visual {
-        margin-bottom: 1rem; /* Espacio si la info va debajo */
-    }
-    .member-photo {
-        max-width: 150px; /* Foto un poco más pequeña en móvil */
-        height: 150px;
-    }
-     .member-name {
-        font-size: 1.2rem; /* Nombre más pequeño en móvil */
-     }
-
-}
 .member-info ul {
-    list-style-type: disc; /* Tipo de viñeta: disc, circle, square, none */
-    padding-left: 1.5rem;  /* Ajusta la indentación si es necesario */
-    margin-top: 1rem;      /* Espacio entre el párrafo anterior y la lista */
-    margin-bottom: 0;      /* Quitar margen inferior si el contenedor ya lo tiene */
-    color: var(--white);   /* Asegurar color del texto */
-    font-family: "Rubik", sans-serif; /* Asegurar fuente */
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-family: "Rubik", sans-serif;
 }
 
 .member-info li {
-    margin-bottom: 0.6rem; /* Espacio entre elementos de la lista */
-    line-height: 1.7;     /* Ajustar altura de línea si es necesario */
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+    position: relative;
+    padding-left: 1.5rem;
+}
+.member-info li::before {
+    content: "\27A4"; /* Flecha */
+    color: var(--red);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-size: 0.9em;
 }
 
-/* Ajustar el margen del párrafo que precede a la lista si es necesario */
-.member-info p:first-child {
-    margin-bottom: 1rem; /* Ajusta este valor según necesites espacio antes de la UL */
-}
-
-/* --- Ajustes en Media Query para móvil (opcional) --- */
+/* --- Media Query Pilotos (Móvil) --- */
 @media (max-width: 767.98px) {
-    .member-info ul {
-        padding-left: 1rem; /* Menos indentación en móvil */
-        text-align: left;  /* Forzar texto a la izquierda en la lista aunque el contenedor esté centrado */
-        display: inline-block; /* Para que text-align:left funcione en contenedor centrado */
+    .team-member {
+        text-align: center;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem !important;
     }
-}
-/* Ajustes adicionales si se ven mal en pantallas intermedias (tablets) */
-@media (min-width: 768px) and (max-width: 991.98px) {
     .member-info {
-        padding-left: 1rem; /* Reducir padding izquierdo en tablets */
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-left: 0;
     }
-    
+    .member-photo {
+        max-width: 150px;
+        height: 150px;
+    }
+    .member-name {
+        font-size: 1.2rem;
+    }
+    .member-info ul {
+        padding-left: 0;
+        display: inline-block;
+        text-align: left;
+    }
+     .member-info li {
+        padding-left: 1.5rem;
+    }
 }
-/* -------------------------AQUI COMIENZA CALENDARIO.CSS */
 
-
-/* --- STYLES FOR CALENDARIO SECTION --- */
-
+/* === ESTILOS PÁGINA CALENDARIO (.calendario-section) === */
+.calendario-section {
+     padding-top: 3rem;
+     padding-bottom: 3rem;
+}
 
 .calendario-section .section-title {
-    /* Reusing general styles, ensure they are defined */
-    color: var(--red);
-    margin-bottom: 3rem; /* Adjusted spacing */
-    font-size: 2.5rem;
-    font-family: "Rubik Dirt", system-ui; /* Using unique font */
+     font-family: "Rubik Dirt", system-ui;
 }
 
-/* Style for the link wrapping the card */
 .event-link {
-    display: block; /* Makes the link behave like a block element */
-    text-decoration: none; /* Removes underline */
-    color: inherit; /* Ensures text color is inherited */
-    height: 100%; /* Ensure link takes full height of column for h-100 card */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
 }
 
-/* Style for the Bootstrap card */
 .calendario-section .card {
-    background-color: #404040; /* Slightly adjusted card background */
+    background-color: #404040;
     border: 1px solid var(--silver);
-    border-radius: 8px; /* Rounded corners for the card */
-    overflow: hidden; /* Ensures image corners are clipped */
-    height: 100%; /* Takes full height from parent if specified (like h-100) */
-    /* The transition effect will be applied ON the card, triggered by link hover */
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Style for the image inside the card */
 .calendario-section .card-img-top {
-    /* Bootstrap's card-img-top handles width/height well */
-    /* Optional: Add fixed aspect ratio if all images should match */
-    /* aspect-ratio: 16 / 9; */
-    /* aspect-ratio: 4 / 3; */
-    /* aspect-ratio: 1 / 1; /* for square images */
-    object-fit: cover; /* Ensures image covers area without distortion if aspect ratio is set */
+    width: 100%;
+    aspect-ratio: 4 / 3; /* Proporción imagen */
+    object-fit: cover;
 }
-
-/* Style for the card footer */
+.calendario-section .card-body {
+     flex-grow: 1;
+}
 .calendario-section .card-footer {
-    background-color: #383838; /* Darker footer background */
-    border-top: 1px solid var(--silver); /* Separator line */
-    padding: 0.75rem 1rem; /* Default Bootstrap padding, adjust if needed */
+    background-color: #383838;
+    border-top: 1px solid var(--silver);
+    padding: 0.75rem 1rem;
+    margin-top: auto;
 }
 
-/* Style for the competition name text in the footer */
 .competition-name {
-    color: var(--yellow); /* Yellow text for emphasis */
-    font-weight: 600; /* Semi-bold */
-    font-size: 1rem; /* Adjust size as needed */
-    /* text-transform: uppercase; */ /* Optional: Make text uppercase */
-    /* margin-bottom: 0; /* Already set with mb-0 class in HTML */
+    color: var(--yellow);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0;
+    text-align: center;
 }
 
-/* Hover effect - Applied TO the card WHEN the link is hovered */
-.event-link:hover .card {
-    transform: translateY(-6px); /* Slightly increased lift effect */
-    box-shadow: 0 10px 25px rgba(213, 0, 0, 0.4); /* Enhanced red glow shadow */
+.event-link:hover .card,
+.event-link:focus .card {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(213, 0, 0, 0.5);
+}
+.event-link:focus {
+    outline: none;
+}
+.event-link:focus .card {
+     outline: 3px solid var(--yellow);
+     outline-offset: 1px;
 }
 
 
-/* --- Media Queries for Responsiveness --- */
-
-/* Adjustments for smaller screens */
+/* --- Media Query Calendario (Móvil) --- */
 @media (max-width: 767.98px) {
-   
-
     .calendario-section .section-title {
-        font-size: 2rem; /* Smaller title on mobile */
-    }
-
-}
-
-/* Adjustments for tablets */
-@media (min-width: 768px) and (max-width: 991.98px) {
-    
-    .competition-name {
-        font-size: 0.9rem; /* Slightly smaller text on tablets if needed */
+        font-size: 2rem;
     }
 }
-/* ----------------------------------------------Aqui empieza INFORMACION AL PULSAR */
 
-/* --- Añadir en informacion.css --- */
-
+/* === ESTILOS PÁGINA INFORMACIÓN === */
 .content-box {
-    background-color: #444; /* Fondo gris oscuro (o el que prefieras, puedes usar var(--black) o algo intermedio) */
-    padding: 1.5rem;       /* Padding interno (equivale a p-4 de Bootstrap) */
-    border-radius: 0.375rem; /* Bordes redondeados (equivale a .rounded de Bootstrap) */
-    height: 100%;          /* Intenta que ambas cajas ocupen toda la altura de su columna */
-    display: flex;         /* Usar flexbox para mejor control interno */
-    flex-direction: column; /* Apilar el contenido verticalmente dentro de la caja */
+    background-color: #444;
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: var(--white);
 }
 
-/* Opcional: Estilos específicos para la imagen dentro de la caja izquierda */
-.content-box .img-fluid {
-    margin-bottom: 1rem; /* Espacio entre la imagen y el párrafo debajo */
-
+.content-box img.img-fluid {
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
 }
 
-/* Opcional: Para centrar el contenido de la caja izquierda si lo deseas */
+.content-box h3, .content-box h4 {
+    color: var(--yellow);
+    font-family: "Rubik Dirt", system-ui;
+    margin-bottom: 1rem;
+}
+
+.content-box p {
+    font-family: "Rubik", sans-serif;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+.content-box p:last-child {
+    margin-bottom: 0;
+}
+.content-box ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.content-box li {
+     position: relative;
+     padding-left: 1.5rem;
+     margin-bottom: 0.7rem;
+     font-family: "Rubik", sans-serif;
+     line-height: 1.6;
+}
+.content-box li::before {
+    content: "\27A4"; /* Flecha */
+    color: var(--red);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 0.9em;
+}
+
 .content-box.text-center-content {
-    align-items: center; /* Centra horizontalmente (porque flex-direction es column) */
-    text-align: center;  /* Centra el texto */
+    align-items: center;
+    text-align: center;
+}
+.content-box.text-center-content ul {
+    display: inline-block;
+    text-align: left;
 }
 
-/* Hack leve para ayudar a que height: 100% funcione mejor en columnas Bootstrap */
+/* --- Hack para height: 100% en columnas Bootstrap --- */
 .row > [class^="col-"] {
     display: flex;
     flex-direction: column;
 }
 .row > [class^="col-"] > .content-box {
-    flex-grow: 1; /* Permite que la caja crezca para llenar el espacio vertical de la columna */
+    flex-grow: 1;
+}
+
+/* --- Media Query para espaciado de content-box en móvil --- */
+@media (max-width: 767.98px) {
+    .row > [class^="col-"] {
+        margin-bottom: 1.5rem;
+    }
+    .row > [class^="col-"]:last-child {
+        margin-bottom: 0;
+    }
 }
