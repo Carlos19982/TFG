@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('pilotos', function (Blueprint $table) {
             $table->id();
             $table->string('Nombre', 40);
-            $table->string('descripcion');
+            $table->string('Apellidos', 40);
+            $table->string('Descripcion',255);
             $table->timestamps();
         });
     }
