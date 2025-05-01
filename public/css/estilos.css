@@ -1,0 +1,558 @@
+/* === IMPORTACIONES DE FUENTES (Deben ir al principio) === */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,600;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Rubik:ital,wght@0,600;1,600&display=swap');
+
+/* === VARIABLES CSS GLOBALES === */
+:root {
+    /* Colores originales */
+    --black: #333333;
+    --white: #EDEDED;
+    --silver: #CCCCCC;
+    --red: #D50000;
+    --red-light: #FF073A;
+    --red-dark: #9E0000;
+    --yellow: #FFD700;
+    --yellow-gold: #FFA500;
+}
+
+/* === CLASES DE FUENTES GLOBALES === */
+.unique-font {
+    font-family: "Rubik Dirt", system-ui;
+}
+
+.regular-font {
+    font-family: "Rubik", sans-serif;
+}
+
+/* === ESTILOS BASE DEL BODY === */
+body {
+    background-color: var(--black);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Rubik", sans-serif;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* === ESTILOS CONTENIDO PRINCIPAL === */
+main.container {
+    flex-grow: 1;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+/* === ENCABEZADO (NAVBAR) === */
+.navbar {
+    background-color: var(--black);
+    border-bottom: 0.125rem solid var(--red);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    position: relative; /* Añadido para contexto de posicionamiento si es necesario */
+}
+
+/* --- ESTILO DEL CONTENEDOR NAVBAR --- */
+/* Aplica Flexbox al contenedor DIRECTO dentro de la navbar */
+.navbar > .container,
+.navbar > .container-fluid {
+    display: flex;
+    /* QUITAMOS flex-wrap: nowrap; de aquí */
+    justify-content: space-between; /* EMPUJA LOGO IZQ, RESTO DER */
+    align-items: center; /* Alinea verticalmente */
+}
+/* --- FIN ESTILO CONTENEDOR NAVBAR --- */
+
+.logo-header {
+    max-height: 50px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.nav-link {
+    color: var(--white);
+    font-family: "Rubik", sans-serif;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.li-plantilla {
+     transition: background-color 0.2s ease-in-out;
+     border-radius: 7%;
+}
+.li-plantilla:hover {
+    background-color: var(--red);
+}
+.li-plantilla:hover .nav-link {
+     color: var(--black);
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+    z-index: 10; /* Asegurar que esté sobre otros elementos si hay solapamiento */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(237, 237, 237, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Comportamiento del div colapsable */
+.navbar-collapse {
+    /* No necesita flex-basis: 100% aquí, Bootstrap lo maneja */
+    flex-grow: 1;
+    align-items: center;
+    width: 100%; /* Asegurar ancho completo cuando es visible */
+}
+
+/* --- Media Queries para Navbar --- */
+
+/* Estilos del menú colapsado (Móvil) */
+@media (max-width: 991.98px) {
+    /* --- AJUSTE CLAVE MÓVIL --- */
+    .navbar > .container,
+    .navbar > .container-fluid {
+        flex-wrap: wrap; /* PERMITE QUE EL navbar-collapse BAJE A LA SIGUIENTE LÍNEA */
+    }
+    /* --- FIN AJUSTE CLAVE MÓVIL --- */
+
+    .navbar-collapse {
+        /* Estilos visuales del menú desplegado */
+        background-color: rgba(0, 0, 0, 0.9); /* Ligeramente más opaco */
+        border-top: 1px solid var(--red);
+        margin-top: 0.5rem; /* Espacio entre toggler y menú */
+        padding: 1rem 0;
+        backdrop-filter: blur(5px);
+        width: 100%; /* Doble confirmación de ancho completo */
+        order: 3; /* Asegura que vaya después del logo (1) y toggler (2) en el flujo flex wrap */
+        /* Quitar cualquier posicionamiento absoluto si lo hubiera */
+        position: static;
+    }
+    .navbar-nav {
+        text-align: center;
+        width: 100%;
+    }
+    .navbar-nav .nav-item.li-plantilla {
+        width: 100%;
+        border-bottom: 1px solid rgba(204, 204, 204, 0.2);
+    }
+     .navbar-nav .nav-item.li-plantilla:last-child {
+         border-bottom: none;
+     }
+    .navbar-nav .nav-item.li-plantilla .nav-link {
+        padding: 0.9rem 1rem;
+        display: block;
+        width: 100%;
+    }
+    .li-plantilla:hover {
+       background-color: var(--red);
+    }
+    .li-plantilla:hover .nav-link {
+       color: var(--black);
+    }
+}
+
+/* Estilos del menú expandido (Desktop) */
+@media (min-width: 992px) {
+    /* --- AJUSTE CLAVE DESKTOP --- */
+    .navbar > .container,
+    .navbar > .container-fluid {
+         flex-wrap: nowrap; /* ASEGURA QUE TODO QUEDE EN UNA LÍNEA EN DESKTOP */
+    }
+     /* --- FIN AJUSTE CLAVE DESKTOP --- */
+
+    .navbar-collapse {
+        display: flex !important; /* Fuerza display flex */
+        flex-basis: auto; /* Ancho automático */
+        width: auto; /* Ancho automático */
+        order: 0; /* Resetear orden */
+        background-color: transparent; /* Sin fondo especial */
+        border-top: none; /* Sin borde */
+        margin-top: 0; /* Sin margen */
+        padding: 0; /* Sin padding extra */
+        backdrop-filter: none; /* Sin blur */
+    }
+    .navbar-nav {
+       margin-left: auto !important; /* EMPUJA LOS LINKS A LA DERECHA */
+       flex-direction: row; /* Links en fila */
+       gap: 1rem; /* Espacio entre LIs */
+       width: auto; /* Ancho automático */
+       text-align: left; /* Alinear texto a la izquierda por defecto */
+    }
+     .li-plantilla {
+         border-radius: 7%;
+         width: auto; /* Ancho automático */
+         border-bottom: none; /* Sin borde inferior */
+     }
+     .navbar-nav .nav-item.li-plantilla .nav-link {
+        padding: 0.5rem 1rem; /* Padding normal de desktop */
+        display: inline-block; /* Comportamiento normal */
+        width: auto;
+    }
+}
+
+
+/* === ESTILOS GENERALES DE SECCIONES === */
+.hero-section,
+.features-section,
+.join-section {
+    border-radius: 0.625rem;
+    text-align: center;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    font-family: "Rubik", sans-serif;
+}
+
+.first-title {
+    font-family: "Rubik Dirt", system-ui;
+}
+
+.section-title-div {
+    padding: 0;
+}
+
+.section-title-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-title {
+    color: var(--red);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+.hero-img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* === FOOTER === */
+footer {
+    margin-top: auto;
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.footer-top {
+    background-color: var(--red);
+    padding: 1.2rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.img-footer-partner {
+    max-height: 50px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(50%) brightness(1.1);
+    transition: filter 0.3s ease;
+}
+.img-footer-partner:hover {
+    filter: grayscale(0%) brightness(1);
+}
+
+.footer-bottom {
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+.social-icons a {
+    color: var(--yellow);
+    margin: 0 0.75rem;
+    font-size: 1.6rem;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.social-icons a:hover {
+    color: var(--red-light);
+    transform: scale(1.1);
+}
+
+.footer-bottom p {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: var(--silver);
+}
+
+/* === ESTILOS PÁGINA PILOTOS (.nosotros-section) === */
+.nosotros-section {
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+}
+
+.nosotros-section .section-title {
+    margin-bottom: 3rem;
+}
+
+.team-member {
+    border-bottom: 1px solid rgba(204, 204, 204, 0.3);
+    padding-bottom: 3rem;
+    margin-bottom: 3rem !important;
+}
+.team-member:last-child {
+    border-bottom: none;
+    margin-bottom: 0 !important;
+    padding-bottom: 0;
+}
+
+.member-visual {
+     text-align: center;
+}
+
+.member-photo {
+    max-width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 5px solid var(--red-light);
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto 1rem auto;
+    display: block;
+    background-color: var(--silver);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.member-photo:hover {
+    box-shadow: 0 0 15px 4px rgba(255, 7, 58, 0.6), /* --red-light */
+                0 0 25px 8px rgba(255, 215, 0, 0.5); /* --yellow */
+    transform: scale(1.05);
+}
+
+.member-name {
+    font-family: "Rubik", sans-serif;
+    font-weight: 600;
+    color: var(--yellow);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.member-info {
+    text-align: left;
+    color: var(--white);
+}
+
+.member-info p {
+    font-family: "Rubik", sans-serif;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+}
+.member-info p:last-child {
+    margin-bottom: 0;
+}
+
+.member-info ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-family: "Rubik", sans-serif;
+}
+
+.member-info li {
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+    position: relative;
+    padding-left: 1.5rem;
+}
+.member-info li::before {
+    content: "\27A4"; /* Flecha */
+    color: var(--red);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-size: 0.9em;
+}
+
+/* --- Media Query Pilotos (Móvil) --- */
+@media (max-width: 767.98px) {
+    .team-member {
+        text-align: center;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem !important;
+    }
+    .member-info {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-left: 0;
+    }
+    .member-photo {
+        max-width: 150px;
+        height: 150px;
+    }
+    .member-name {
+        font-size: 1.2rem;
+    }
+    .member-info ul {
+        padding-left: 0;
+        display: inline-block;
+        text-align: left;
+    }
+     .member-info li {
+        padding-left: 1.5rem;
+    }
+}
+
+/* === ESTILOS PÁGINA CALENDARIO (.calendario-section) === */
+.calendario-section {
+     padding-top: 3rem;
+     padding-bottom: 3rem;
+}
+
+.calendario-section .section-title {
+     font-family: "Rubik Dirt", system-ui;
+}
+
+.event-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+}
+
+.calendario-section .card {
+    background-color: #404040;
+    border: 1px solid var(--silver);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendario-section .card-img-top {
+    width: 100%;
+    aspect-ratio: 4 / 3; /* Proporción imagen */
+    object-fit: cover;
+}
+.calendario-section .card-body {
+     flex-grow: 1;
+}
+.calendario-section .card-footer {
+    background-color: #383838;
+    border-top: 1px solid var(--silver);
+    padding: 0.75rem 1rem;
+    margin-top: auto;
+}
+
+.competition-name {
+    color: var(--yellow);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.event-link:hover .card,
+.event-link:focus .card {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(213, 0, 0, 0.5);
+}
+.event-link:focus {
+    outline: none;
+}
+.event-link:focus .card {
+     outline: 3px solid var(--yellow);
+     outline-offset: 1px;
+}
+
+
+/* --- Media Query Calendario (Móvil) --- */
+@media (max-width: 767.98px) {
+    .calendario-section .section-title {
+        font-size: 2rem;
+    }
+}
+
+/* === ESTILOS PÁGINA INFORMACIÓN === */
+.content-box {
+    background-color: #444;
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: var(--white);
+}
+
+.content-box img.img-fluid {
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+
+.content-box h3, .content-box h4 {
+    color: var(--yellow);
+    font-family: "Rubik Dirt", system-ui;
+    margin-bottom: 1rem;
+}
+
+.content-box p {
+    font-family: "Rubik", sans-serif;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+.content-box p:last-child {
+    margin-bottom: 0;
+}
+.content-box ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.content-box li {
+     position: relative;
+     padding-left: 1.5rem;
+     margin-bottom: 0.7rem;
+     font-family: "Rubik", sans-serif;
+     line-height: 1.6;
+}
+.content-box li::before {
+    content: "\27A4"; /* Flecha */
+    color: var(--red);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 0.9em;
+}
+
+.content-box.text-center-content {
+    align-items: center;
+    text-align: center;
+}
+.content-box.text-center-content ul {
+    display: inline-block;
+    text-align: left;
+}
+
+/* --- Hack para height: 100% en columnas Bootstrap --- */
+.row > [class^="col-"] {
+    display: flex;
+    flex-direction: column;
+}
+.row > [class^="col-"] > .content-box {
+    flex-grow: 1;
+}
+
+/* --- Media Query para espaciado de content-box en móvil --- */
+@media (max-width: 767.98px) {
+    .row > [class^="col-"] {
+        margin-bottom: 1.5rem;
+    }
+    .row > [class^="col-"]:last-child {
+        margin-bottom: 0;
+    }
+}

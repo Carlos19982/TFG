@@ -1,34 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ZRT MOMO</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="/src/Style/app.css">
-    </head>
-
-    <body>
-        <!-- Barra de navegación --> 
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="../src/img/ZRTSINFONDO 1.svg" alt="Momo Tires Logo" class="img-fluid logo-header">
-                </a>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#">NOSOTROS</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">CALENDARIO</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">GALERÍA</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">ÚNETE</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Sección Hero -->
-        <section class="hero-section d-flex align-items-center">
+@extends('layout.plantilla')
+@section('title', 'Home')
+@section('content')
+<section class="hero-section d-flex align-items-center">
             <div class="section-title-div container">
                 <div class="row">
                     <div class="section-title-items col-lg-6">
@@ -37,10 +11,10 @@
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa accusantium perspiciatis laudantium pariatur. Reiciendis fugiat doloribus voluptate enim accusamus beatae delectus eius ullam, explicabo vitae, corrupti odit. Magnam, architecto iste?
                             Nobis eos molestias, error quo rerum, iure ex obcaecati dolores suscipit minus dignissimos. Laudantium quisquam blanditiis velit ad repellat neque expt.
                         </p>
-                        <img src="../src/img/LOGONACHOSINFONDO 1.svg" alt="Auto en pista" class="hero-img">
+                        <img src="{{ asset('img\LOGONACHOSINFONDO 1.svg') }}" alt="Momo Tires Logo " class="hero-img">
                     </div>
                     <div class="section-title-img col-lg-6">
-                        <img src="../src/img/coche 1.svg" alt="Momo Tires Logo" class="img-fluid">
+                        <img src="{{ asset('img\coche 1.svg') }}" alt="Auto en pista" class="img-fluid">
                     </div>
                 </div>
             </div>
@@ -97,31 +71,7 @@
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer>
-            <!-- Franja roja con imágenes -->
-            <div class="footer-top text-center">
-                <img src="../src/img/PatroMomo.svg" alt="MOMO Tires Logo" class="img-footer-partner">
-                <img src="../src/img/PatroillanDommarco.svg" alt="Logo Ilian Domi" class="img-footer-partner">
-                <img src="../src/img/PatroTheMechtCat.svg" alt="Logo The Mech Cat" class="img-footer-partner">
-            </div>
-            <!-- Footer negro -->
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="social-icons mb-3">
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-twitter"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                    </div>
-                    <p>© 2024 ZRT MOMO. Todos los derechos reservados.</p>
-                </div>
-            </div>
-        </footer>
 
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Iconos de Bootstrap -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
-    </body>
 
-</html>
+@endsection
+      
