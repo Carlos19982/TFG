@@ -41,13 +41,13 @@ class EventoPilotoResource extends Resource
                     ->relationship('piloto')
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->Nombre} {$record->Apellidos}")
                     ->searchable()
-                    // ->preload() // Eliminado para optimizar carga inicial
+                    ->preload()
                     ->required(),
                 Forms\Components\Select::make('evento_id')
                     ->label('Evento')
                     ->relationship('evento', 'Nombre')
                     ->searchable()
-                    // ->preload() // Eliminado para optimizar carga inicial
+                    ->preload()
                     ->required(),
                 Forms\Components\DatePicker::make('fecha_registro')
                     ->label('Fecha de Registro')
