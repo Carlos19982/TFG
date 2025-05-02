@@ -6,12 +6,14 @@ use App\Filament\Resources\PilotosResource\Pages;
 use App\Filament\Resources\PilotosResource\RelationManagers;
 use App\Models\Pilotos;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload; // Asegúrate de importar
 use Filament\Forms\Components\Section; // Para organizar el formulario
 use Filament\Forms\Components\Textarea; // Para la descripción
 use Filament\Forms\Components\TextInput; // Para campos de texto en filtros
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn; // Para mostrar imágenes
 use Filament\Tables\Columns\TextColumn; // Para las columnas de texto
 use Filament\Tables\Filters\Filter; // Para filtros personalizados
 use Filament\Tables\Table;
@@ -53,11 +55,12 @@ class PilotosResource extends Resource
                             ->maxLength(255)
                             ->rows(4)
                             ->columnSpanFull(),
-                        Forms\Components\FileUpload::make('foto_url')
-                            ->label('Foto del Piloto') // Etiqueta del campo
+                        FileUpload::make('Imagen') // Usar 'I' mayúscula
+                            ->label('Foto del Piloto')
                             ->image()
-                            ->directory('pilotos-fotos')
-                            ->avatar()
+                            ->directory('pilotos-fotos') // Directorio de almacenamiento
+                            ->imageEditor() // Opcional
+                            ->avatar() // Opcional
                             ->columnSpanFull(),
                     ]),
             ]);
@@ -80,6 +83,12 @@ class PilotosResource extends Resource
                     ->label('Apellidos') // Etiqueta de columna
                     ->searchable()
                     ->sortable(),
+                    
+                ImageColumn::make('Imagen')
+                    ->label('Imagen') // Etiqueta
+                    ->disk('public') // Especifica el disco donde buscar
+                    ->circular()
+                    ->height(60), // Ajusta el tamaño según necesites
 
                 TextColumn::make('Descripcion')
                     ->label('Descripción') // Etiqueta de columna
@@ -99,6 +108,7 @@ class PilotosResource extends Resource
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                // Columna para mostrar la imagen
             ])
             ->filters([
                 // --- Filtro por Nombre y Apellidos ---
