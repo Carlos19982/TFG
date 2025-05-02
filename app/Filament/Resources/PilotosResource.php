@@ -8,49 +8,58 @@ use App\Models\Pilotos;
 use Filament\Forms;
 use Filament\Forms\Components\Section; // Para organizar el formulario
 use Filament\Forms\Components\Textarea; // Para la descripción
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TextInput; // Para campos de texto en filtros
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn; // Para las columnas de texto
+use Filament\Tables\Filters\Filter; // Para filtros personalizados
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Arr; // Para el indicador del filtro
+
 
 class PilotosResource extends Resource
 {
     protected static ?string $model = Pilotos::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user'; // Icono más apropiado
+    protected static ?string $navigationIcon = 'heroicon-o-user'; // Icono
+
+    // --- Traducciones para el Modelo y Navegación ---
+    protected static ?string $modelLabel = 'Piloto'; // Nombre singular del modelo
+    protected static ?string $pluralModelLabel = 'Pilotos'; // Nombre plural del modelo
+    protected static ?string $navigationLabel = 'Gestionar Pilotos'; // Texto en la barra lateral
+    // protected static ?string $navigationGroup = 'Administración'; // Opcional: Grupo en la barra lateral
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Información Personal') // Agrupamos campos
-                    ->columns(2) // Distribuir en 2 columnas
+                Section::make('Información Personal') // Título de la sección
+                    ->columns(2)
                     ->schema([
                         TextInput::make('Nombre')
+                            ->label('Nombre') // Etiqueta del campo
                             ->required()
                             ->maxLength(40),
                         TextInput::make('Apellidos')
+                            ->label('Apellidos') // Etiqueta del campo
                             ->required()
                             ->maxLength(40),
-                        // Usar Textarea para la descripción
                         Textarea::make('Descripcion')
+                            ->label('Descripción') // Etiqueta del campo
                             ->required()
                             ->maxLength(255)
-                            ->rows(4) // Definir altura inicial
-                            ->columnSpanFull(), // Ocupar todo el ancho de la sección
-                        // Opcional: Campo para foto
-                        // Forms\Components\FileUpload::make('foto_url')
-                        //     ->label('Foto del Piloto')
-                        //     ->image()
-                        //     ->directory('pilotos-fotos') // Directorio de almacenamiento
-                        //     ->avatar() // Estilo avatar
-                        //     ->columnSpanFull(),
+                            ->rows(4)
+                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('foto_url')
+                            ->label('Foto del Piloto') // Etiqueta del campo
+                            ->image()
+                            ->directory('pilotos-fotos')
+                            ->avatar()
+                            ->columnSpanFull(),
                     ]),
-                // Puedes añadir más secciones aquí si el modelo crece
             ]);
     }
 
@@ -60,43 +69,77 @@ class PilotosResource extends Resource
             ->columns([
                 // Opcional: Mostrar imagen si la añades al form
                 // Tables\Columns\ImageColumn::make('foto_url')
-                //     ->label('Foto')
-                //     ->circular(), // Mostrar como círculo
+                //     ->label('Foto') // Etiqueta de columna
+                //     ->circular(),
 
                 TextColumn::make('Nombre')
+                    ->label('Nombre') // Etiqueta de columna
                     ->searchable()
-                    ->sortable(), // Habilitar ordenación
+                    ->sortable(),
                 TextColumn::make('Apellidos')
+                    ->label('Apellidos') // Etiqueta de columna
                     ->searchable()
-                    ->sortable(), // Habilitar ordenación
+                    ->sortable(),
 
                 TextColumn::make('Descripcion')
+                    ->label('Descripción') // Etiqueta de columna
                     ->searchable()
-                    ->limit(50) // Limitar caracteres mostrados en la tabla
-                    ->tooltip(fn (Pilotos $record): string => $record->Descripcion) // Mostrar completo al pasar el ratón
-                    // Alternativa: ->wrap() para que el texto continúe abajo
-                    ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
+                    ->limit(50)
+                    ->tooltip(fn(Pilotos $record): string => $record->Descripcion)
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('created_at')
-                    ->dateTime('d/m/Y H:i') // Formato más legible
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
-
-                TextColumn::make('updated_at')
+                    ->label('Fecha Creación') // Etiqueta de columna
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('updated_at')
+                    ->label('Última Actualización') // Etiqueta de columna
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                // Aquí podrías añadir filtros si fueran necesarios
-                // Por ejemplo, si tuvieras un campo 'activo' (boolean):
-                // Tables\Filters\TernaryFilter::make('activo')
+                // --- Filtro por Nombre y Apellidos ---
+                Filter::make('nombre_apellidos')
+                    ->label('Filtrar por Nombre/Apellidos') // Etiqueta del filtro
+                    ->form([
+                        TextInput::make('nombre_filtro')
+                            ->label('Nombre contiene'), // Etiqueta del campo de filtro
+                        TextInput::make('apellidos_filtro')
+                            ->label('Apellidos contiene'), // Etiqueta del campo de filtro
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            // Aplica filtro por nombre si se introdujo texto
+                            ->when(
+                                $data['nombre_filtro'],
+                                fn(Builder $query, $nombre): Builder => $query->where('Nombre', 'like', "%{$nombre}%")
+                            )
+                            // Aplica filtro por apellidos si se introdujo texto
+                            ->when(
+                                $data['apellidos_filtro'],
+                                fn(Builder $query, $apellidos): Builder => $query->where('Apellidos', 'like', "%{$apellidos}%")
+                            );
+                    })
+                    // Muestra qué filtros están activos
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['nombre_filtro'] ?? null) {
+                            $indicators['nombre_filtro'] = 'Nombre contiene "' . $data['nombre_filtro'] . '"';
+                        }
+                        if ($data['apellidos_filtro'] ?? null) {
+                            $indicators['apellidos_filtro'] = 'Apellidos contienen "' . $data['apellidos_filtro'] . '"';
+                        }
+                        return $indicators;
+                    }),
+
+                // Otros filtros que puedas necesitar...
             ])
             ->actions([
-                // Opcional: Acción para ver detalles
-                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(), // Añadir acción de borrar
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -108,10 +151,7 @@ class PilotosResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Aquí podrías añadir Relation Managers si quieres mostrar
-            // tablas relacionadas directamente en la página del piloto.
-            // Por ejemplo, los eventos en los que ha participado:
-            // RelationManagers\EventosRelationManager::class,
+            // RelationManagers...
         ];
     }
 
@@ -120,7 +160,6 @@ class PilotosResource extends Resource
         return [
             'index' => Pages\ListPilotos::route('/'),
             'create' => Pages\CreatePilotos::route('/create'),
-            // 'view' => Pages\ViewPiloto::route('/{record}'), // Añadir si usas ViewAction
             'edit' => Pages\EditPilotos::route('/{record}/edit'),
         ];
     }
