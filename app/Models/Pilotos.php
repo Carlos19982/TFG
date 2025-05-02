@@ -14,8 +14,8 @@ class Pilotos extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [
-        'nombre',
-        'apellidos',
+        'Nombre',
+        'Apellidos',
         'Descripcion'
     ];
 
@@ -23,7 +23,7 @@ class Pilotos extends Model
     {
         return $this->belongsToMany(
             Eventos::class,           // Modelo relacionado
-            'Piloto_Evento',         // Tabla pivote
+            'evento_piloto',         // Tabla pivote
             'piloto_id',             // Clave foránea de Piloto en tabla pivote
             'evento_id'              // Clave foránea de Evento en tabla pivote
         )->withPivot('id','FechaRegistro'); // Incluir campo extra de la tabla pivote

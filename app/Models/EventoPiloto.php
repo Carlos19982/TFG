@@ -25,14 +25,13 @@ class EventoPiloto extends Pivot
         'fecha_registro' => 'datetime',
     ];
 
-    // Puedes definir relaciones inversas desde el pivote si lo necesitas (opcional)
-    // public function piloto()
-    // {
-    //     return $this->belongsTo(Pilotos::class);
-    // }
+     public function piloto()
+     {
+         return $this->belongsTo(Pilotos::class);
+     }
 
-    // public function evento()
-    // {
-    //     return $this->belongsTo(Eventos::class);
-    // }
+     public function evento()
+     {
+         return $this->belongsTo(Eventos::class);
+     }
 }
