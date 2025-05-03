@@ -19,9 +19,6 @@ return new class extends Migration
             $table->foreignId('evento_id')->constrained('eventos')->onDelete('cascade');
             $table->timestamp('fecha_registro')->nullable(); // Tu campo extra
             $table->timestamps(); // created_at y updated_at (opcional)
-
-            // Opcional: Añadir un índice único para evitar duplicados
-            $table->unique(['piloto_id', 'evento_id']);
         });
     }
 
