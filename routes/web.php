@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\PilotController; 
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,6 +15,7 @@ Route::get('/calendario', function () {
 Route::get('/calendario/informacion', function () {
     return view('informacion');
 })->name('calendario.informacion');
+
 
 Route::get('/pilotos', function () {
     return view('pilotos');
