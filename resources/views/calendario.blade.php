@@ -19,8 +19,8 @@
         <div class="col-12 col-md-4">
           <a href="{{ route('calendario.informacion', ['id' => $evento->id]) }}" class="event-link" aria-label="Detalles {{ $evento->nombre }}">
             <div class="card h-100">
-              {{-- Muestra la URL de imagen preparada en el controlador --}}
-              <img src="{{  $evento->imagen ? Storage::url(path: $evento->imagen) : Storage::url('imagenes-defecto/evento-default.png') }}" class="card-img-top" alt="Imagen {{ $evento->nombre }}">
+              {{-- Muestra imagen (imagen1) o la imagen por defecto --}}
+              <img src="{{ $evento->imagen ? Storage::url(path: $evento->imagen) : Storage::url('imagenes-defecto/evento-default.png') }}" class="card-img-top" alt="Imagen {{ $evento->nombre }}">
               <div class="card-footer">
                 <p class="competition-name text-center mb-0">{{ $evento->nombre }}</p>
               </div>
@@ -36,6 +36,8 @@
         @endif
       @endforelse
 
-    </div> </div> </section>
+    </div>
+  </div>
+</section>
 
 @endsection
