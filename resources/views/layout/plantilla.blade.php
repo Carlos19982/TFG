@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> {{-- O lang="{{ str_replace('_', '-', app()->getLocale()) }}" para idioma de Laravel --}}
+<html lang="en"> 
 
 <head>
     <meta charset="UTF-8">
@@ -36,7 +36,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/pilotos') }}">PILOTOS</a></li>
-                    <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/calendario') }}">CALENDARIO</a></li>
+                    <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/calendario') }}">EVENTOS</a></li>
                     <li class="nav-item li-plantilla"><a class="nav-link" href="#">GALERÍA</a></li>
                     <li class="nav-item li-plantilla"><a class="nav-link" href="#">ÚNETE</a></li>
                 </ul>
