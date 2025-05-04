@@ -376,6 +376,18 @@ footer {
     font-size: 0.9em;
 }
 
+.pilot_event_link {
+    color: var(--red);          
+    text-decoration: none;     
+    /* Transición suave para el color y el subrayado */
+    transition: color 0.1s, text-decoration 0.3s ease;
+  }
+  
+  .pilot_event_link:hover {
+    color: var(--red-dark);
+    text-decoration: underline;
+  }
+
 /* --- Media Query Pilotos (Móvil) --- */
 @media (max-width: 767.98px) {
     .team-member {

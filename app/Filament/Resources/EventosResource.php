@@ -57,15 +57,14 @@ class EventosResource extends Resource
                             ->columnSpan(1), // Ocupa 1 columna
 
                         Textarea::make('descripcion')
-                            ->label('Descripción Principal (4:5)') // Etiqueta
+                            ->label('Descripción Principal') // Etiqueta
                             ->required()
                             ->maxLength(255)
                             ->rows(4)
                             ->columnSpanFull(), // Ocupa todo el ancho
 
                          Textarea::make('descripcion2') // Nuevo campo descripción 2
-                            ->label('Descripción Secundaria (16:9)') // Etiqueta
-                            // ->required() // Descomentar si es obligatorio
+                            ->label('Descripción Secundaria') // Etiqueta
                             ->maxLength(255)
                             ->rows(3)
                             ->columnSpanFull(),
@@ -77,7 +76,6 @@ class EventosResource extends Resource
                          // Campo para subir la imagen principal (4:5)
                          FileUpload::make('imagen')
                             ->label('Imagen Principal (4:5)') // Etiqueta
-                            ->required() // Si la imagen es obligatoria
                             ->image() // Especifica que es una imagen
                             ->directory('eventos-imagenes') // Directorio donde se guardarán
                             ->imageEditor()
@@ -87,9 +85,8 @@ class EventosResource extends Resource
                          // Campo para subir la imagen secundaria (16:9)
                          FileUpload::make('imagen2')
                             ->label('Imagen Secundaria (16:9)') // Etiqueta
-                            // ->required() // Descomentar si es obligatoria
                             ->image()
-                            ->directory('eventos-imagenes-secundarias') // Directorio diferente o el mismo?
+                            ->directory('eventos-imagenes') // Directorio diferente o el mismo?
                             ->imageEditor()
                             ->imageEditorAspectRatios(['16:9']) // Sugerir aspect ratio
                             ->columnSpan(1), // Ocupa 1 columna
