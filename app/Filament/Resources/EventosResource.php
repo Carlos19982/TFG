@@ -10,12 +10,15 @@ use Filament\Forms\Components\FileUpload; // Para subir imágenes
 use Filament\Forms\Components\Section;    // Para organizar el formulario
 use Filament\Forms\Components\Textarea;   // Para la descripción
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;     // Para el campo booleano
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;  // Para mostrar booleanos como iconos
 use Filament\Tables\Columns\ImageColumn; // Para mostrar imágenes
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;     // Para filtros personalizados
+use Filament\Tables\Filters\TernaryFilter; // Para filtros booleanos
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -37,30 +40,60 @@ class EventosResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Detalles del Evento') // Título de la sección
-                    ->columns(1) // Una columna por defecto para este layout
+                Section::make('Detalles Principales') // Título de la sección
+                    ->columns(2) // Dos columnas para distribuir mejor
                     ->schema([
                         TextInput::make('nombre')
                             ->label('Nombre del Evento') // Etiqueta
                             ->required()
-                            ->maxLength(40),
+                            ->maxLength(40)
+                            ->columnSpan(1), // Ocupa 1 columna
 
-                        // Campo para subir la imagen
-                        FileUpload::make('imagen')
-                            ->label('Imagen del Evento') // Etiqueta
-                            ->required() // Si la imagen es obligatoria
-                            ->image() // Especifica que es una imagen
-                            ->directory('eventos-imagenes') // Directorio donde se guardarán
-                            ->imageEditor() // Opcional: Habilita editor básico
-                            ->columnSpanFull(), // Ocupar todo el ancho
+                        // Campo booleano 'finalizado'
+                        Toggle::make('finalizado')
+                            ->label('Evento Finalizado') // Etiqueta
+                            ->default(false) // Valor por defecto
+                            ->required()
+                            ->columnSpan(1), // Ocupa 1 columna
 
                         Textarea::make('descripcion')
-                            ->label('Descripción') // Etiqueta
+                            ->label('Descripción Principal (4:5)') // Etiqueta
                             ->required()
                             ->maxLength(255)
                             ->rows(4)
+                            ->columnSpanFull(), // Ocupa todo el ancho
+
+                         Textarea::make('descripcion2') // Nuevo campo descripción 2
+                            ->label('Descripción Secundaria (16:9)') // Etiqueta
+                            // ->required() // Descomentar si es obligatorio
+                            ->maxLength(255)
+                            ->rows(3)
                             ->columnSpanFull(),
                     ]),
+
+                Section::make('Imágenes') // Sección separada para imágenes
+                    ->columns(2)
+                    ->schema([
+                         // Campo para subir la imagen principal (4:5)
+                         FileUpload::make('imagen')
+                            ->label('Imagen Principal (4:5)') // Etiqueta
+                            ->required() // Si la imagen es obligatoria
+                            ->image() // Especifica que es una imagen
+                            ->directory('eventos-imagenes') // Directorio donde se guardarán
+                            ->imageEditor()
+                            ->imageEditorAspectRatios(['4:5']) // Sugerir aspect ratio
+                            ->columnSpan(1), // Ocupa 1 columna
+
+                         // Campo para subir la imagen secundaria (16:9)
+                         FileUpload::make('imagen2')
+                            ->label('Imagen Secundaria (16:9)') // Etiqueta
+                            // ->required() // Descomentar si es obligatoria
+                            ->image()
+                            ->directory('eventos-imagenes-secundarias') // Directorio diferente o el mismo?
+                            ->imageEditor()
+                            ->imageEditorAspectRatios(['16:9']) // Sugerir aspect ratio
+                            ->columnSpan(1), // Ocupa 1 columna
+                    ])
             ]);
     }
 
@@ -68,22 +101,43 @@ class EventosResource extends Resource
     {
         return $table
             ->columns([
-                // Columna para mostrar la imagen
-                ImageColumn::make('imagen')
-                    ->label('Imagen') // Etiqueta
-                    ->square() // O ->circular()
-                    ->height(60), // Ajusta el tamaño según necesites
+                 // Columna para mostrar la imagen secundaria (16:9)
+                 ImageColumn::make('imagen2') // Mostrar imagen2
+                    ->label('Imagen (16:9)') // Etiqueta
+                    ->disk('public') // Especificar disco
+                    ->width(120) // Ajustar ancho (mantendrá proporción si height es null)
+                    ->height(null), // Dejar null para que calcule altura según ancho
 
                 TextColumn::make('nombre')
                     ->label('Nombre') // Etiqueta
                     ->searchable()
                     ->sortable(), // Habilitar ordenación
 
+                // Columna para mostrar el estado 'finalizado'
+                IconColumn::make('finalizado')
+                    ->label('Finalizado') // Etiqueta
+                    ->boolean() // Interpretar como booleano (true/false)
+                    ->sortable(), // Permite ordenar por este campo
+
+                // Columnas ocultas por defecto (puedes habilitarlas con el selector de columnas)
+                ImageColumn::make('imagen') // Imagen original (4:5)
+                    ->label('Imagen (4:5)')
+                    ->disk('public')
+                    ->square()->height(60)
+                    ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
+
                 TextColumn::make('descripcion')
-                    ->label('Descripción') // Etiqueta
+                    ->label('Desc. Principal')
                     ->searchable()
-                    ->limit(60) // Limitar caracteres
-                    ->tooltip(fn (Eventos $record): string => $record->descripcion) // Mostrar completo al pasar ratón
+                    ->limit(60)
+                    ->tooltip(fn (Eventos $record): string => $record->descripcion)
+                    ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
+
+                TextColumn::make('descripcion2') // Nueva descripción
+                    ->label('Desc. Secundaria')
+                    ->searchable()
+                    ->limit(60)
+                    ->tooltip(fn (Eventos $record): string => $record->descripcion2 ?? '') // Usar operador null coalescing
                     ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
 
                 TextColumn::make('created_at')
@@ -113,7 +167,6 @@ class EventosResource extends Resource
                                 fn (Builder $query, $nombre): Builder => $query->where('nombre', 'like', "%{$nombre}%")
                             );
                     })
-                    // Muestra qué filtro está activo
                     ->indicateUsing(function (array $data): array {
                         $indicators = [];
                         if ($data['nombre_filtro'] ?? null) {
@@ -121,9 +174,16 @@ class EventosResource extends Resource
                         }
                         return $indicators;
                     }),
+
+                 // --- Filtro para 'finalizado' ---
+                 TernaryFilter::make('finalizado')
+                    ->label('Estado Finalizado')
+                    ->boolean()
+                    ->trueLabel('Sí')
+                    ->falseLabel('No')
+                    ->placeholder('Todos'), // Opción para no filtrar
             ])
             ->actions([
-                // Tables\Actions\ViewAction::make()->label('Ver'), // Si tienes página View
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -137,8 +197,7 @@ class EventosResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Aquí podrías añadir Relation Managers, por ejemplo, para ver los pilotos inscritos:
-            // RelationManagers\PilotosRelationManager::class,
+            // RelationManagers...
         ];
     }
 
