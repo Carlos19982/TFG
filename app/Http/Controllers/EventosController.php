@@ -58,14 +58,7 @@ class EventosController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            $evento = Eventos::findOrFail($id);
-            return view('calendario.informacion', ['evento' => $evento]);
-
-        } catch (\Exception $e) {
-            Log::error('Error al cargar la información del evento: ' . $e->getMessage());
-            return view('calendario.informacion', ['error' => 'Ocurrió un error al cargar la información del evento.']);
-        }
+        //
     }
 
     /**
