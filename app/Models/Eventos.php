@@ -4,83 +4,87 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage; // Importa la fachada Storage
+use Illuminate\Database\Eloquent\Relations\BelongsToMany; // Asegúrate de importar BelongsToMany
+use Illuminate\Support\Facades\Storage;
 
 class Eventos extends Model
 {
     use HasFactory;
 
     /**
-     * El nombre de la tabla asociada con el modelo.
-     *
-     * Laravel infiere "eventos" de "Evento", pero puedes especificarlo si es diferente.
      * @var string
      */
-    // protected $table = 'eventos'; // Descomentar si tu tabla se llama diferente
+    // protected $table = 'eventos';
 
     /**
-     * Indica si el modelo debe tener timestamps (created_at, updated_at).
-     * Por defecto es true. Cámbialo a false si tu tabla NO tiene timestamps().
      * @var bool
      */
     // public $timestamps = true;
 
     /**
-     * Los atributos que se pueden asignar masivamente.
-     * Es una medida de seguridad para proteger contra asignaciones no deseadas.
-     *
      * @var array<int, string>
      */
     protected $fillable = [
         'nombre',
         'imagen',
         'descripcion',
-        'imagen2',
-        'descripcion2',
-        'finalizado'
+        'imagen2',         // Incluir los nuevos campos si son fillable
+        'descripcion2',    // Incluir los nuevos campos si son fillable
+        'finalizado',      // Incluir los nuevos campos si son fillable (si se asignan masivamente)
     ];
+
     /**
-     * The "booted" method of the model.
-     * Este método se ejecuta cuando el modelo se inicializa.
-     * Aquí podemos registrar los listeners de eventos del modelo.
-     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'finalizado' => 'boolean', // Asegúrate de castear el campo booleano
+    ];
+
+    /**
      * @return void
      */
     protected static function booted(): void
     {
-        // --- Listener para el evento 'deleting' (Borrar imagen al borrar registro) ---
         static::deleting(function (Eventos $evento) {
-            // Verifica si el modelo tiene un valor en el campo 'imagen'
             if ($evento->imagen) {
-                // Intenta borrar el archivo del disco de almacenamiento 'public'.
                 Storage::disk('public')->delete($evento->imagen);
             }
+             // Añadir limpieza para imagen2 si existe
+             if ($evento->imagen2) {
+                 Storage::disk('public')->delete($evento->imagen2);
+             }
         });
 
-        // --- Listener para el evento 'updating' (Borrar imagen antigua al actualizar) ---
         static::updating(function (Eventos $evento) {
-            // Verifica si el campo 'imagen' ha sido modificado en esta actualización
             if ($evento->isDirty('imagen')) {
-                // Obtiene la ruta de la imagen original (antes de la actualización)
                 $rutaImagenOriginal = $evento->getOriginal('imagen');
-
-                // Si había una imagen original, intenta borrarla
                 if ($rutaImagenOriginal) {
                     Storage::disk('public')->delete($rutaImagenOriginal);
                 }
             }
+             // Añadir limpieza para imagen2 si se modifica
+             if ($evento->isDirty('imagen2')) {
+                 $rutaImagenOriginal2 = $evento->getOriginal('imagen2');
+                 if ($rutaImagenOriginal2) {
+                     Storage::disk('public')->delete($rutaImagenOriginal2);
+                 }
+             }
         });
     }
 
     /**
-     * Los pilotos que participan en el evento.
-     * (Esta es la relación que definimos en la respuesta anterior)
+     * Los pilotos que participan en este evento.
      */
-    public function pilotos()
+    public function pilotos(): BelongsToMany
     {
-        return $this->belongsToMany(Pilotos::class, 'evento_piloto')
-                    ->using(EventoPiloto::class) // Asumiendo que creaste el modelo pivote EventoPiloto
-                    ->withPivot('id', 'fecha_registro')
-                    ->withTimestamps();
+        return $this->belongsToMany(
+                Pilotos::class,
+                'evento_piloto',
+                'evento_id',    // Clave de Eventos en tabla pivote
+                'piloto_id'     // Clave de Pilotos en tabla pivote
+            )
+            ->using(EventoPiloto::class)
+            ->withPivot('id', 'fecha_registro')
+            ->withTimestamps(); // Asume que la tabla pivote tiene timestamps
     }
 }

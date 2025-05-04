@@ -13,7 +13,8 @@ Route::get('/home', function () {
 
 Route::get('/calendario', [EventosController::class, 'index'])->name('calendario.index');
 
-Route::get('/calendario/informacion', [EventosController::class, 'show'])->name('calendario.informacion');
+Route::get('/calendario/informacion/{id}', [EventosController::class, 'mostrarDetalleEvento'])
+    ->name('calendario.informacion');
 
 Route::get('/pilotos-y-sus-eventos', [EventopilotoController::class, 'index'])->name('pilotos_eventos.index');
 

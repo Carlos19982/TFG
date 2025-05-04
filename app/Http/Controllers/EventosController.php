@@ -7,6 +7,7 @@ use App\Models\Eventos;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EventosController extends Controller
 {
@@ -26,6 +27,23 @@ class EventosController extends Controller
             return view('calendario', ['error' => 'Ocurrió un error al cargar los eventos.']);
         }
     }
+
+    public function mostrarDetalleEvento($id): View
+    {
+        try {
+            $evento = Eventos::with('pilotos')->findOrFail($id);
+
+            return view('informacion', ['evento' => $evento]);
+
+        } catch (ModelNotFoundException $e) {
+            abort(404, 'Evento no encontrado');
+
+        } catch (\Exception $e) {
+            Log::error("Error al cargar detalle evento ID {$id}: " . $e->getMessage() . "\n" . $e->getTraceAsString());
+            return view('informacion', ['error' => 'No se pudo cargar la información del evento. Por favor, inténtalo más tarde.']);
+        }
+    }
+
 
     /**
      * Store a newly created resource in storage.
