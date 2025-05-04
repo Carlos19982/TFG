@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\PilotosController; 
 use App\Http\Controllers\EventosController; 
+use App\Http\Controllers\EventopilotoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,7 +17,6 @@ Route::get('/calendario/informacion', function () {
     return view('informacion');
 })->name('calendario.informacion');
 
+Route::get('/pilotos-y-sus-eventos', [EventopilotoController::class, 'index'])->name('pilotos_eventos.index');
 
-Route::get('/pilotos', [PilotosController::class, 'index'])->name('pilotos.index'); {
-    return view('pilotos');
-};
+Route::get('/pilotos', [PilotosController::class, 'index'])->name('pilotos.index');
