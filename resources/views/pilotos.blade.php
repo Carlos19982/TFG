@@ -1,3 +1,5 @@
+{{-- resources/views/pilotos.blade.php --}}
+
 @extends('layout.plantilla')
 @section('title', 'Pilotos')
 @section('content')
@@ -14,47 +16,61 @@
   </div>
   @endif
 
-  {{-- Usamos @forelse para iterar y manejar el caso vacío fácilmente --}}
+  {{-- Itera sobre los pilotos o muestra mensaje si está vacío/error --}}
   @forelse($pilotos as $piloto)
-  {{-- Calcular si la fila es par para invertir el layout --}}
-  @php $isInverso = ($loop->iteration % 2 == 0); @endphp
+    {{-- Calcular si la fila es par para invertir el layout --}}
+    @php $isInverso = ($loop->iteration % 2 == 0); @endphp
 
-  {{-- Estructura de fila para un piloto --}}
-  <div class="team-member row align-items-center mb-5">
+    {{-- Estructura de fila para un piloto --}}
+    <div class="team-member row align-items-center mb-5">
 
-    {{-- Columna para Imagen y Nombre del Piloto --}}
-    <div class="col-md-3 text-center member-visual {{ $isInverso ? 'order-md-2' : '' }}">
-      <img
-        src="{{ $piloto->Imagen ? Storage::url($piloto->Imagen) : Storage::url('imagenes-defecto/Piloto.png') }}"
-        alt="Foto de {{ $piloto->Nombre }} {{ $piloto->Apellidos }}"
-        class="img-fluid member-photo mb-2" />
-      <div class="member-name">{{ $piloto->Nombre }} {{ $piloto->Apellidos }}</div>
+      {{-- Columna para Imagen y Nombre del Piloto  --}}
+      <div class="col-md-3 text-center member-visual {{ $isInverso ? 'order-md-2' : '' }}">
+        <img
+          
+          src="{{ $piloto->Imagen ? Storage::url($piloto->Imagen) : Storage::url('imagenes-defecto/Piloto.png') }}"
+          alt="Foto de {{ $piloto->Nombre }} {{ $piloto->Apellidos }}"
+          class="img-fluid member-photo mb-2" />
+        <div class="member-name">{{ $piloto->Nombre }} {{ $piloto->Apellidos }}</div>
+      </div>
+
+      {{-- Columna para Información del Piloto --}}
+      <div class="col-md-9 member-info d-flex flex-column {{ $isInverso ? 'order-md-1 align-items-md-end' : 'align-items-md-start' }} px-3">
+        <p>
+          {{-- Mostrar descripción  --}}
+          {{ $piloto->Descripcion ?? 'Información no disponible.' }}
+        </p>
+
+        {{-- *** INICIO: Mostrar Eventos Asociados *** --}}
+        <h5 class="mt-3">Eventos en los que participa:</h5>
+        @if ($piloto->eventos->isNotEmpty())
+            <ul>
+                @foreach ($piloto->eventos as $evento)
+                    <li>
+                        {{-- Envolvemos el nombre en un enlace 'a' --}}
+                        <a href="{{ route('calendario.informacion', ['id' => $evento->id]) }}">
+                            {{ $evento->nombre }}
+                        </a>
+                        
+                    </li>
+                @endforeach
+            </ul>
+        @else
+            <p>No participa en ningún evento.</p>
+        @endif
+        {{-- *** FIN: Mostrar Eventos Asociados *** --}}
+
+      </div>
+
     </div>
-
-    {{-- Columna para Información del Piloto --}}
-    <div class="col-md-9 member-info d-flex flex-column {{ $isInverso ? 'order-md-1 align-items-md-end' : 'align-items-md-start' }} px-3">
-      <p>
-        {{-- Mostrar descripción, con un texto por defecto si es null --}}
-        {{ $piloto->Descripcion ?? 'Información no disponible.' }}
-      </p>
-      {{-- Lista estática - Modificar si tienes datos dinámicos para esto --}}
-      <ul>
-        <li>Ejemplo 1</li>
-        <li>Ejemplo 2</li>
-        <li>Ejemplo 3</li>
-        <li>Ejemplo 4</li>
-      </ul>
-    </div>
-
-  </div>
-  {{-- Fin de la estructura para un piloto --}}
+    {{-- Fin de la estructura para un piloto --}}
 
   @empty {{-- Esto se ejecuta si $pilotos está vacío --}}
-  @if(!isset($error))
-  <div class="alert alert-info text-center" role="alert">
-    No hay pilotos registrados en este momento.
-  </div>
-  @endif
+    @if(!isset($error))
+    <div class="alert alert-info text-center" role="alert">
+      No hay pilotos registrados en este momento.
+    </div>
+    @endif
   @endforelse
 
 </section>

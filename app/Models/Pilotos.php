@@ -60,7 +60,7 @@ class Pilotos extends Model
             'evento_piloto',         // Tabla pivote
             'piloto_id',             // Clave foránea de Piloto en tabla pivote
             'evento_id'              // Clave foránea de Evento en tabla pivote
-        )->withPivot('id','FechaRegistro'); // Incluir campo extra de la tabla pivote
+        )->withPivot('id','fecha_registro'); // Incluir campo extra de la tabla pivote
            
     }
 }
