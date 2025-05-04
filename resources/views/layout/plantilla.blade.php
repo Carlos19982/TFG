@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -20,7 +20,8 @@
 <body>
 
     {{-- Barra de Navegación --}}
-    <nav class="navbar navbar-expand-lg"> {{-- Considera añadir una clase de fondo como 'navbar-light bg-light' o 'navbar-dark bg-dark' si es necesario --}}
+    <nav class="navbar navbar-expand-lg">
+        {{-- Considera añadir una clase de fondo como 'navbar-light bg-light' o 'navbar-dark bg-dark' si es necesario --}}
         <div class="container">
             {{-- Brand/Logo --}}
             <a class="navbar-brand" href="{{ url('/home') }}">
@@ -28,7 +29,8 @@
             </a>
 
             {{-- Botón Toggler para Móviles (AHORA DENTRO de NAV y CONTAINER) --}}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -36,7 +38,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/pilotos') }}">PILOTOS</a></li>
-                    <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/calendario') }}">EVENTOS</a></li>
+                    <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/calendario') }}">EVENTOS</a>
+                    </li>
                     <li class="nav-item li-plantilla"><a class="nav-link" href="#">GALERÍA</a></li>
                     <li class="nav-item li-plantilla"><a class="nav-link" href="#">ÚNETE</a></li>
                 </ul>
