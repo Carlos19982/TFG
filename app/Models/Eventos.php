@@ -35,6 +35,9 @@ class Eventos extends Model
         'nombre',
         'imagen',
         'descripcion',
+        'imagen2',
+        'descripcion2',
+        'finalizado'
     ];
     /**
      * The "booted" method of the model.
