@@ -52,15 +52,16 @@ class Pilotos extends Model
             }
         });
     }
-
-    public function eventos(): BelongsToMany
+    public function eventos(): BelongsToMany // Especifica el tipo de retorno
     {
         return $this->belongsToMany(
-            Eventos::class,           // Modelo relacionado
-            'evento_piloto',         // Tabla pivote
-            'piloto_id',             // Clave foránea de Piloto en tabla pivote
-            'evento_id'              // Clave foránea de Evento en tabla pivote
-        )->withPivot('id','fecha_registro'); // Incluir campo extra de la tabla pivote
-           
+                Eventos::class,           // Modelo relacionado
+                'evento_piloto',         // Tabla pivote
+                'piloto_id',             // Clave foránea de Pilotos en tabla pivote (¡ESTA ES LA CLAVE!)
+                'evento_id'              // Clave foránea de Eventos en tabla pivote
+            )
+            ->using(EventoPiloto::class) // Si usas modelo Pivote personalizado
+            ->withPivot('id', 'fecha_registro') // Campos extra de la tabla pivote
+            ->withTimestamps(); // Si la tabla pivote tiene timestamps
     }
 }
