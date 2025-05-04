@@ -48,7 +48,7 @@
                 @foreach ($piloto->eventos as $evento)
                     <li>
                         {{-- Envolvemos el nombre en un enlace 'a' --}}
-                        <a href="{{ route('calendario.informacion', ['id' => $evento->id]) }}">
+                        <a class="pilot_event_link" href="{{ route('calendario.informacion', ['id' => $evento->id]) }}">
                             {{ $evento->nombre }}
                         </a>
                         

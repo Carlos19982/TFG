@@ -57,14 +57,14 @@ class EventosResource extends Resource
                             ->columnSpan(1), // Ocupa 1 columna
 
                         Textarea::make('descripcion')
-                            ->label('Descripción Principal (4:5)') // Etiqueta
+                            ->label('Descripción Principal') // Etiqueta
                             ->required()
                             ->maxLength(255)
                             ->rows(4)
                             ->columnSpanFull(), // Ocupa todo el ancho
 
                          Textarea::make('descripcion2') // Nuevo campo descripción 2
-                            ->label('Descripción Secundaria (16:9)') // Etiqueta
+                            ->label('Descripción Secundaria') // Etiqueta
                             // ->required() // Descomentar si es obligatorio
                             ->maxLength(255)
                             ->rows(3)
