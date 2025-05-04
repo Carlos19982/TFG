@@ -15,4 +15,3 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('/pilots', [PilotosController::class, 'index']);

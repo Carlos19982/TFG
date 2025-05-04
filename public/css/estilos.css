@@ -435,7 +435,7 @@ footer {
 
 .calendario-section .card-img-top {
     width: 100%;
-    aspect-ratio: 4 / 3; /* Proporción imagen */
+    aspect-ratio: 4 / 5; /* Proporción imagen */
     object-fit: cover;
 }
 .calendario-section .card-body {
