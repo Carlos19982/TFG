@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="content-box">
+            <div class="content-box text-break">
                 <h3 class="first-title mb-3" style="color: var(--red);">Información Relevante</h3>
 
                 <p>
