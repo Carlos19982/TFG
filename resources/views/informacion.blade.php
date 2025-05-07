@@ -27,7 +27,7 @@
                 <img src="{{ $imageUrl }}" alt="Imagen de {{ $evento->nombre }}" class="img-fluid rounded mb-3"
                     style="max-height: 400px; object-fit: cover;" />
 
-                <h2 class="first-title mt-3" style="color: var(--yellow);">
+                <h2 class="first-title mt-3 text-break" style="color: var(--yellow);">
                     {{ $evento->nombre }}
                 </h2>
             </div>

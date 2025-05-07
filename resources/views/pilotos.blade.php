@@ -28,13 +28,13 @@
         <div class="col-md-3 text-center member-visual {{ $isInverso ? 'order-md-2' : '' }}">
             <img src="{{ $piloto->Imagen ? Storage::url($piloto->Imagen) : Storage::url('imagenes-defecto/Piloto.png') }}"
                 alt="Foto de {{ $piloto->Nombre }} {{ $piloto->Apellidos }}" class="img-fluid member-photo mb-2" />
-            <div class="member-name">{{ $piloto->Nombre }} {{ $piloto->Apellidos }}</div>
+            <div class="member-name text-break">{{ $piloto->Nombre }} {{ $piloto->Apellidos }}</div>
         </div>
 
         {{-- Columna para Información del Piloto --}}
         <div
             class="col-md-9 member-info d-flex flex-column {{ $isInverso ? 'order-md-1 align-items-md-end' : 'align-items-md-start' }} px-3">
-            <p>
+            <p class="text-break">
                 {{-- Mostrar descripción --}}
                 {{ $piloto->Descripcion ?? 'Información no disponible.' }}
             </p>

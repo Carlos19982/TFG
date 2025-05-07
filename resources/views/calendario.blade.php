@@ -22,7 +22,7 @@
                     <div class="card h-100">
                         {{-- Muestra imagen (imagen1) o la imagen por defecto --}}
                         <img src="{{ $evento->imagen ? Storage::url(path: $evento->imagen) : Storage::url('imagenes-defecto/evento-default.png') }}"
-                            class="card-img-top" alt="Imagen {{ $evento->nombre }}">
+                            class="card-img-top" alt="Imagen {{ $evento->nombre }}" style="filter: grayscale({{ $evento->finalizado ? 1 : 0 }});">
                         <div class="card-footer">
                             <p class="competition-name text-center mb-0">{{ $evento->nombre }}</p>
                         </div>
