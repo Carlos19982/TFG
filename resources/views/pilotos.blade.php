@@ -77,7 +77,7 @@
     @endforelse
             {{-- *** INICIO: ENLACES DE PAGINACIÓN *** --}}
             @if ($pilotos->hasPages()) {{-- Solo muestra la paginación si hay más de una página --}}
-        <div class="mt-5 d-flex justify-content-center">
+        <div class="mt-5 d-flex justify-content-end">
             {{ $pilotos->links() }} {{-- Esto renderiza los enlaces de paginación --}}
         </div>
         @endif

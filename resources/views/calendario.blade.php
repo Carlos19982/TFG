@@ -42,7 +42,7 @@
 
         {{-- *** INICIO: ENLACES DE PAGINACIÓN *** --}}
         @if ($eventos->hasPages()) {{-- Solo muestra la paginación si hay más de una página --}}
-        <div class="mt-5 d-flex justify-content-center">
+        <div class="mt-5 d-flex justify-content-end">
             {{ $eventos->links() }} {{-- Esto renderiza los enlaces de paginación --}}
         </div>
         @endif
