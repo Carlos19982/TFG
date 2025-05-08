@@ -36,7 +36,7 @@
                     <section class="pilot-info-section pilot-about-section">
                         {{-- CAMBIO AQUÍ: Título dinámico --}}
                         <h2 class="pilot-section-title">Sobre {{ $piloto->Nombre }}</h2> 
-                        <div class="pilot-about-content">
+                        <div class="pilot-about-content text-break">
                             <p>{!! nl2br(e($piloto->Descripcion)) !!}</p>
                         </div>
                         <p class="pilot-join-date">

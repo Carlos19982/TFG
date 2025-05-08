@@ -24,7 +24,7 @@ class PilotosController extends Controller
                     $query->select('eventos.id', 'eventos.nombre');
                 }])
                 ->select('pilotos.id', 'pilotos.Nombre', 'pilotos.Apellidos', 'pilotos.Descripcion', 'pilotos.Imagen')
-                ->get();
+                ->paginate(15);
 
             return view('pilotos', ['pilotos' => $pilotos]);
 
