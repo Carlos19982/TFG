@@ -19,3 +19,5 @@ Route::get('/calendario/informacion/{id}', [EventosController::class, 'mostrarDe
 Route::get('/pilotos-y-sus-eventos', [EventopilotoController::class, 'index'])->name('pilotos_eventos.index');
 
 Route::get('/pilotos', [PilotosController::class, 'index'])->name('pilotos.index');
+
+Route::get('/pilotos/{id}', [PilotosController::class, 'show'])->name('pilotos.show');

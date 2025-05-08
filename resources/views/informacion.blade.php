@@ -35,7 +35,10 @@
                 <ul>
                     @foreach ($evento->pilotos as $piloto)
                     <li>
-                        {{ $piloto->Nombre }} {{ $piloto->Apellidos }}
+                        {{-- Nombre del piloto ahora es un enlace a su ficha personal --}}
+                        <a href="{{ route('pilotos.show', ['id' => $piloto->id]) }}" class="pilot_event_link"> {{-- Puedes usar la clase pilot_event_link o crear una nueva si quieres un estilo diferente --}}
+                            {{ $piloto->Nombre }} {{ $piloto->Apellidos }}
+                        </a>
                     </li>
                     @endforeach
                 </ul>
@@ -43,7 +46,6 @@
                 <p>No hay pilotos registrados para este evento.</p>
                 @endif
 
-                {{-- Mostrar Descripción 2 si existe --}}
                 @if($evento->descripcion2)
                 <h5 class="mt-4">Más Detalles:</h5>
                 <p>

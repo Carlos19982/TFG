@@ -25,9 +25,14 @@
     <div class="team-member row align-items-center mb-5">
 
         {{-- Columna para Imagen y Nombre del Piloto --}}
+        {{-- Columna para Imagen y Nombre del Piloto --}}
         <div class="col-md-3 text-center member-visual {{ $isInverso ? 'order-md-2' : '' }}">
-            <img src="{{ $piloto->Imagen ? Storage::url($piloto->Imagen) : Storage::url('imagenes-defecto/Piloto.png') }}"
-                alt="Foto de {{ $piloto->Nombre }} {{ $piloto->Apellidos }}" class="img-fluid member-photo mb-2" />
+            {{-- Envolvemos la imagen en una etiqueta <a> --}}
+            <a href="{{ route('pilotos.show', ['id' => $piloto->id]) }}">
+                <img src="{{ $piloto->Imagen ? Storage::url($piloto->Imagen) : Storage::url('imagenes-defecto/Piloto.png') }}"
+                    alt="Foto de {{ $piloto->Nombre }} {{ $piloto->Apellidos }}" class="img-fluid member-photo mb-2" />
+            </a>
+            {{-- El nombre también podría ser un enlace si lo deseas, o mantenerse como está --}}
             <div class="member-name text-break">{{ $piloto->Nombre }} {{ $piloto->Apellidos }}</div>
         </div>
 
