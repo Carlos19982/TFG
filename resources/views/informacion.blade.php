@@ -15,13 +15,10 @@
             <div class="text-center">
 
                 @php
-                // --- Generación de URL de Imagen (Usando imagen2) ---
-                $defaultImage = 'imagenes-defecto/evento-default.png'; // Ruta relativa a public del storage
-
-                // Comprueba si el campo 'imagen2' tiene valor Y si el archivo existe en disco 'public'.
+                $defaultImage = 'imagenes-defecto/evento-default.png';
                 $imageUrl = ($evento->imagen2 && Storage::disk('public')->exists($evento->imagen2))
-                ? Storage::disk('public')->url($evento->imagen2) // Usa imagen2 si existe
-                : Storage::disk('public')->url($defaultImage); // Si no, usa la imagen por defecto
+                ? Storage::disk('public')->url($evento->imagen2)
+                : Storage::disk('public')->url($defaultImage);
                 @endphp
 
                 <img src="{{ $imageUrl }}" alt="Imagen de {{ $evento->nombre }}" class="img-fluid rounded mb-3"
@@ -46,7 +43,10 @@
                 <ul>
                     @foreach ($evento->pilotos as $piloto)
                     <li>
-                        {{ $piloto->Nombre }} {{ $piloto->Apellidos }}
+                        {{-- Nombre del piloto ahora es un enlace a su ficha personal --}}
+                        <a href="{{ route('pilotos.show', ['id' => $piloto->id]) }}" class="pilot_event_link"> {{-- Puedes usar la clase pilot_event_link o crear una nueva si quieres un estilo diferente --}}
+                            {{ $piloto->Nombre }} {{ $piloto->Apellidos }}
+                        </a>
                     </li>
                     @endforeach
                 </ul>
@@ -54,7 +54,6 @@
                 <p>No hay pilotos registrados para este evento.</p>
                 @endif
 
-                {{-- Mostrar Descripción 2 si existe --}}
                 @if($evento->descripcion2)
                 <h5 class="mt-4">Más Detalles:</h5>
                 <p>

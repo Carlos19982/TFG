@@ -568,3 +568,166 @@ footer {
         margin-bottom: 0;
     }
 }
+
+/* === ESTILOS PÁGINA INFORMACIÓN PILOTO DETALLE === */
+
+.pilot-detail-header {
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.pilot-detail-image {
+    width: 350px; /* CAMBIADO: Tamaño aumentado */
+    height: 350px; /* CAMBIADO: Tamaño aumentado */
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+    background-color: var(--silver);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.pilot-detail-name {
+    font-family: "Rubik", sans-serif;
+    font-weight: 600;
+    color: var(--yellow);
+    font-size: 2.4rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.pilot-detail-quote {
+    font-family: "Rubik", sans-serif;
+    font-style: italic;
+    color: var(--white);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+
+.section-separator {
+    border: 0;
+    border-top: 1px solid rgba(204, 204, 204, 0.25);
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.pilot-info-section {
+    margin-top: 0; 
+}
+
+.pilot-section-title {
+    font-family: "Rubik Dirt", system-ui;
+    color: var(--red);
+    font-size: 1.9rem;
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+
+.pilot-about-content p {
+    font-family: "Rubik", sans-serif;
+    color: var(--silver);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    text-align: left;
+    white-space: pre-line;
+}
+.pilot-about-content p:last-child {
+    margin-bottom: 0;
+}
+
+.pilot-join-date {
+    font-family: "Rubik", sans-serif;
+    color: var(--silver);
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+.pilot-join-date .icon-calendar {
+    margin-right: 8px;
+    line-height: 1;
+}
+
+/* Eventos del Piloto */
+.events-list {
+    margin-top: 0.5rem;
+}
+.event-card {
+    background-color: #f8f5f0;
+    color: var(--black);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+.event-card-info {
+    flex-grow: 1;
+    margin-right: 1rem;
+}
+.event-card .event-name {
+    font-family: "Rubik", sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--black);
+    margin-bottom: 0; 
+}
+.event-card-action {
+    flex-shrink: 0;
+}
+.btn-view-event {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: "Rubik", sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+.btn-view-event:hover,
+.btn-view-event:focus {
+    background-color: var(--red);
+    color: var(--white);
+    text-decoration: none;
+    outline: none;
+    transform: scale(1.03);
+}
+
+@media (max-width: 576px) {
+    .event-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .event-card-info {
+        margin-right: 0;
+        margin-bottom: 0.85rem;
+        width: 100%;
+    }
+    .event-card-action {
+        width: 100%;
+    }
+    .btn-view-event {
+        display: block;
+        text-align: center;
+    }
+}
