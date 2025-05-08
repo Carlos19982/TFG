@@ -1,6 +1,6 @@
 @extends('layout.plantilla')
 
-@section('title', isset($evento) ? 'Información: ' . $evento->nombre : 'Información')
+@section('title', isset($evento) ? $evento->nombre : 'Información')
 
 @section('content')
 <div class="container my-5">

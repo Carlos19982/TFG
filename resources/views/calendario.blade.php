@@ -21,8 +21,8 @@
                     aria-label="Detalles {{ $evento->nombre }}">
                     <div class="card h-100">
                         {{-- Muestra imagen (imagen1) o la imagen por defecto --}}
-                        <img src="{{    $evento->imagen ? Storage::url($evento->imagen) : Storage::url('eventos-imagenes/eventoBase(4-5).png') }}"
-                            class="card-img-top" alt="Portada del evento" style="filter: grayscale({{ $evento->finalizado ? 1 : 0 }});">
+                        <img src="{{ $evento->imagen ? Storage::url($evento->imagen) : Storage::url('eventos-imagenes/eventoBase(4-5).png') }}"
+                            class="card-img-top" alt="Portada del evento {{ $evento->nombre }}" style="filter: grayscale({{ $evento->finalizado ? 1 : 0 }});">
                         <div class="card-footer">
                             <p class="competition-name text-center mb-0">{{ $evento->nombre }}</p>
                         </div>
@@ -39,6 +39,15 @@
             @endforelse
 
         </div>
+
+        {{-- *** INICIO: ENLACES DE PAGINACIÓN *** --}}
+        @if ($eventos->hasPages()) {{-- Solo muestra la paginación si hay más de una página --}}
+        <div class="mt-5 d-flex justify-content-center">
+            {{ $eventos->links() }} {{-- Esto renderiza los enlaces de paginación --}}
+        </div>
+        @endif
+        {{-- *** FIN: ENLACES DE PAGINACIÓN *** --}}
+
     </div>
 </section>
 
