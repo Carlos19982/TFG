@@ -18,7 +18,7 @@ class EventosController extends Controller
     {
         try {
             // Obtener eventos (seleccionando campos necesarios)
-            $eventos = Eventos::orderBy('finalizado', 'asc')->get();
+            $eventos = Eventos::orderBy('finalizado', 'asc')->paginate(12);
             
             // Pasar la colección de eventos a la vista 'calendario'
             return view('calendario', ['eventos' => $eventos]);
