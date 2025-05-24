@@ -14,15 +14,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            pilotoSeeder::class,
-            eventoSeeder::class,
-            evento_pilotoSeeder::class,
-        ]);
-        // User::factory(10)->create();
+                // Primero los datos base
+            BaseEventSeeder::class,      // Nuevo
+            SeasonSeeder::class,         // Nuevo
+            PilotoSeeder::class,         // Ya existía (pilotoSeeder)
+            EventoSeeder::class,         // Ya existía (eventoSeeder, ahora crea instancias)
 
-/*         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]); */
+                // Luego las relaciones y datos dependientes
+            evento_pilotoSeeder::class,   // Ya existía (evento_pilotoSeeder)
+            GalleryImageSeeder::class,   // Nuevo
+        ]);
+
+        // User::factory(10)->create();
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
     }
 }

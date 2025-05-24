@@ -5,91 +5,143 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EventosResource\Pages;
 use App\Filament\Resources\EventosResource\RelationManagers;
 use App\Models\Eventos;
+use App\Models\BaseEvent; // Importar modelo BaseEvent
+use App\Models\Season;   // Importar modelo Season
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload; // Para subir imágenes
-use Filament\Forms\Components\Section;    // Para organizar el formulario
-use Filament\Forms\Components\Textarea;   // Para la descripción
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select; // Para los nuevos selects
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;     // Para el campo booleano
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get; // <--- IMPORTANTE: Para usar en closures de reactividad
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;  // Para mostrar booleanos como iconos
-use Filament\Tables\Columns\ImageColumn; // Para mostrar imágenes
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;     // Para filtros personalizados
-use Filament\Tables\Filters\TernaryFilter; // Para filtros booleanos
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter; // Para los nuevos filtros
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Arr;             // Para el indicador del filtro
+use Illuminate\Support\Arr;
 
 class EventosResource extends Resource
 {
     protected static ?string $model = Eventos::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-calendar-days'; // Icono más apropiado
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
-    // --- Traducciones para el Modelo y Navegación ---
-    protected static ?string $modelLabel = 'Evento'; // Nombre singular del modelo
-    protected static ?string $pluralModelLabel = 'Eventos'; // Nombre plural del modelo
-    protected static ?string $navigationLabel = 'Gestionar Eventos'; // Texto en la barra lateral
-    // protected static ?string $navigationGroup = 'Administración'; // Opcional: Grupo en la barra lateral
+    protected static ?string $modelLabel = 'Instancia de Evento';
+    protected static ?string $pluralModelLabel = 'Instancias de Eventos';
+    protected static ?string $navigationLabel = 'Gestionar Instancias de Eventos';
+    // protected static ?string $navigationGroup = 'Eventos y Galerías';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Detalles Principales') // Título de la sección
-                    ->columns(2) // Dos columnas para distribuir mejor
+                Section::make('Categorización del Evento')
+                    ->columns(2)
+                    ->schema([
+                        Select::make('base_event_id')
+                            ->label('Tipo de Evento Base')
+                            ->relationship('baseEvent', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->live() // <-- AÑADIDO: Hace que este campo sea reactivo
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('Nombre del Evento Base')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->unique('base_events', 'name'),
+                            ])
+                            ->createOptionAction(function (Forms\Components\Actions\Action $action) {
+                                return $action
+                                    ->modalHeading('Crear Nuevo Tipo de Evento Base')
+                                    ->modalButton('Crear Evento Base')
+                                    ->modalWidth('md');
+                            }),
+
+                        Select::make('season_id')
+                            ->label('Temporada')
+                            ->relationship('season', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            // --- MODIFICACIÓN AQUÍ ---
+                            // Deshabilita este campo si 'base_event_id' no está seleccionado
+                            ->disabled(fn (Get $get): bool => $get('base_event_id') === null)
+                            // Opcional: Ocultar en lugar de deshabilitar
+                            // ->hidden(fn (Get $get): bool => $get('base_event_id') === null)
+                            ->helperText(fn (Get $get): string => $get('base_event_id') === null ? 'Primero debes seleccionar un Tipo de Evento Base.' : '')
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('Nombre de la Temporada (ej. 2025 - Edición 1)')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->unique('seasons', 'name'),
+                            ])
+                            ->createOptionAction(function (Forms\Components\Actions\Action $action) {
+                                return $action
+                                    ->modalHeading('Crear Nueva Temporada')
+                                    ->modalButton('Crear Temporada')
+                                    ->modalWidth('md');
+                            }),
+                    ]),
+
+                Section::make('Detalles de la Instancia del Evento')
+                    ->columns(2)
                     ->schema([
                         TextInput::make('nombre')
-                            ->label('Nombre del Evento') // Etiqueta
+                            ->label('Nombre Descriptivo de la Instancia')
+                            ->helperText('Ej: GP España 2025 - Carrera Principal. Se puede generar o personalizar.')
                             ->required()
-                            ->maxLength(40)
-                            ->columnSpan(1), // Ocupa 1 columna
+                            ->maxLength(255)
+                            ->columnSpanFull(),
 
-                        // Campo booleano 'finalizado'
                         Toggle::make('finalizado')
-                            ->label('Evento Finalizado') // Etiqueta
-                            ->default(false) // Valor por defecto
-                            ->required()
-                            ->columnSpan(1), // Ocupa 1 columna
+                            ->label('Evento Finalizado')
+                            ->default(false)
+                            ->required(),
 
                         Textarea::make('descripcion')
-                            ->label('Descripción Principal') // Etiqueta
+                            ->label('Descripción Principal (para imagen 4:5)')
                             ->required()
                             ->maxLength(255)
                             ->rows(4)
-                            ->columnSpanFull(), // Ocupa todo el ancho
+                            ->columnSpanFull(),
 
-                         Textarea::make('descripcion2') // Nuevo campo descripción 2
-                            ->label('Descripción Secundaria') // Etiqueta
+                         Textarea::make('descripcion2')
+                            ->label('Descripción Secundaria (para imagen 16:9)')
                             ->maxLength(255)
                             ->rows(3)
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Imágenes') // Sección separada para imágenes
+                Section::make('Imágenes de la Instancia')
                     ->columns(2)
                     ->schema([
-                         // Campo para subir la imagen principal (4:5)
                          FileUpload::make('imagen')
-                            ->label('Imagen Principal (4:5)') // Etiqueta
-                            ->image() // Especifica que es una imagen
-                            ->directory('eventos-imagenes') // Directorio donde se guardarán
-                            ->imageEditor()
-                            ->imageEditorAspectRatios(['4:5']) // Sugerir aspect ratio
-                            ->columnSpan(1), // Ocupa 1 columna
-
-                         // Campo para subir la imagen secundaria (16:9)
-                         FileUpload::make('imagen2')
-                            ->label('Imagen Secundaria (16:9)') // Etiqueta
+                            ->label('Imagen Principal (4:5)')
                             ->image()
-                            ->directory('eventos-imagenes') // Directorio diferente o el mismo?
+                            ->directory('eventos-imagenes')
                             ->imageEditor()
-                            ->imageEditorAspectRatios(['16:9']) // Sugerir aspect ratio
-                            ->columnSpan(1), // Ocupa 1 columna
+                            ->imageEditorAspectRatios(['4:5'])
+                            ->columnSpan(1),
+
+                         FileUpload::make('imagen2')
+                            ->label('Imagen Secundaria (16:9)')
+                            ->image()
+                            ->directory('eventos-imagenes-secundarias')
+                            ->imageEditor()
+                            ->imageEditorAspectRatios(['16:9'])
+                            ->columnSpan(1),
                     ])
             ]);
     }
@@ -98,64 +150,41 @@ class EventosResource extends Resource
     {
         return $table
             ->columns([
-                 // Columna para mostrar la imagen secundaria (16:9)
-                 ImageColumn::make('imagen2') // Mostrar imagen2
-                    ->label('Imagen (16:9)') // Etiqueta
-                    ->disk('public') // Especificar disco
-                    ->width(120) // Ajustar ancho (mantendrá proporción si height es null)
-                    ->height(null), // Dejar null para que calcule altura según ancho
-
-                TextColumn::make('nombre')
-                    ->label('Nombre') // Etiqueta
-                    ->searchable()
-                    ->sortable(), // Habilitar ordenación
-
-                // Columna para mostrar el estado 'finalizado'
-                IconColumn::make('finalizado')
-                    ->label('Finalizado') // Etiqueta
-                    ->boolean() // Interpretar como booleano (true/false)
-                    ->sortable(), // Permite ordenar por este campo
-
-                // Columnas ocultas por defecto (puedes habilitarlas con el selector de columnas)
-                ImageColumn::make('imagen') // Imagen original (4:5)
-                    ->label('Imagen (4:5)')
+                ImageColumn::make('imagen2')
+                    ->label('Imagen (16:9)')
                     ->disk('public')
-                    ->square()->height(60)
-                    ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
-
-                TextColumn::make('descripcion')
-                    ->label('Desc. Principal')
+                    ->width(120)
+                    ->height(null),
+                TextColumn::make('nombre')
+                    ->label('Nombre Instancia')
                     ->searchable()
-                    ->limit(60)
-                    ->tooltip(fn (Eventos $record): string => $record->descripcion)
-                    ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
-
-                TextColumn::make('descripcion2') // Nueva descripción
-                    ->label('Desc. Secundaria')
+                    ->sortable(),
+                TextColumn::make('baseEvent.name')
+                    ->label('Tipo de Evento')
                     ->searchable()
-                    ->limit(60)
-                    ->tooltip(fn (Eventos $record): string => $record->descripcion2 ?? '') // Usar operador null coalescing
-                    ->toggleable(isToggledHiddenByDefault: true), // Oculta por defecto
-
-                TextColumn::make('created_at')
-                    ->label('Fecha Creación') // Etiqueta
-                    ->dateTime('d/m/Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
-                    ->label('Última Actualización') // Etiqueta
-                    ->dateTime('d/m/Y H:i')
+                    ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('season.name')
+                    ->label('Temporada')
+                    ->searchable()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
+                IconColumn::make('finalizado')
+                    ->label('Finalizado')
+                    ->boolean()
+                    ->sortable(),
+                ImageColumn::make('imagen')->label('Imagen (4:5)')->disk('public')->square()->height(60)->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('descripcion')->label('Desc. Principal')->limit(60)->tooltip(fn (Eventos $record): string => $record->descripcion)->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('descripcion2')->label('Desc. Secundaria')->limit(60)->tooltip(fn (Eventos $record): string => $record->descripcion2 ?? '')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('created_at')->label('Fecha Creación')->dateTime('d/m/Y H:i')->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')->label('Última Actualización')->dateTime('d/m/Y H:i')->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                // --- Filtro por Nombre ---
                 Filter::make('nombre')
-                    ->label('Filtrar por Nombre') // Etiqueta del filtro
+                    ->label('Filtrar por Nombre de Instancia')
                     ->form([
                         TextInput::make('nombre_filtro')
-                            ->label('Nombre contiene'), // Etiqueta del campo de filtro
+                            ->label('Nombre contiene'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -167,18 +196,26 @@ class EventosResource extends Resource
                     ->indicateUsing(function (array $data): array {
                         $indicators = [];
                         if ($data['nombre_filtro'] ?? null) {
-                            $indicators['nombre_filtro'] = 'Nombre contiene "' . $data['nombre_filtro'] . '"';
+                            $indicators['nombre_filtro'] = 'Nombre Instancia contiene "' . $data['nombre_filtro'] . '"';
                         }
                         return $indicators;
                     }),
-
-                 // --- Filtro para 'finalizado' ---
+                SelectFilter::make('base_event_id')
+                    ->label('Filtrar por Tipo de Evento')
+                    ->relationship('baseEvent', 'name')
+                    ->searchable()
+                    ->preload(),
+                SelectFilter::make('season_id')
+                    ->label('Filtrar por Temporada')
+                    ->relationship('season', 'name')
+                    ->searchable()
+                    ->preload(),
                  TernaryFilter::make('finalizado')
                     ->label('Estado Finalizado')
                     ->boolean()
                     ->trueLabel('Sí')
                     ->falseLabel('No')
-                    ->placeholder('Todos'), // Opción para no filtrar
+                    ->placeholder('Todos'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -194,7 +231,7 @@ class EventosResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // RelationManagers...
+            RelationManagers\GalleryImagesRelationManager::class,
         ];
     }
 
@@ -203,7 +240,6 @@ class EventosResource extends Resource
         return [
             'index' => Pages\ListEventos::route('/'),
             'create' => Pages\CreateEventos::route('/create'),
-            // 'view' => Pages\ViewEvento::route('/{record}'), // Añadir si creas página View
             'edit' => Pages\EditEventos::route('/{record}/edit'),
         ];
     }
