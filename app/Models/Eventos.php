@@ -58,8 +58,6 @@ class Eventos extends Model
             if ($evento->imagen2) {
                 Storage::disk('public')->delete($evento->imagen2);
             }
-            // No es necesario borrar explícitamente gallery_images aquí si la FK
-            // en gallery_images tiene onDelete('cascade')
         });
 
         static::updating(function (Eventos $evento) {
