@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-6 mb-4 mb-md-0">
             <div class="text-center">
-                <img src="{{    $evento->imagen2 ? Storage::url($evento->imagen2) : Storage::url('eventos-imagenes/eventoBase(16-9).png') }}" alt="Imagen de {{ $evento->nombre }}" class="img-fluid rounded mb-3"
+                <img src="{{    $evento->imagen2 ? Storage::url($evento->imagen2) : Storage::url('eventos-imagenes/EventoBase16-9.png') }}" alt="Imagen de {{ $evento->nombre }}" class="img-fluid rounded mb-3"
                     style="max-height: 400px; object-fit: cover;" />
 
                 <h2 class="first-title mt-3 text-break" style="color: var(--yellow);">

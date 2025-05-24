@@ -44,7 +44,7 @@
                         <li class="nav-item li-plantilla"><a class="nav-link"
                                 href="{{ url('/calendario') }}">EVENTOS</a>
                         </li>
-                        <li class="nav-item li-plantilla"><a class="nav-link" href="#">GALERÍA</a></li>
+                        <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/galeria') }}">GALERÍA</a></li>
                         <li class="nav-item li-plantilla"><a class="nav-link" href="#">ÚNETE</a></li>
                     </ul>
                 </div>

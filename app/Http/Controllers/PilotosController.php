@@ -50,21 +50,21 @@ class PilotosController extends Controller
     public function show(string $id): View
     {
         try {
-            $piloto = Pilotos::with(['eventos' => function ($query) {
-                    $query->select('eventos.id', 'eventos.nombre'); // Asegúrate de seleccionar al menos estos
-                          // ->orderBy('eventos.fecha_inicio', 'desc'); // Puedes quitar la ordenación por fecha si ya no es relevante
+            // 1. Obtener pilotos CON sus eventos no finalizados (Eager Loading con restricción)
+            $pilotos = Pilotos::with(['eventos' => function ($query) {
+                    $query->where('eventos.finalizado', false) // <-- AÑADIDO: Condición para no finalizados
+                          ->select('eventos.id', 'eventos.nombre'); // Selecciona solo los campos necesarios de eventos
                 }])
-                ->findOrFail($id);
-    
-            return view('pilotosinformacion', ['piloto' => $piloto]);
-    
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            Log::error("Piloto no encontrado con ID {$id}: " . $e->getMessage());
-            abort(404, 'Piloto no encontrado');
+                ->select('pilotos.id', 'pilotos.Nombre', 'pilotos.Apellidos', 'pilotos.Descripcion', 'pilotos.Imagen')
+                ->paginate(15);
+
+            return view('pilotos', ['pilotos' => $pilotos]);
+
         } catch (\Exception $e) {
-            Log::error("Error al cargar información del piloto ID {$id}: " . $e->getMessage());
-            return view('pilotosinformacion', [
-                'error' => 'Ocurrió un error al cargar la información del piloto.'
+            Log::error('Error al cargar la vista de pilotos: ' . $e->getMessage());
+            return view('pilotos', [
+                'error' => 'No se pudieron cargar los pilotos.',
+                'pilotos' => collect() // Devuelve una colección vacía para evitar errores en la vista
             ]);
         }
     }
