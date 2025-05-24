@@ -731,3 +731,98 @@ footer {
         text-align: center;
     }
 }
+/* === ESTILOS PÁGINA GALERÍA === */
+.gallery-section {
+    padding-top: 1rem; /* Reducido de 3rem para que el título no esté tan separado si no hay mucho más contenido */
+    padding-bottom: 3rem;
+}
+
+.gallery-title {
+    font-family: "Rubik Dirt", system-ui; /* Usando tu fuente única */
+    color: var(--red);
+    font-size: 2.5rem; /* Consistente con .section-title */
+    margin-bottom: 2rem; /* Espacio debajo del título, puedes ajustar Bootstrap mb-5 en el h2 si prefieres */
+    text-align: center;
+}
+
+/* Estilos para el carrusel en sí */
+#eventGalleryCarousel {
+    border-radius: 0.625rem; /* Similar a .hero-section */
+    overflow: hidden; /* Para que las imágenes internas respeten el border-radius del carrusel */
+    border: 2px solid var(--red-dark); /* Un borde sutil con tu color oscuro */
+    background-color: #2a2a2a; /* Un fondo oscuro por si las imágenes tardan o no cargan */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.carousel-item img {
+    max-height: 70vh; /* Limita la altura máxima de la imagen a un 70% de la altura de la ventana */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio, puede recortar un poco */
+    /* No necesitas width: 100% aquí porque .d-block .w-100 ya lo hacen */
+}
+
+/* Personalización de los indicadores del carrusel para tema oscuro */
+.carousel-indicators [data-bs-target] {
+    background-color: var(--silver);
+    opacity: 0.6;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-top: none; /* Quitar bordes default de bootstrap si los hay */
+    border-bottom: none;
+}
+
+.carousel-indicators .active {
+    background-color: var(--red-light);
+    opacity: 1;
+}
+
+/* Personalización de los controles (flechas) del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para mejor contraste */
+    border-radius: 50%;
+    padding: 1.2rem; /* Aumentar el área del icono para que el fondo se vea más */
+    /* El color del SVG por defecto es blanco, que se verá bien */
+}
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+/* Opcional: Caption styling si decides usarlo */
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente para el texto */
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+.carousel-caption h5 {
+    color: var(--yellow); /* Título del caption en amarillo */
+    font-family: "Rubik", sans-serif;
+}
+
+.carousel-caption p {
+    color: var(--white);
+    font-family: "Rubik", sans-serif;
+    font-size: 0.9rem;
+}
+
+/* Media query para ajustar el tamaño de las flechas en pantallas pequeñas */
+@media (max-width: 767.98px) {
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        padding: 0.8rem; /* Más pequeñas en móviles */
+    }
+    .gallery-title {
+        font-size: 2rem; /* Título un poco más pequeño en móviles */
+    }
+    .carousel-item img {
+        max-height: 50vh; /* Imágenes un poco menos altas en móviles */
+    }
+}

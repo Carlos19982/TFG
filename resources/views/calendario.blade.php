@@ -21,8 +21,9 @@
                     aria-label="Detalles {{ $evento->nombre }}">
                     <div class="card h-100">
                         {{-- Muestra imagen (imagen1) o la imagen por defecto --}}
-                        <img src="{{ $evento->imagen ? Storage::url($evento->imagen) : Storage::url('eventos-imagenes/eventoBase(4-5).png') }}"
-                            class="card-img-top" alt="Portada del evento {{ $evento->nombre }}" style="filter: grayscale({{ $evento->finalizado ? 1 : 0 }});">
+                        <img src="{{ $evento->imagen ? Storage::url($evento->imagen) : Storage::url('eventos-imagenes/EventoBase4-5.png') }}"
+                            class="card-img-top" alt="Portada del evento {{ $evento->nombre }}"
+                            style="filter: grayscale({{ $evento->finalizado ? 1 : 0 }});">
                         <div class="card-footer">
                             <p class="competition-name text-center mb-0">{{ $evento->nombre }}</p>
                         </div>

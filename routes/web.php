@@ -21,3 +21,7 @@ Route::get('/pilotos-y-sus-eventos', [EventopilotoController::class, 'index'])->
 Route::get('/pilotos', [PilotosController::class, 'index'])->name('pilotos.index');
 
 Route::get('/pilotos/{id}', [PilotosController::class, 'show'])->name('pilotos.show');
+
+Route::get('/galeria', function () {
+    return view('galeria'); // 'galeria' es el nombre de tu archivo Blade (galeria.blade.php)
+});
