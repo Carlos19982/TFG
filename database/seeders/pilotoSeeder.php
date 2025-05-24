@@ -5,10 +5,10 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str; // Necesario para Str::random
-use Carbon\Carbon; // Necesario para las fechas
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
-class pilotoSeeder extends Seeder
+class PilotoSeeder extends Seeder // Nombre de clase como lo tienes: pilotoSeeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +20,7 @@ class pilotoSeeder extends Seeder
                 'Nombre' => 'PilotoNombre ' . Str::random(5),
                 'Apellidos' => 'Apellido ' . Str::random(8),
                 'Descripcion' => 'Descripción del piloto ' . ($i + 1) . '. ' . Str::random(50),
-                'Imagen' => null, // Campo de imagen vacío (null)
+                'Imagen' => 'pilotos-fotos/placeholder_piloto.png', // Ruta placeholder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
