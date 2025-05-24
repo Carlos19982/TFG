@@ -49,6 +49,11 @@ class PilotosResource extends Resource
                             ->label('Apellidos') // Etiqueta del campo
                             ->required()
                             ->maxLength(40),
+                        Textarea::make('Frase')
+                            ->label('Frase') // Etiqueta del campo
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
                         Textarea::make('Descripcion')
                             ->label('Descripción') // Etiqueta del campo
                             ->required()
@@ -83,7 +88,7 @@ class PilotosResource extends Resource
                     ->label('Apellidos') // Etiqueta de columna
                     ->searchable()
                     ->sortable(),
-                    
+
                 ImageColumn::make('Imagen')
                     ->label('Imagen') // Etiqueta
                     ->disk('public') // Especifica el disco donde buscar

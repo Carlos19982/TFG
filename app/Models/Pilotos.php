@@ -17,6 +17,7 @@ class Pilotos extends Model
     protected $fillable = [
         'Nombre',
         'Apellidos',
+        'Frase',
         'Descripcion',
         'Imagen'
     ];

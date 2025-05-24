@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('Apellidos', 40);
             $table->string('Frase',255);
             $table->string('Descripcion', 255);
-            $table->string('Imagen', 250)->nullable();
+            $table->text('Imagen')->nullable();
             $table->timestamps();
         });
 
@@ -41,8 +41,8 @@ return new class extends Migration
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 255); // Longitud ya ajustada
-            $table->string('imagen', 50)->nullable();
-            $table->string('imagen2', 50)->nullable();
+            $table->text('imagen')->nullable();
+            $table->text('imagen2')->nullable();
             $table->string('descripcion', 255);
             $table->string('descripcion2', 255)->nullable();
             $table->boolean('finalizado')->default(false);
