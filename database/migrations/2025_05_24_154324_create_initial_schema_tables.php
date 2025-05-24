@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('Nombre', 40);
             $table->string('Apellidos', 40);
+            $table->string('Frase',255);
             $table->string('Descripcion', 255);
             $table->string('Imagen', 250)->nullable();
             $table->timestamps();
