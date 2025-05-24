@@ -50,7 +50,7 @@ return new class extends Migration
             $table->foreignId('evento_id')
                   ->constrained('eventos')
                   ->onDelete('cascade');
-            $table->string('file_path');
+            $table->text('file_path');
             $table->string('title')->nullable();
             $table->text('caption')->nullable();
             $table->integer('sort_order')->default(0)->nullable();

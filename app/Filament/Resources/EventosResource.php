@@ -111,14 +111,14 @@ class EventosResource extends Resource
                             ->required(),
 
                         Textarea::make('descripcion')
-                            ->label('Descripción Principal (para imagen 4:5)')
+                            ->label('Descripción Principal')
                             ->required()
                             ->maxLength(255)
                             ->rows(4)
                             ->columnSpanFull(),
 
                          Textarea::make('descripcion2')
-                            ->label('Descripción Secundaria (para imagen 16:9)')
+                            ->label('Descripción Secundaria')
                             ->maxLength(255)
                             ->rows(3)
                             ->columnSpanFull(),
