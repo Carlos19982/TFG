@@ -2,6 +2,7 @@
 use App\Http\Controllers\PilotosController; 
 use App\Http\Controllers\EventosController; 
 use App\Http\Controllers\EventopilotoController;
+use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,4 @@ Route::match(['get', 'post'], '/pilotos', [PilotosController::class, 'index'])->
 
 Route::get('/pilotos/{id}', [PilotosController::class, 'show'])->name('pilotos.show');
 
-Route::get('/galeria', function () {
-    return view('galeria'); // 'galeria' es el nombre de tu archivo Blade (galeria.blade.php)
-});
+Route::get('/galeria', [GalleryController::class, 'index'])->name('galeria.index');

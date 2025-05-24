@@ -1,67 +1,82 @@
 @extends('layout.plantilla')
 
-@section('title', isset($evento) ? 'Galería - ' . $evento->nombre : 'Galería de Eventos')
+@section('title', 'Galería de Eventos')
 
 @section('content')
-<main class="container mt-5 mb-5"> {{-- Añadimos mt-5 y mb-5 para espaciado vertical --}}
-    <div class="gallery-section">
-        <div class="text-center mb-5">
-            <h2 class="gallery-title">
-                {{-- Si tienes una variable $evento, puedes usar su nombre. Si no, un título genérico. --}}
-                {{-- Para este ejemplo, como pediste "Evento 1", lo pongo directamente --}}
-                {{-- Si quieres que sea dinámico: isset($evento) ? $evento->nombre : 'Evento 1' --}}
-                Evento 1
-            </h2>
+<main class="container mt-5 mb-5">
+
+    @if($baseEventsList && $baseEventsList->count() > 0)
+    @foreach($baseEventsList as $baseEvent)
+    <div class="gallery-section mb-5">
+        <div class="text-center mb-4">
+            <h2 class="gallery-title">{{ $baseEvent->name }}</h2>
         </div>
 
-        {{-- Inicio del Carrusel Bootstrap --}}
-        <div id="eventGalleryCarousel" class="carousel slide" data-bs-ride="carousel">
-            {{-- Indicadores (los puntitos de abajo) --}}
+        @if($baseEvent->eventos && $baseEvent->eventos->count() > 0)
+        <div id="baseEventCarousel-{{ $baseEvent->id }}" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#eventGalleryCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#eventGalleryCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#eventGalleryCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                {{-- Puedes añadir más botones aquí si añades más imágenes --}}
+                @foreach($baseEvent->eventos as $index => $eventoInstancia)
+                <button type="button" data-bs-target="#baseEventCarousel-{{ $baseEvent->id }}" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
+                @endforeach
             </div>
 
-            {{-- Contenedor de las imágenes (slides) --}}
             <div class="carousel-inner">
-                {{-- Primer slide (activo por defecto) --}}
-                <div class="carousel-item active">
-                    {{-- Usaremos un placeholder para la imagen. Reemplaza esto con tus imágenes reales --}}
-                    {{-- Ejemplo: {{ asset('storage/galeria/evento1/imagen1.jpg') }} --}}
-                    <img src="https://placehold.co/1200x600/333333/EFEFEF?text=Imagen+1" class="d-block w-100" alt="Descripción de la Imagen 1">
-                    {{-- Opcional: Caption para la imagen --}}
-                    {{-- <div class="carousel-caption d-none d-md-block">
-                        <h5>Título Imagen 1</h5>
-                        <p>Pequeña descripción de la imagen 1.</p>
-                    </div> --}}
-                </div>
+                @foreach($baseEvent->eventos as $index => $eventoInstancia)
+                @php
+                // Intentar obtener la primera imagen de la galería de esta instancia de evento.
+                // $eventoInstancia->galleryImages es la colección de GalleryImage para esta "season".
+                // ->first() toma la primera imagen de esa colección (ordenada como definimos en el controlador).
+                $carouselImage = $eventoInstancia->galleryImages->first();
+                @endphp
+                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                    <img src="{{-- Inicio de la lógica condicional para src --}}
+                  @if($carouselImage && $carouselImage->file_path) {{-- Si tenemos una GalleryImage y tiene un file_path --}}
+                      {{ Storage::url($carouselImage->file_path) }}
+                  @else {{-- Si no, o si el file_path está vacío --}}
+                      {{ Storage::url('imagenes-defecto/EventoBase16-9.png') }} {{-- Imagen por defecto. Asegúrate que la ruta sea con '/' --}}
+                  @endif
+                  {{-- Fin de la lógica condicional para src --}}"
+                        class="d-block w-100"
+                        alt="{{ $eventoInstancia->nombre }} @if($carouselImage && $carouselImage->title) - {{ $carouselImage->title }} @elseif($carouselImage) - Imagen de {{ $eventoInstancia->nombre }} @else - Imagen por defecto @endif"> {{-- Alt text mejorado --}}
 
-                {{-- Segundo slide --}}
-                <div class="carousel-item">
-                    <img src="https://placehold.co/1200x600/444444/EFEFEF?text=Imagen+2" class="d-block w-100" alt="Descripción de la Imagen 2">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ $eventoInstancia->nombre }}</h5>
+                        @if($carouselImage && $carouselImage->caption)
+                        <p>{{ $carouselImage->caption }}</p>
+                        @elseif($carouselImage && $carouselImage->title)
+                        <p>{{ $carouselImage->title }}</p>
+                        @endif
+                    </div>
                 </div>
-
-                {{-- Tercer slide --}}
-                <div class="carousel-item">
-                    <img src="https://placehold.co/1200x600/555555/EFEFEF?text=Imagen+3" class="d-block w-100" alt="Descripción de la Imagen 3">
-                </div>
-                {{-- Añade más .carousel-item aquí para más imágenes --}}
+                @endforeach
             </div>
 
-            {{-- Controles de Anterior/Siguiente --}}
-            <button class="carousel-control-prev" type="button" data-bs-target="#eventGalleryCarousel" data-bs-slide="prev">
+            @if($baseEvent->eventos->count() > 1)
+            <button class="carousel-control-prev" type="button" data-bs-target="#baseEventCarousel-{{ $baseEvent->id }}" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Anterior</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#eventGalleryCarousel" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#baseEventCarousel-{{ $baseEvent->id }}" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Siguiente</span>
             </button>
+            @endif
         </div>
-        {{-- Final del Carrusel Bootstrap --}}
-
+        @else
+        <div class="alert alert-light text-center" role="alert">
+            No hay temporadas para mostrar para {{ $baseEvent->name }}.
+        </div>
+        @endif
     </div>
+    @if(!$loop->last)
+    <hr class="my-5">
+    @endif
+    @endforeach
+    @else
+    <div class="alert alert-info text-center" role="alert">
+        No hay eventos con galerías para mostrar en este momento.
+    </div>
+    @endif
+
 </main>
 @endsection
