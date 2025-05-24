@@ -73,7 +73,7 @@ class GalleryImageResource extends Resource
 
                 TextInput::make('sort_order')
                     ->label('Orden de Visualización Inicial')
-                    ->numeric()
+                    ->numeric()->minValue(1)
                     ->default(0)
                     ->helperText('Las imágenes subsiguientes en este lote incrementarán este valor.'),
             ]);
