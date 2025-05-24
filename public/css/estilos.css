@@ -826,3 +826,49 @@ footer {
         max-height: 50vh; /* Imágenes un poco menos altas en móviles */
     }
 }
+/* === ESTILOS BOTONES PERSONALIZADOS (BUSCADOR PILOTOS) === */
+
+
+.btn-buscar-custom {
+    background-color: var(--yellow) !important; /* Usando tu variable CSS --yellow */
+    border-color: var(--yellow) !important;
+    color: var(--black) !important; /* Texto oscuro para contraste con amarillo */
+}
+
+.btn-buscar-custom:hover,
+.btn-buscar-custom:focus,
+.btn-buscar-custom:active {
+    background-color: #e6c300 !important; /* Un amarillo un poco más oscuro para el hover/focus */
+    border-color: #e6c300 !important;
+    color: var(--black) !important;
+}
+
+.btn-limpiar-custom {
+    background-color: var(--red) !important; /* Usando tu variable CSS --red */
+    border-color: var(--red) !important;
+    color: var(--white) !important; /* Texto blanco para contraste con rojo */
+}
+
+.btn-limpiar-custom:hover,
+.btn-limpiar-custom:focus,
+.btn-limpiar-custom:active {
+    background-color: var(--red-dark) !important; /* Usando tu variable CSS --red-dark para el hover */
+    border-color: var(--red-dark) !important;
+    color: var(--white) !important;
+}
+
+/* Si quieres una versión "outline" para el botón limpiar */
+.btn-outline-limpiar-custom {
+    color: var(--red) !important;
+    border-color: var(--red) !important;
+    background-color: transparent; /* Asegurar fondo transparente para outline */
+}
+.btn-outline-limpiar-custom:hover,
+.btn-outline-limpiar-custom:focus,
+.btn-outline-limpiar-custom:active {
+    color: var(--white) !important;
+    background-color: var(--red) !important;
+    border-color: var(--red) !important;
+}
+
+/* === FIN ESTILOS BOTONES PERSONALIZADOS === */
