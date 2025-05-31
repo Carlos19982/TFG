@@ -26,3 +26,6 @@ Route::match(['get', 'post'], '/pilotos', [PilotosController::class, 'index'])->
 Route::get('/pilotos/{id}', [PilotosController::class, 'show'])->name('pilotos.show');
 
 Route::get('/galeria', [GalleryController::class, 'index'])->name('galeria.index');
+
+Route::get('/galeria/temporada/{eventoInstancia}', [GalleryController::class, 'showSeasonGallery'])
+    ->name('gallery.season');
