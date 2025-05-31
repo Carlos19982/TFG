@@ -19,6 +19,7 @@ class PilotoSeeder extends Seeder // Nombre de clase como lo tienes: pilotoSeede
             DB::table('pilotos')->insert([
                 'Nombre' => 'PilotoNombre ' . Str::random(5),
                 'Apellidos' => 'Apellido ' . Str::random(8),
+                'Frase' => 'Frase del piloto '. ($i + 1). '. '. Str::random(20),
                 'Descripcion' => 'Descripción del piloto ' . ($i + 1) . '. ' . Str::random(50),
                 'Imagen' => 'pilotos-fotos/placeholder_piloto.png', // Ruta placeholder
                 'created_at' => Carbon::now(),

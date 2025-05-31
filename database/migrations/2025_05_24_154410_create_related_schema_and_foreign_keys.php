@@ -53,8 +53,9 @@ return new class extends Migration
             $table->text('file_path');
             $table->string('title')->nullable();
             $table->text('caption')->nullable();
-            $table->integer('sort_order')->default(0)->nullable();
+            $table->integer('sort_order')->unsigned()->default(1);
             $table->timestamps();
+            $table->unique(['evento_id', 'sort_order'], 'gallery_images_evento_id_sort_order_unique');
         });
     }
 
