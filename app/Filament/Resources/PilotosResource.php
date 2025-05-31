@@ -75,11 +75,6 @@ class PilotosResource extends Resource
     {
         return $table
             ->columns([
-                // Opcional: Mostrar imagen si la añades al form
-                // Tables\Columns\ImageColumn::make('foto_url')
-                //     ->label('Foto') // Etiqueta de columna
-                //     ->circular(),
-
                 TextColumn::make('Nombre')
                     ->label('Nombre') // Etiqueta de columna
                     ->searchable()

@@ -64,6 +64,7 @@ class RootPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class, // Middleware de autenticación de Filament
-            ]);
+            ])
+            ->darkMode(true, true);
     }
 }

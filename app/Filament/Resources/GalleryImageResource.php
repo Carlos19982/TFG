@@ -20,6 +20,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Grouping\Group;
 
 class GalleryImageResource extends Resource
 {
@@ -83,7 +84,8 @@ class GalleryImageResource extends Resource
     {
         return $table
             // Ordenar por evento y luego por sort_order por defecto
-            ->defaultSort('evento.nombre', 'asc')
+            ->defaultSort('sort_order', 'asc')
+            ->reorderable('sort_order')
             ->deferFilters() // Opcional: aplicar filtros solo al hacer clic en botón
             ->columns([
                 ImageColumn::make('file_path')
@@ -136,7 +138,14 @@ class GalleryImageResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+
+            ->groups([
+                Group::make('evento.nombre') // Agrupa por el nombre del evento relacionado
+                    ->label('Evento')        // Etiqueta para la opción de agrupar
+                    ->collapsible(),       // Permite que los grupos se puedan colapsar/expandir
+            ])
+            ->defaultGroup('evento.nombre');
     }
 
     public static function getRelations(): array
