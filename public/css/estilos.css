@@ -872,3 +872,86 @@ footer {
 }
 
 /* === FIN ESTILOS BOTONES PERSONALIZADOS === */
+/* === ESTILOS PÁGINA GALERÍA GENERAL === */
+.gallery-container-general {
+    /* Espacio adicional si es necesario, Bootstrap my-5 ya da margen */
+}
+
+.gallery-title-general {
+    font-family: "Rubik Dirt", system-ui;
+    color: var(--red);
+    font-size: 2.5rem; /* Consistente con .section-title */
+    /* margin-bottom ya está con Bootstrap .mb-5 */
+}
+
+.gallery-card-general {
+    background-color: #2e2e2e; /* Un gris oscuro ligeramente más claro que el body */
+    border-radius: 0.5rem; /* Bordes redondeados suaves */
+    overflow: hidden; /* Asegura que la imagen respete el border-radius */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex; /* Para estructura interna de imagen y caption */
+    flex-direction: column;
+    height: 100%; /* Para que todas las tarjetas en una fila tengan la misma altura si el contenido varía */
+}
+
+.gallery-card-general:hover {
+    transform: translateY(-8px) scale(1.02); /* Efecto de elevación sutil y zoom ligero */
+    box-shadow: 0 10px 25px rgba(213, 0, 0, 0.4); /* Sombra roja al hacer hover */
+}
+
+.gallery-card-general a {
+    display: block; /* Para que el enlace ocupe el espacio de la imagen */
+    text-decoration: none;
+}
+
+.gallery-image-general {
+    width: 100%;
+    aspect-ratio: 4 / 3; /* Mantiene una proporción consistente para las imágenes */
+    object-fit: cover; /* Asegura que la imagen cubra el área, recortando si es necesario */
+    /* No necesita border-radius aquí si .gallery-card-general tiene overflow:hidden */
+    transition: opacity 0.3s ease;
+}
+.gallery-card-general a:hover .gallery-image-general {
+    opacity: 0.85; /* Ligera transparencia en la imagen al pasar el mouse sobre el enlace */
+}
+
+
+.gallery-caption-general {
+    padding: 1rem;
+    background-color: rgba(30,30,30,0.8); /* Fondo ligeramente transparente para el caption */
+    color: var(--white);
+    flex-grow: 1; /* Permite que esta sección crezca si hay espacio extra */
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-item-title {
+    font-family: "Rubik", sans-serif;
+    font-weight: 600;
+    color: var(--yellow);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-item-description {
+    font-family: "Rubik", sans-serif;
+    color: var(--silver);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+    flex-grow: 1; /* Asegura que el texto ocupe espacio y empuje elementos si es necesario */
+}
+
+/* Ajustes para pantallas más pequeñas si es necesario, aunque Bootstrap ya ayuda mucho */
+@media (max-width: 575.98px) {
+    .gallery-title-general {
+        font-size: 2rem;
+    }
+    .gallery-item-title {
+        font-size: 1rem;
+    }
+    .gallery-item-description {
+        font-size: 0.8rem;
+    }
+}
