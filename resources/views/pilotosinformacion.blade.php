@@ -22,9 +22,11 @@
                     <h1 class="pilot-detail-name">{{ $piloto->Nombre }} {{ $piloto->Apellidos }}</h1>
                     <p class="pilot-detail-quote">
                         @if(isset($piloto->Frase) && trim($piloto->Frase) !== '')
-                            "{{ $piloto->Frase }}"
+                            <span>
+                                {{ $piloto->Frase }}
+                            </span> 
                         @else
-                            "Pasión, precisión y velocidad en cada curva"
+                            <span>Otro día, la misma mierda</span>
                         @endif
                     </p>
                 </div>
