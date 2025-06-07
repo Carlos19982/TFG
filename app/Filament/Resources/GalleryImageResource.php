@@ -50,6 +50,7 @@ class GalleryImageResource extends Resource
                     ->label('Archivos de Imagen')
                     ->required()
                     ->multiple() // <-- PERMITE SUBIDA MÚLTIPLE
+                    ->disk('public') // <--- AÑADE ESTA LÍNEA
                     ->minFiles(1) // Opcional: mínimo 1 archivo
                     // ->maxFiles(10) // Opcional: máximo de archivos por subida
                     ->reorderable() // Opcional: permite al usuario reordenar antes de subir
@@ -74,9 +75,21 @@ class GalleryImageResource extends Resource
 
                 TextInput::make('sort_order')
                     ->label('Orden de Visualización Inicial')
-                    ->numeric()->minValue(1)
-                    ->default(0)
-                    ->helperText('Las imágenes subsiguientes en este lote incrementarán este valor.'),
+                    ->numeric()
+                    ->minValue(1)
+                    ->default(function () {
+                        // Si estamos creando, obtener el siguiente número disponible
+                        $request = request();
+                        $eventoId = $request->get('evento_id');
+
+                        if ($eventoId) {
+                            $maxSortOrder = GalleryImage::where('evento_id', $eventoId)->max('sort_order') ?? 0;
+                            return $maxSortOrder + 1;
+                        }
+
+                        return 1;
+                    })
+                    ->helperText('Las imágenes subsiguientes en este lote incrementarán este valor. Déjalo vacío para añadir al final.'),
             ]);
     }
 
@@ -103,12 +116,12 @@ class GalleryImageResource extends Resource
                     ->label('Título')
                     ->searchable()
                     ->limit(30)
-                    ->tooltip(fn (GalleryImage $record): ?string => $record->title),
+                    ->tooltip(fn(GalleryImage $record): ?string => $record->title),
 
                 TextColumn::make('caption')
                     ->label('Descripción')
                     ->limit(40)
-                    ->tooltip(fn (GalleryImage $record): ?string => $record->caption)
+                    ->tooltip(fn(GalleryImage $record): ?string => $record->caption)
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('sort_order')
@@ -127,8 +140,8 @@ class GalleryImageResource extends Resource
                     ->label('Filtrar por Evento')
                     ->relationship('evento', 'nombre') // Filtra por la relación 'evento'
                     ->searchable()
-                    // ->preload() // Quitado para mejorar rendimiento si hay muchos eventos
-                    ,
+                // ->preload() // Quitado para mejorar rendimiento si hay muchos eventos
+                ,
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

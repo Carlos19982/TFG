@@ -8,7 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Filament\Notifications\Notification; // Para notificaciones
+use Filament\Notifications\Notification;
 
 class CreateGalleryImage extends CreateRecord
 {
@@ -22,31 +22,39 @@ class CreateGalleryImage extends CreateRecord
         $eventoId = $data['evento_id'];
         $title = $data['title'] ?? null;
         $caption = $data['caption'] ?? null;
-        // El orden que el usuario quiere para la PRIMERA imagen del lote
         $requestedSortOrder = (int) ($data['sort_order'] ?? 0);
 
         if (empty($filePaths)) {
             Notification::make()
-                ->title('Error al crear imágenes')
-                ->body('No se seleccionaron archivos de imagen.')
+                ->title('Error')
+                ->body('No se seleccionaron archivos para subir.')
                 ->danger()
                 ->send();
-            return new (static::getModel()); // Devuelve instancia vacía para evitar error fatal
+            return new (static::getModel());
         }
 
         $numberOfFiles = count($filePaths);
 
         DB::transaction(function () use ($filePaths, $eventoId, $title, $caption, $requestedSortOrder, $numberOfFiles) {
-            // 1. HACER HUECO: Incrementar el sort_order de las imágenes existentes
-            // para este evento que tengan un sort_order >= al solicitado.
-            // El incremento es por la cantidad de nuevas imágenes que se van a insertar.
+            
+            // Si sort_order es 0 o no se especificó, usar el siguiente disponible
+            if ($requestedSortOrder <= 0) {
+                $maxSortOrder = GalleryImage::where('evento_id', $eventoId)->max('sort_order') ?? 0;
+                $requestedSortOrder = $maxSortOrder + 1;
+            }
+
+            // 1. Hacer espacio para las nuevas imágenes
+            // Ordenamos por sort_order DESC para evitar conflictos de clave única
             GalleryImage::where('evento_id', $eventoId)
                 ->where('sort_order', '>=', $requestedSortOrder)
-                ->increment('sort_order', $numberOfFiles);
+                ->orderBy('sort_order', 'desc')
+                ->get()
+                ->each(function ($image) use ($numberOfFiles) {
+                    $image->update(['sort_order' => $image->sort_order + $numberOfFiles]);
+                });
 
             // 2. Insertar las nuevas imágenes
             foreach ($filePaths as $index => $individualFilePath) {
-                // El sort_order para la imagen actual del lote
                 $currentSortOrder = $requestedSortOrder + $index;
 
                 $imageData = [
