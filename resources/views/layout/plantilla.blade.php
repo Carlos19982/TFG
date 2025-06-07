@@ -9,6 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     {{-- Bootstrap Icons CSS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Font Awesome en tu HTML -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
     {{-- CSS Global --}}
     <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
@@ -45,7 +48,7 @@
                                 href="{{ url('/calendario') }}">EVENTOS</a>
                         </li>
                         <li class="nav-item li-plantilla"><a class="nav-link" href="{{ url('/galeria') }}">GALERÍA</a></li>
-                        <li class="nav-item li-plantilla"><a class="nav-link" href="#">ÚNETE</a></li>
+                        <li class="nav-item li-plantilla"><a class="nav-link" href="https://discord.gg/394mvsXvX9">ÚNETE</a></li>
                     </ul>
                 </div>
             </div>
@@ -67,9 +70,9 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="social-icons mb-3">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-twitter"></i></a>
-                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.twitch.tv/zrtmomotiresarg"><i class="fab fa-twitch"></i></a>
+                    <a href="https://x.com/zrt_momotiresar"><i class="bi bi-twitter"></i></a>
+                    <a href="https://www.instagram.com/zrt_momotiresar/"><i class="bi bi-instagram"></i></a>
                 </div>
                 <p>© {{ date('Y') }} ZRT MOMO. Todos los derechos reservados.</p>
             </div>

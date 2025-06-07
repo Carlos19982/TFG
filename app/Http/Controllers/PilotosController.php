@@ -89,7 +89,7 @@ class PilotosController extends Controller
                 }])
                 // Es buena práctica seleccionar explícitamente los campos del piloto también,
                 // aunque findOrFail los traería todos por defecto si no se especifica.
-                ->select('pilotos.id', 'pilotos.Nombre', 'pilotos.Apellidos', 'pilotos.Descripcion', 'pilotos.Imagen')
+                ->select('pilotos.id', 'pilotos.Nombre', 'pilotos.Apellidos', 'pilotos.Frase', 'pilotos.Descripcion', 'pilotos.Imagen')
                 ->findOrFail($id);
     
             // Devuelve la vista 'pilotosinformacion.blade.php' con el piloto encontrado
