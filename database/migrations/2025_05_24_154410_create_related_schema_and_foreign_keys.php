@@ -44,18 +44,20 @@ return new class extends Migration
         });
 
         // Crear tabla gallery_images
-        // Basado en: 2025_05_24_115529_create_gallery_images_table.php
         Schema::create('gallery_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('evento_id')
-                  ->constrained('eventos')
-                  ->onDelete('cascade');
-            $table->text('file_path');
+            $table->foreignId('evento_id')->constrained()->onDelete('cascade');
+            $table->string('file_path');
             $table->string('title')->nullable();
             $table->text('caption')->nullable();
-            $table->integer('sort_order')->unsigned()->default(1);
+            $table->unsignedInteger('sort_order')->default(1);
             $table->timestamps();
-            $table->unique(['evento_id', 'sort_order'], 'gallery_images_evento_id_sort_order_unique');
+            
+            // Índice único compuesto para evitar duplicados
+            $table->unique(['evento_id', 'sort_order']);
+            
+            // Índices para mejorar rendimiento
+            $table->index(['evento_id', 'sort_order']);
         });
     }
 

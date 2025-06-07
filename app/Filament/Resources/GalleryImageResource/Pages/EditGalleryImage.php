@@ -21,42 +21,42 @@ class EditGalleryImage extends EditRecord
     }
 
     // Sobrescribimos el método para manejar la lógica de reordenamiento
+// En: app/Filament/Resources/GalleryImageResource/Pages/EditGalleryImage.php
+
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $originalSortOrder = $record->getOriginal('sort_order');
         $newSortOrder = (int) ($data['sort_order'] ?? $originalSortOrder);
-        $eventoId = $data['evento_id'] ?? $record->evento_id; // Asegurarse de tener el evento_id
+        $eventoId = $record->evento_id;
 
-        // Solo actuar si el sort_order ha cambiado y es diferente
-        if ($newSortOrder !== $originalSortOrder) {
-            DB::transaction(function () use ($record, $eventoId, $originalSortOrder, $newSortOrder, $data) {
-                // Si el nuevo orden es MENOR que el original (la imagen sube en la lista)
-                if ($newSortOrder < $originalSortOrder) {
-                    // Incrementar el orden de las imágenes entre el nuevo y el antiguo orden
-                    GalleryImage::where('evento_id', $eventoId)
-                        ->where('id', '!=', $record->id) // No afectar a la imagen actual
-                        ->where('sort_order', '>=', $newSortOrder)
-                        ->where('sort_order', '<', $originalSortOrder)
-                        ->increment('sort_order');
-                }
-                // Si el nuevo orden es MAYOR que el original (la imagen baja en la lista)
-                elseif ($newSortOrder > $originalSortOrder) {
-                    // Decrementar el orden de las imágenes entre el antiguo y el nuevo orden
-                    GalleryImage::where('evento_id', $eventoId)
-                        ->where('id', '!=', $record->id) // No afectar a la imagen actual
-                        ->where('sort_order', '<=', $newSortOrder)
-                        ->where('sort_order', '>', $originalSortOrder)
-                        ->decrement('sort_order');
-                }
-                // Actualizar el registro actual con todos los datos del formulario
-                // (incluyendo el nuevo sort_order y cualquier otro campo modificado)
+        DB::transaction(function () use ($record, $data, $eventoId, $originalSortOrder, $newSortOrder) {
+            if ($newSortOrder === $originalSortOrder) {
                 $record->update($data);
-            });
-        } else {
-            // Si el sort_order no cambió, simplemente actualiza el registro
-            $record->update($data);
-        }
+                return;
+            }
 
-        return $record;
+            // 1. Mover temporalmente el registro a un valor que no interfiere (-1).
+            // Esto LIBERA su posición original y evita cualquier conflicto.
+            $record->update(['sort_order' => 0]);
+
+            // 2. Mover los otros registros.
+            if ($newSortOrder < $originalSortOrder) {
+                // MOVER HACIA ARRIBA (ej. pos 5 -> 2)
+                GalleryImage::where('evento_id', $eventoId)
+                    ->whereBetween('sort_order', [$newSortOrder, $originalSortOrder - 1])
+                    ->increment('sort_order');
+
+            } else { // ($newSortOrder > $originalSortOrder)
+                // MOVER HACIA ABAJO (ej. pos 2 -> 5)
+                GalleryImage::where('evento_id', $eventoId)
+                    ->whereBetween('sort_order', [$originalSortOrder + 1, $newSortOrder])
+                    ->decrement('sort_order');
+            }
+
+            // 3. Aplicar los datos finales, incluyendo la nueva posición.
+            $record->update($data);
+        });
+
+        return $record->refresh();
     }
 }
