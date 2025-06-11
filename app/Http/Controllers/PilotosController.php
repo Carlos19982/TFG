@@ -42,7 +42,7 @@ class PilotosController extends Controller
             }
 
             // 3. Paginar los resultados
-            $pilotos = $query->paginate(15);
+            $pilotos = $query->paginate(10);
 
             // 4. Si hay un término de búsqueda, añadirlo a los enlaces de paginación
             if ($searchTerm) {
