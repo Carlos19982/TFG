@@ -6,12 +6,13 @@
             <div class="row">
                 <div class="section-title-items col-lg-6">
                     <h1 class="section-title unique-font">ZRT MOMO TIRES ARG</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quis soluta commodi blanditiis hic.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa accusantium perspiciatis laudantium
-                        pariatur. Reiciendis fugiat doloribus voluptate enim accusamus beatae delectus eius ullam, explicabo
-                        vitae, corrupti odit. Magnam, architecto iste?
-                        Nobis eos molestias, error quo rerum, iure ex obcaecati dolores suscipit minus dignissimos.
-                        Laudantium quisquam blanditiis velit ad repellat neque expt.
+                    <p>
+                        ZRT MOMO TIRES es un equipo y una comunidad de simracing donde compartimos juntos nuestra pasión por
+                        el mundo del motor. Participamos en los campeonatos organizados por la comunidad y en los eventos
+                        especiales del mundo del Simracing. Ofrecemos un Discord donde podrás compartir tu tiempo con
+                        nosotros, las fotos que saques de tus highlights y comentar tus dudas para sacar la mejor
+                        vuelta. Desde la creación en 2024 nuestro objetivo es dar un espacio para principiantes y
+                        experimentados que buscan el trabajo en equipo y alcanzar sus metas.
                     </p>
                     <img src="{{ asset('img\LOGONACHOSINFONDO 1.svg') }}" alt="Momo Tires Logo " class="hero-img">
                 </div>
@@ -26,8 +27,11 @@
     <section class="features-section d-flex align-items-center">
         <div>
             <h2 class="section-title">CARACTERÍSTICAS</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis soluta commodi blanditiis hic, laborum quo
-                delectus, non molestiae magni quas ea! Perferendis repudiandae perspiciatis atque architecto.</p>
+            <p>
+                Biblioteca de setup / Discord dedicado a campeonatos y eventos especiales / Equipo que colabora para sacar
+                el mejor ritmo / Comunidad abierta para todos los equipos / Te acompoñamos desde el principio para hacer que
+                disfrutes de la experiencia
+            </p>
         </div>
     </section>
 

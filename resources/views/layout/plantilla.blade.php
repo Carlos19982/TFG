@@ -29,7 +29,7 @@
             necesario --}}
             <div class="container">
                 {{-- Brand/Logo --}}
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('img/ZRTSINFONDO 1.svg') }}" alt="ZRT MOMO Logo" class="img-fluid logo-header">
                 </a>
 

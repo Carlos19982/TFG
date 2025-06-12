@@ -33,7 +33,7 @@
                                                           @if($carouselImage && $carouselImage->file_path)
                                                               {{ Storage::url($carouselImage->file_path) }}
                                                           @else
-                                                              {{ Storage::url('imagenes-defecto/EventoBase16-9.png') }}
+                                                              {{ Storage::url('gallery_images/imagen_defecto.jpg') }}
                                                           @endif
                                                           {{-- Fin de la lógica condicional para src --}}" class="d-block w-100"
                                                 alt="{{ $eventoInstancia->nombre }} @if($carouselImage && $carouselImage->title) - {{ $carouselImage->title }} @elseif($carouselImage) - Imagen de {{ $eventoInstancia->nombre }} @else - Imagen por defecto @endif">

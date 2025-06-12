@@ -20,9 +20,6 @@ class EditGalleryImage extends EditRecord
         ];
     }
 
-    // Sobrescribimos el método para manejar la lógica de reordenamiento
-// En: app/Filament/Resources/GalleryImageResource/Pages/EditGalleryImage.php
-
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $originalSortOrder = $record->getOriginal('sort_order');
