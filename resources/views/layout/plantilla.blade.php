@@ -30,7 +30,7 @@
             <div class="container">
                 {{-- Brand/Logo --}}
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('img/ZRTSINFONDO 1.svg') }}" alt="ZRT MOMO Logo" class="img-fluid logo-header">
+                    <img src="{{ asset('img/Logo.png') }}" alt="ZRT MOMO Logo" class="img-fluid logo-header">
                 </a>
 
                 {{-- Botón Toggler para Móviles (AHORA DENTRO de NAV y CONTAINER) --}}
@@ -64,8 +64,8 @@
     {{-- ====> INICIO DEL FOOTER <==== --}} <footer>
         <div class="footer-top text-center">
             <img src="{{ asset('img/PatroMomo.svg') }}" alt="MOMO Tires Logo" class="img-footer-partner">
-            <img src="{{ asset('img/PatroillanDommarco.svg') }}" alt="Logo Ilian Domi" class="img-footer-partner">
-            <img src="{{ asset('img/PatroTheMechtCat.svg') }}" alt="Logo The Mech Cat" class="img-footer-partner">
+            <img src="{{ asset('img/ILLAN_DOMMARCO_SILLER.png') }}" alt="Logo Ilian Domi" class="img-footer-partner">
+            <img src="{{ asset('img/TheMechCatFullBlanco.png') }}" alt="Logo The Mech Cat" class="img-footer-partner">
         </div>
         <div class="footer-bottom">
             <div class="container">
