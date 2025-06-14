@@ -35,7 +35,22 @@
         {{-- FIN: Formulario de Búsqueda --}}
         {{-- ========================================================== --}}
 
-
+    <div class="carousel-inner">
+        @foreach($baseEvent->eventos as $index => $eventoInstancia)
+        @php
+        $carouselImage = $eventoInstancia->galleryImages->firstWhere('sort_order', 1) ?? $eventoInstancia->galleryImages->first(); @endphp
+        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+            {{-- INICIO DEL CAMBIO: Envolver la imagen en un enlace --}}
+            <a href="{{ route('gallery.season', ['eventoInstancia' => $eventoInstancia->id]) }}">
+                <img src="{{-- Inicio de la lógica condicional para src --}}
+                                                          @if($carouselImage && $carouselImage->file_path)
+                                                              {{ Storage::url($carouselImage->file_path) }}
+                                                          @else
+                                                              {{ Storage::url('gallery_images/imagen_defecto.jpg') }}
+                                                          @endif
+                                                          {{-- Fin de la lógica condicional para src --}}" class="d-block w-100"
+                    alt="{{ $eventoInstancia->nombre }} @if($carouselImage && $carouselImage->title) - {{ $carouselImage->title }} @elseif($carouselImage) - Imagen de {{ $eventoInstancia->nombre }} @else - Imagen por defecto @endif">
+            </a>
         {{-- Se cambia el @if por @forelse para manejar el caso de "no hay resultados" --}}
         @forelse($baseEventsList as $baseEvent)
             <div class="gallery-section mb-5">
