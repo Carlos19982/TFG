@@ -3,14 +3,10 @@ use App\Http\Controllers\PilotosController;
 use App\Http\Controllers\EventosController; 
 use App\Http\Controllers\EventopilotoController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\Home;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/home', function () {
-    return view('home');
-});
+Route::get('/', [Home::class, 'index'])->name('home.index');
 
 Route::get('/calendario', [EventosController::class, 'index'])->name('calendario.index');
 
