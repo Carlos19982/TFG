@@ -65,7 +65,7 @@ main.container {
 /* --- FIN ESTILO CONTENEDOR NAVBAR --- */
 
 .logo-header {
-    max-height: 50px;
+    max-height: 9vh;
     width: auto;
     flex-shrink: 0;
 }
@@ -873,9 +873,6 @@ footer {
 
 /* === FIN ESTILOS BOTONES PERSONALIZADOS === */
 /* === ESTILOS PÁGINA GALERÍA GENERAL === */
-.gallery-container-general {
-    /* Espacio adicional si es necesario, Bootstrap my-5 ya da margen */
-}
 
 .gallery-title-general {
     font-family: "Rubik Dirt", system-ui;
