@@ -1,128 +1,77 @@
-{{-- galeria.blade.php (Corregido) --}}
 @extends('layout.plantilla')
 
-@section('title', 'Galería de Eventos')
+@section('title', 'Galerías de Eventos')
 
 @section('content')
-<main class="container mt-5 mb-5">
+<div class="container my-5">
+    <h1 class="gallery-title text-center mb-5">Galerías de Eventos</h1>
+    
+    @if($baseEventsList->count() > 0)
+        @foreach($baseEventsList as $baseEvent)
+            <div class="event-block mb-5">
+                <h2 class="unique-font">{{ $baseEvent->name }}</h2>
+                
+                @if($baseEvent->eventos->count() > 0)
+                    <div id="carousel-{{ $baseEvent->id }}" class="carousel slide" data-bs-ride="carousel">
+                        
+                        @if($baseEvent->eventos->count() > 1)
+                            <div class="carousel-indicators">
+                                @foreach($baseEvent->eventos as $season)
+                                    <button type="button" data-bs-target="#carousel-{{ $baseEvent->id }}" data-bs-slide-to="{{ $loop->index }}" class="@if($loop->first) active @endif" aria-label="Temporada {{ $loop->iteration }}"></button>
+                                @endforeach
+                            </div>
+                        @endif
 
-    {{-- ========================================================== --}}
-    {{-- INICIO: Formulario de Búsqueda --}}
-    {{-- ========================================================== --}}
-    <div class="d-flex flex-wrap justify-content-center align-items-center mb-5 position-relative">
-        {{-- Título Centrado --}}
-        <div class="section-title-div text-center mx-auto py-2">
-            <h1 class="section-title first-title mb-0">GALERÍA DE EVENTOS</h1>
-        </div>
+                        <div class="carousel-inner">
+                            @foreach($baseEvent->eventos as $season)
+                                <div class="carousel-item @if($loop->first) active @endif">
+                                    <a href="{{ route('gallery.season', ['eventoInstancia' => $season->id]) }}">
+                                        @php $coverImage = $season->galleryImages->first(); @endphp
+                                        @if($coverImage)
+                                            <img src="{{ Storage::url($coverImage->file_path) }}" class="d-block w-100" alt="Portada de {{ $season->nombre }}">
+                                        @else
+                                            {{-- ================================================================ --}}
+                                            {{-- CAMBIO REALIZADO AQUÍ --}}
+                                            {{-- Se usa la misma imagen y método que en la página de pilotos --}}
+                                            <img src="{{ Storage::url('imagenes-defecto/EventoBase16-9.png') }}" class="d-block w-100" alt="Sin portada">
+                                            {{-- ================================================================ --}}
+                                        @endif
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>{{ $season->nombre }}</h5>
+                                            <p>Ver galería de esta temporada</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                        
+                        @if($baseEvent->eventos->count() > 1)
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ $baseEvent->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ $baseEvent->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        @endif
 
-        {{-- Buscador a la Derecha --}}
-        <div class="search-form-container ms-md-auto mt-3 mt-md-0">
-            <form action="{{ route('galeria.index') }}" method="GET" class="d-flex">
-                <input type="text" name="termino_busqueda" class="form-control form-control-sm me-2"
-                    placeholder="Buscar evento..." value="{{ $searchTerm ?? '' }}" aria-label="Buscar evento">
-
-                <button type="submit" class="btn btn-sm btn-buscar-custom">Buscar</button>
-
-                @if(isset($searchTerm) && $searchTerm)
-                <a href="{{ route('galeria.index') }}" class="btn btn-sm btn-limpiar-custom ms-2">Limpiar</a>
-                @endif
-            </form>
-        </div>
-    </div>
-    {{-- ========================================================== --}}
-    {{-- FIN: Formulario de Búsqueda --}}
-    {{-- ========================================================== --}}
-
-    {{-- Se itera sobre la lista de eventos base. Este es el bucle principal. --}}
-    @forelse($baseEventsList as $baseEvent)
-    <div class="gallery-section mb-5">
-        <div class="text-center mb-4">
-            <h2 class="gallery-title">{{ $baseEvent->name }}</h2>
-        </div>
-
-        @if($baseEvent->eventos->count() > 0)
-        <div id="baseEventCarousel-{{ $baseEvent->id }}" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                @foreach($baseEvent->eventos as $index => $eventoInstancia)
-                <button type="button" data-bs-target="#baseEventCarousel-{{ $baseEvent->id }}"
-                    data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}"
-                    aria-current="{{ $index == 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
-                @endforeach
-            </div>
-
-            <div class="carousel-inner">
-                @foreach($baseEvent->eventos as $index => $eventoInstancia)
-                @php
-                $carouselImage = $eventoInstancia->galleryImages->firstWhere('sort_order', 1) ?? $eventoInstancia->galleryImages->first();
-                @endphp
-                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                    <a href="{{ route('gallery.season', ['eventoInstancia' => $eventoInstancia->id]) }}">
-                        <img src="{{ $carouselImage ? Storage::url($carouselImage->file_path) : Storage::url('imagenes-defecto/EventoBase16-9.png') }}" class="d-block w-100"
-                            alt="{{ $eventoInstancia->nombre }}">
-                    </a>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>
-                            <a href="{{ route('gallery.season', ['eventoInstancia' => $eventoInstancia->id]) }}"
-                                class="text-white text-decoration-none">
-                                {{ $eventoInstancia->nombre }}
-                            </a>
-                        </h5>
                     </div>
-                </div>
-                @endforeach
+                @else
+                    <p>Este evento no tiene temporadas con galerías.</p>
+                @endif
             </div>
-
-            @if($baseEvent->eventos->count() > 1)
-            <button class="carousel-control-prev" type="button" data-bs-target="#baseEventCarousel-{{ $baseEvent->id }}"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#baseEventCarousel-{{ $baseEvent->id }}"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
+            @if(!$loop->last)
+                <hr class="my-5 section-separator">
             @endif
-        </div>
-        @else
-        {{-- Este caso ya está controlado por whereHas en el controlador, pero se deja por si acaso --}}
-        <div class="alert alert-light text-center" role="alert">
-            No hay temporadas para mostrar para {{ $baseEvent->name }}.
-        </div>
-        @endif
-    </div>
+        @endforeach
 
-    {{-- Separador entre eventos base, excepto para el último --}}
-    @if(!$loop->last)
-    <hr class="my-5">
-    @endif
+        <div class="d-flex justify-content-center">
+            {{ $baseEventsList->links() }}
+        </div>
 
-    @empty
-    {{-- Esto se muestra si $baseEventsList está vacío --}}
-    @if(isset($searchTerm) && $searchTerm)
-    <div class="alert alert-warning text-center" role="alert">
-        No se encontraron eventos que coincidan con "<strong>{{ $searchTerm }}</strong>".
-    </div>
     @else
-    <div class="alert alert-info text-center" role="alert">
-        No hay eventos con galerías para mostrar en este momento.
-    </div>
+        <p class="text-center">No se encontraron eventos con galerías.</p>
     @endif
-    @endforelse
-
-
-    {{-- ========================================================== --}}
-    {{-- INICIO: Enlaces de Paginación --}}
-    {{-- ========================================================== --}}
-    @if ($baseEventsList->hasPages())
-    <div class="mt-5 d-flex justify-content-end">
-        {{ $baseEventsList->links() }}
-    </div>
-    @endif
-    {{-- ========================================================== --}}
-    {{-- FIN: Enlaces de Paginación --}}
-    {{-- ========================================================== --}}
-
-</main>
+</div>
 @endsection
