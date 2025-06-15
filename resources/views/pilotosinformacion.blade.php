@@ -51,25 +51,51 @@
                 <hr class="section-separator">
 
                 <section class="pilot-info-section pilot-events-section">
-                    <h2 class="pilot-section-title">Eventos en los que participa</h2>
-                    
-                    @if(isset($piloto->eventos) && $piloto->eventos->count() > 0)
-                        <div class="events-list">
-                            @foreach($piloto->eventos as $evento)
-                                <div class="event-card">
-                                    <div class="event-card-info">
-                                        <h3 class="event-name">{{ $evento->nombre }}</h3>
-                                    </div>
-                                    <div class="event-card-action">
-                                        <a href="{{ route('calendario.informacion', ['id' => $evento->id]) }}" class="btn btn-view-event">Ver Evento</a>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <p>Este piloto no tiene eventos programados actualmente.</p>
-                    @endif
-                </section>
+    <h2 class="pilot-section-title">Eventos Activos</h2>
+
+    {{-- Primero, listamos solo los eventos NO finalizados --}}
+    @if(isset($piloto->eventos) && $piloto->eventos->where('finalizado', false)->count() > 0)
+        <div class="events-list">
+            @foreach($piloto->eventos->where('finalizado', false) as $evento)
+                <div class="event-card">
+                    <div class="event-card-info">
+                        <h3 class="event-name">{{ $evento->nombre }}</h3>
+                    </div>
+                    <div class="event-card-action">
+                        <a href="{{ route('calendario.informacion', ['id' => $evento->id]) }}" class="btn btn-view-event">Ver Evento</a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <p>Este piloto no está participando en eventos activos actualmente.</p>
+    @endif
+
+    {{-- Separador si hay eventos en ambas categorías --}}
+    @if($piloto->eventos->where('finalizado', false)->count() > 0 && $piloto->eventos->where('finalizado', true)->count() > 0)
+        <hr class="section-separator" style="margin-top: 2.5rem; margin-bottom: 2.5rem;">
+    @endif
+
+    {{-- Segundo, listamos los eventos SÍ finalizados (Historial) --}}
+    @if(isset($piloto->eventos) && $piloto->eventos->where('finalizado', true)->count() > 0)
+        <h2 class="pilot-section-title" style="color: var(--silver);">Historial de Eventos</h2>
+        <div class="events-list">
+            @foreach($piloto->eventos->where('finalizado', true) as $evento)
+                {{-- Añadimos una clase extra para darle un estilo diferente --}}
+                <div class="event-card event-card-inactive">
+                    <div class="event-card-info">
+                        <h3 class="event-name">{{ $evento->nombre }}</h3>
+                    </div>
+                    <div class="event-card-action">
+                        {{-- El botón puede seguir llevando a la info del evento --}}
+                        <a href="{{ route('calendario.informacion', ['id' => $evento->id]) }}" class="btn btn-view-event">Ver Evento</a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
+</section>
 
             @else
                 <div class="text-center alert alert-warning" role="alert">

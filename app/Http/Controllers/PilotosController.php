@@ -24,18 +24,18 @@ class PilotosController extends Controller
 
             // 1. Iniciar la consulta base para Pilotos
             $query = Pilotos::with(['eventos' => function ($query) {
-                    $query->where('eventos.finalizado', false)
+                $query->where('eventos.finalizado', false)
                     ->select('eventos.id', 'eventos.nombre'); // Selecciona solo campos necesarios de eventos
-                }])
+            }])
                 ->select('pilotos.id', 'pilotos.Nombre', 'pilotos.Apellidos', 'pilotos.Descripcion', 'pilotos.Imagen'); // Campos principales de pilotos
 
             // 2. Si hay un término de búsqueda, aplicar el filtro
             if ($searchTerm) {
                 $query->where(function ($q) use ($searchTerm) {
                     $q->where('pilotos.Nombre', 'LIKE', "%{$searchTerm}%")
-                      ->orWhere('pilotos.Apellidos', 'LIKE', "%{$searchTerm}%")
-                      // Buscar por Nombre y Apellidos concatenados
-                      ->orWhereRaw("CONCAT(pilotos.Nombre, ' ', pilotos.Apellidos) LIKE ?", ["%{$searchTerm}%"]);
+                        ->orWhere('pilotos.Apellidos', 'LIKE', "%{$searchTerm}%")
+                        // Buscar por Nombre y Apellidos concatenados
+                        ->orWhereRaw("CONCAT(pilotos.Nombre, ' ', pilotos.Apellidos) LIKE ?", ["%{$searchTerm}%"]);
                     // Opcional: Si también quieres buscar por Apellidos + Nombre
                     // ->orWhereRaw("CONCAT(pilotos.Apellidos, ' ', pilotos.Nombre) LIKE ?", ["%{$searchTerm}%"]);
                 });
@@ -54,7 +54,6 @@ class PilotosController extends Controller
                 'pilotos' => $pilotos,
                 'searchTerm' => $searchTerm
             ]);
-
         } catch (\Exception $e) {
             Log::error('Error al cargar la vista de pilotos: ' . $e->getMessage());
             return view('pilotos', [
@@ -81,20 +80,20 @@ class PilotosController extends Controller
     {
         try {
             $piloto = Pilotos::with(['eventos' => function ($query) {
-                    // Aquí puedes añadir condiciones a los eventos si es necesario,
-                    // por ejemplo, solo los eventos activos o no finalizados:
-                    // $query->where('eventos.finalizado', false);
-                    $query->where('eventos.finalizado', false)
-                    ->select('eventos.id', 'eventos.nombre'); // Asegúrate de seleccionar los campos de eventos
-                }])
+                // Aquí puedes añadir condiciones a los eventos si es necesario,
+                // por ejemplo, solo los eventos activos o no finalizados:
+                // $query->where('eventos.finalizado', false);
+                $query->select('eventos.id', 'eventos.nombre', 'eventos.finalizado')
+                    ->orderBy('eventos.finalizado', 'asc'); // finalizado=false (0) aparecerá antes que finalizado=true (1)
+            }])
+
                 // Es buena práctica seleccionar explícitamente los campos del piloto también,
                 // aunque findOrFail los traería todos por defecto si no se especifica.
                 ->select('pilotos.id', 'pilotos.Nombre', 'pilotos.Apellidos', 'pilotos.Frase', 'pilotos.Descripcion', 'pilotos.Imagen')
                 ->findOrFail($id);
-    
+
             // Devuelve la vista 'pilotosinformacion.blade.php' con el piloto encontrado
             return view('pilotosinformacion', ['piloto' => $piloto]);
-    
         } catch (ModelNotFoundException $e) {
             // Si el piloto no se encuentra, lanza un error 404
             Log::error("Piloto no encontrado con ID {$id}: " . $e->getMessage());

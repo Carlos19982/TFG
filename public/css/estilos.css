@@ -1,8 +1,10 @@
 /* === IMPORTACIONES DE FUENTES (Deben ir al principio) === */
+
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,600;1,600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Rubik:ital,wght@0,600;1,600&display=swap');
 
 /* === VARIABLES CSS GLOBALES === */
+
 :root {
     /* Colores originales */
     --black: #0a0a0a;
@@ -15,7 +17,9 @@
     --yellow-gold: #FFA500;
 }
 
+
 /* === CLASES DE FUENTES GLOBALES === */
+
 .unique-font {
     font-family: "Rubik Dirt", system-ui;
 }
@@ -24,7 +28,9 @@
     font-family: "Rubik", sans-serif;
 }
 
+
 /* === ESTILOS BASE DEL BODY === */
+
 body {
     background-color: var(--black);
     color: var(--white);
@@ -36,7 +42,9 @@ body {
     line-height: 1.6;
 }
 
+
 /* === ESTILOS CONTENIDO PRINCIPAL === */
+
 main.container {
     flex-grow: 1;
     padding-top: 2rem;
@@ -45,23 +53,33 @@ main.container {
 
 
 /* === ENCABEZADO (NAVBAR) === */
+
 .navbar {
     background-color: var(--black);
     border-bottom: 0.125rem solid var(--red);
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    position: relative; /* Añadido para contexto de posicionamiento si es necesario */
+    position: relative;
+    /* Añadido para contexto de posicionamiento si es necesario */
 }
 
+
 /* --- ESTILO DEL CONTENEDOR NAVBAR --- */
+
+
 /* Aplica Flexbox al contenedor DIRECTO dentro de la navbar */
-.navbar > .container,
-.navbar > .container-fluid {
+
+.navbar>.container,
+.navbar>.container-fluid {
     display: flex;
     /* QUITAMOS flex-wrap: nowrap; de aquí */
-    justify-content: space-between; /* EMPUJA LOGO IZQ, RESTO DER */
-    align-items: center; /* Alinea verticalmente */
+    justify-content: space-between;
+    /* EMPUJA LOGO IZQ, RESTO DER */
+    align-items: center;
+    /* Alinea verticalmente */
 }
+
+
 /* --- FIN ESTILO CONTENEDOR NAVBAR --- */
 
 .logo-header {
@@ -79,53 +97,66 @@ main.container {
 }
 
 .li-plantilla {
-     transition: background-color 0.2s ease-in-out;
-     border-radius: 7%;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 7%;
 }
+
 .li-plantilla:hover {
     background-color: var(--red);
 }
+
 .li-plantilla:hover .nav-link {
-     color: var(--black);
+    color: var(--black);
 }
 
 .navbar-toggler {
     border-color: rgba(255, 255, 255, 0.5);
-    z-index: 10; /* Asegurar que esté sobre otros elementos si hay solapamiento */
+    z-index: 10;
+    /* Asegurar que esté sobre otros elementos si hay solapamiento */
 }
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(237, 237, 237, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+
 /* Comportamiento del div colapsable */
+
 .navbar-collapse {
     /* No necesita flex-basis: 100% aquí, Bootstrap lo maneja */
     flex-grow: 1;
     align-items: center;
-    width: 100%; /* Asegurar ancho completo cuando es visible */
+    width: 100%;
+    /* Asegurar ancho completo cuando es visible */
 }
+
 
 /* --- Media Queries para Navbar --- */
 
+
 /* Estilos del menú colapsado (Móvil) */
+
 @media (max-width: 991.98px) {
     /* --- AJUSTE CLAVE MÓVIL --- */
-    .navbar > .container,
-    .navbar > .container-fluid {
-        flex-wrap: wrap; /* PERMITE QUE EL navbar-collapse BAJE A LA SIGUIENTE LÍNEA */
+    .navbar>.container,
+    .navbar>.container-fluid {
+        flex-wrap: wrap;
+        /* PERMITE QUE EL navbar-collapse BAJE A LA SIGUIENTE LÍNEA */
     }
     /* --- FIN AJUSTE CLAVE MÓVIL --- */
-
     .navbar-collapse {
         /* Estilos visuales del menú desplegado */
-        background-color: rgba(0, 0, 0, 0.9); /* Ligeramente más opaco */
+        background-color: rgba(0, 0, 0, 0.9);
+        /* Ligeramente más opaco */
         border-top: 1px solid var(--red);
-        margin-top: 0.5rem; /* Espacio entre toggler y menú */
+        margin-top: 0.5rem;
+        /* Espacio entre toggler y menú */
         padding: 1rem 0;
         backdrop-filter: blur(5px);
-        width: 100%; /* Doble confirmación de ancho completo */
-        order: 3; /* Asegura que vaya después del logo (1) y toggler (2) en el flujo flex wrap */
+        width: 100%;
+        /* Doble confirmación de ancho completo */
+        order: 3;
+        /* Asegura que vaya después del logo (1) y toggler (2) en el flujo flex wrap */
         /* Quitar cualquier posicionamiento absoluto si lo hubiera */
         position: static;
     }
@@ -137,63 +168,113 @@ main.container {
         width: 100%;
         border-bottom: 1px solid rgba(204, 204, 204, 0.2);
     }
-     .navbar-nav .nav-item.li-plantilla:last-child {
-         border-bottom: none;
-     }
+    .navbar-nav .nav-item.li-plantilla:last-child {
+        border-bottom: none;
+    }
     .navbar-nav .nav-item.li-plantilla .nav-link {
         padding: 0.9rem 1rem;
         display: block;
         width: 100%;
     }
     .li-plantilla:hover {
-       background-color: var(--red);
+        background-color: var(--red);
     }
     .li-plantilla:hover .nav-link {
-       color: var(--black);
+        color: var(--black);
     }
 }
 
+
 /* Estilos del menú expandido (Desktop) */
+
 @media (min-width: 992px) {
     /* --- AJUSTE CLAVE DESKTOP --- */
-    .navbar > .container,
-    .navbar > .container-fluid {
-         flex-wrap: nowrap; /* ASEGURA QUE TODO QUEDE EN UNA LÍNEA EN DESKTOP */
+    .navbar>.container,
+    .navbar>.container-fluid {
+        flex-wrap: nowrap;
+        /* ASEGURA QUE TODO QUEDE EN UNA LÍNEA EN DESKTOP */
     }
-     /* --- FIN AJUSTE CLAVE DESKTOP --- */
-
+    /* --- FIN AJUSTE CLAVE DESKTOP --- */
     .navbar-collapse {
-        display: flex !important; /* Fuerza display flex */
-        flex-basis: auto; /* Ancho automático */
-        width: auto; /* Ancho automático */
-        order: 0; /* Resetear orden */
-        background-color: transparent; /* Sin fondo especial */
-        border-top: none; /* Sin borde */
-        margin-top: 0; /* Sin margen */
-        padding: 0; /* Sin padding extra */
-        backdrop-filter: none; /* Sin blur */
+        display: flex !important;
+        /* Fuerza display flex */
+        flex-basis: auto;
+        /* Ancho automático */
+        width: auto;
+        /* Ancho automático */
+        order: 0;
+        /* Resetear orden */
+        background-color: transparent;
+        /* Sin fondo especial */
+        border-top: none;
+        /* Sin borde */
+        margin-top: 0;
+        /* Sin margen */
+        padding: 0;
+        /* Sin padding extra */
+        backdrop-filter: none;
+        /* Sin blur */
     }
     .navbar-nav {
-       margin-left: auto !important; /* EMPUJA LOS LINKS A LA DERECHA */
-       flex-direction: row; /* Links en fila */
-       gap: 1rem; /* Espacio entre LIs */
-       width: auto; /* Ancho automático */
-       text-align: left; /* Alinear texto a la izquierda por defecto */
+        margin-left: auto !important;
+        /* EMPUJA LOS LINKS A LA DERECHA */
+        flex-direction: row;
+        /* Links en fila */
+        gap: 1rem;
+        /* Espacio entre LIs */
+        width: auto;
+        /* Ancho automático */
+        text-align: left;
+        /* Alinear texto a la izquierda por defecto */
     }
-     .li-plantilla {
-         border-radius: 7%;
-         width: auto; /* Ancho automático */
-         border-bottom: none; /* Sin borde inferior */
-     }
-     .navbar-nav .nav-item.li-plantilla .nav-link {
-        padding: 0.5rem 1rem; /* Padding normal de desktop */
-        display: inline-block; /* Comportamiento normal */
+    .li-plantilla {
+        border-radius: 7%;
+        width: auto;
+        /* Ancho automático */
+        border-bottom: none;
+        /* Sin borde inferior */
+    }
+    .navbar-nav .nav-item.li-plantilla .nav-link {
+        padding: 0.5rem 1rem;
+        /* Padding normal de desktop */
+        display: inline-block;
+        /* Comportamiento normal */
         width: auto;
     }
 }
 
 
 /* === ESTILOS GENERALES DE SECCIONES === */
+
+
+/* Ajusta la alineación del texto en la sección principal para escritorio */
+
+@media (min-width: 992px) {
+    .hero-section .section-title-items {
+        text-align: left;
+        /* Alinea el texto a la izquierda en vista de escritorio */
+    }
+}
+
+
+/* Reduce el tamaño de los títulos de la home en pantallas pequeñas */
+
+@media (max-width: 767.98px) {
+    .hero-section .section-title,
+    .features-section .section-title,
+    .join-section .section-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hero-section .section-title,
+    .features-section .section-title,
+    .join-section .section-title {
+        font-size: 1.8rem;
+    }
+}
+
 .hero-section,
 .features-section,
 .join-section {
@@ -206,6 +287,7 @@ main.container {
     padding: 2rem 1rem;
     margin-bottom: 2rem;
     font-family: "Rubik", sans-serif;
+    word-break: break-word;
 }
 
 .first-title {
@@ -227,12 +309,15 @@ main.container {
     margin-bottom: 2rem;
     font-size: 2.5rem;
 }
+
 .hero-img {
     max-width: 100%;
     height: auto;
 }
 
+
 /* === FOOTER === */
+
 footer {
     margin-top: auto;
     background-color: var(--black);
@@ -247,7 +332,7 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 2.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .img-footer-partner {
@@ -257,6 +342,7 @@ footer {
     filter: grayscale(50%) brightness(1.1);
     transition: filter 0.3s ease;
 }
+
 .img-footer-partner:hover {
     filter: grayscale(0%) brightness(1);
 }
@@ -273,6 +359,7 @@ footer {
     text-decoration: none;
     transition: color 0.3s ease, transform 0.2s ease;
 }
+
 .social-icons a:hover {
     color: var(--red-light);
     transform: scale(1.1);
@@ -285,7 +372,18 @@ footer {
     color: var(--silver);
 }
 
+
+/* HOME */
+
+
+/* Corrección para el desbordamiento de texto en párrafos de secciones */
+
+
+/* FIN DE HOME */
+
+
 /* === ESTILOS PÁGINA PILOTOS (.nosotros-section) === */
+
 .nosotros-section {
     padding-top: 3rem;
     padding-bottom: 1rem;
@@ -300,6 +398,7 @@ footer {
     padding-bottom: 3rem;
     margin-bottom: 3rem !important;
 }
+
 .team-member:last-child {
     border-bottom: none;
     margin-bottom: 0 !important;
@@ -307,7 +406,7 @@ footer {
 }
 
 .member-visual {
-     text-align: center;
+    text-align: center;
 }
 
 .member-photo {
@@ -322,9 +421,11 @@ footer {
     background-color: var(--silver);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .member-photo:hover {
     box-shadow: 0 0 15px 4px rgba(255, 7, 58, 0.6), /* --red-light */
-                0 0 25px 8px rgba(255, 215, 0, 0.5); /* --yellow */
+    0 0 25px 8px rgba(255, 215, 0, 0.5);
+    /* --yellow */
     transform: scale(1.05);
 }
 
@@ -349,6 +450,7 @@ footer {
     margin-bottom: 1.2rem;
     font-size: 1rem;
 }
+
 .member-info p:last-child {
     margin-bottom: 0;
 }
@@ -367,8 +469,10 @@ footer {
     position: relative;
     padding-left: 1.5rem;
 }
+
 .member-info li::before {
-    content: "\27A4"; /* Flecha */
+    content: "\27A4";
+    /* Flecha */
     color: var(--red);
     position: absolute;
     left: 0;
@@ -377,18 +481,20 @@ footer {
 }
 
 .pilot_event_link {
-    color: var(--red);          
-    text-decoration: none;     
+    color: var(--red);
+    text-decoration: none;
     /* Transición suave para el color y el subrayado */
     transition: color 0.1s, text-decoration 0.3s ease;
-  }
-  
-  .pilot_event_link:hover {
+}
+
+.pilot_event_link:hover {
     color: var(--red-dark);
     text-decoration: underline;
-  }
+}
+
 
 /* --- Media Query Pilotos (Móvil) --- */
+
 @media (max-width: 767.98px) {
     .team-member {
         text-align: center;
@@ -412,19 +518,21 @@ footer {
         display: inline-block;
         text-align: left;
     }
-     .member-info li {
+    .member-info li {
         padding-left: 1.5rem;
     }
 }
 
+
 /* === ESTILOS PÁGINA CALENDARIO (.calendario-section) === */
+
 .calendario-section {
-     padding-top: 3rem;
-     padding-bottom: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 }
 
 .calendario-section .section-title {
-     font-family: "Rubik Dirt", system-ui;
+    font-family: "Rubik Dirt", system-ui;
 }
 
 .event-link {
@@ -447,12 +555,15 @@ footer {
 
 .calendario-section .card-img-top {
     width: 100%;
-    aspect-ratio: 4 / 5; /* Proporción imagen */
+    aspect-ratio: 4 / 5;
+    /* Proporción imagen */
     object-fit: cover;
 }
+
 .calendario-section .card-body {
-     flex-grow: 1;
+    flex-grow: 1;
 }
+
 .calendario-section .card-footer {
     background-color: #383838;
     border-top: 1px solid var(--silver);
@@ -473,23 +584,28 @@ footer {
     transform: translateY(-8px);
     box-shadow: 0 12px 28px rgba(213, 0, 0, 0.5);
 }
+
 .event-link:focus {
     outline: none;
 }
+
 .event-link:focus .card {
-     outline: 3px solid var(--yellow);
-     outline-offset: 1px;
+    outline: 3px solid var(--yellow);
+    outline-offset: 1px;
 }
 
 
 /* --- Media Query Calendario (Móvil) --- */
+
 @media (max-width: 767.98px) {
     .calendario-section .section-title {
         font-size: 2rem;
     }
 }
 
+
 /* === ESTILOS PÁGINA INFORMACIÓN === */
+
 .content-box {
     background-color: #444;
     padding: 1.5rem;
@@ -505,7 +621,8 @@ footer {
     border-radius: 0.25rem;
 }
 
-.content-box h3, .content-box h4 {
+.content-box h3,
+.content-box h4 {
     color: var(--yellow);
     font-family: "Rubik Dirt", system-ui;
     margin-bottom: 1rem;
@@ -516,24 +633,29 @@ footer {
     line-height: 1.6;
     margin-bottom: 1rem;
 }
+
 .content-box p:last-child {
     margin-bottom: 0;
 }
+
 .content-box ul {
     list-style-type: none;
     padding-left: 0;
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
 .content-box li {
-     position: relative;
-     padding-left: 1.5rem;
-     margin-bottom: 0.7rem;
-     font-family: "Rubik", sans-serif;
-     line-height: 1.6;
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.7rem;
+    font-family: "Rubik", sans-serif;
+    line-height: 1.6;
 }
+
 .content-box li::before {
-    content: "\27A4"; /* Flecha */
+    content: "\27A4";
+    /* Flecha */
     color: var(--red);
     position: absolute;
     left: 0;
@@ -545,29 +667,91 @@ footer {
     align-items: center;
     text-align: center;
 }
+
 .content-box.text-center-content ul {
     display: inline-block;
     text-align: left;
 }
 
+
 /* --- Hack para height: 100% en columnas Bootstrap --- */
-.row > [class^="col-"] {
+
+.row>[class^="col-"] {
     display: flex;
     flex-direction: column;
 }
-.row > [class^="col-"] > .content-box {
+
+.row>[class^="col-"]>.content-box {
     flex-grow: 1;
 }
 
+
 /* --- Media Query para espaciado de content-box en móvil --- */
+
+
+/* === INICIO SECCIÓN RESPONSIVE CORREGIDA === */
+
 @media (max-width: 767.98px) {
-    .row > [class^="col-"] {
-        margin-bottom: 1.5rem;
+    /* Ajustes para tablet */
+    .pilot-detail-image {
+        width: 280px;
+        height: 280px;
     }
-    .row > [class^="col-"]:last-child {
-        margin-bottom: 0;
+    .pilot-detail-name {
+        font-size: 2.1rem;
+    }
+    .pilot-section-title {
+        font-size: 1.7rem;
     }
 }
+
+@media (max-width: 575.98px) {
+    /* Ajustes para móvil */
+    .pilot-detail-header {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+    .pilot-detail-image {
+        width: 220px;
+        height: 220px;
+    }
+    .pilot-detail-name {
+        font-size: 1.8rem;
+    }
+    .pilot-detail-quote {
+        font-size: 1.1rem;
+        max-width: 100%;
+    }
+    .section-separator {
+        margin-top: 2rem;
+    }
+    .event-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .event-card-info {
+        margin-right: 0;
+        margin-bottom: 0.85rem;
+        width: 100%;
+    }
+    .event-card-action {
+        width: 100%;
+    }
+    /* Estilo para tarjetas de eventos finalizados */
+    .event-card-inactive {
+        opacity: 0.7;
+        background-color: #e9e9e9;
+        transition: opacity 0.3s ease;
+    }
+    .event-card-inactive:hover {
+        opacity: 1;
+    }
+    .btn-view-event {
+        display: block;
+        text-align: center;
+    }
+}
+
 
 /* === ESTILOS PÁGINA INFORMACIÓN PILOTO DETALLE === */
 
@@ -576,9 +760,12 @@ footer {
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
+
 .pilot-detail-image {
-    width: 350px; /* CAMBIADO: Tamaño aumentado */
-    height: 350px; /* CAMBIADO: Tamaño aumentado */
+    width: 350px;
+    height: 350px;
+    max-width: 100%;
+    /* AÑADIDO: Evita que la imagen se desborde del contenedor */
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
@@ -587,8 +774,9 @@ footer {
     margin-right: auto;
     margin-bottom: 1.5rem;
     background-color: var(--silver);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
 .pilot-detail-name {
     font-family: "Rubik", sans-serif;
     font-weight: 600;
@@ -596,7 +784,10 @@ footer {
     font-size: 2.4rem;
     margin-bottom: 0.75rem;
     letter-spacing: 0.5px;
+    word-break: break-word;
+    /* AÑADIDO: Evita desbordamiento con nombres largos */
 }
+
 .pilot-detail-quote {
     font-family: "Rubik", sans-serif;
     font-style: italic;
@@ -618,7 +809,7 @@ footer {
 }
 
 .pilot-info-section {
-    margin-top: 0; 
+    margin-top: 0;
 }
 
 .pilot-section-title {
@@ -627,6 +818,7 @@ footer {
     font-size: 1.9rem;
     margin-bottom: 1.25rem;
     text-align: left;
+    word-break: break-word;
 }
 
 .pilot-about-content p {
@@ -638,6 +830,7 @@ footer {
     text-align: left;
     white-space: pre-line;
 }
+
 .pilot-about-content p:last-child {
     margin-bottom: 0;
 }
@@ -651,15 +844,19 @@ footer {
     align-items: center;
     text-align: left;
 }
+
 .pilot-join-date .icon-calendar {
     margin-right: 8px;
     line-height: 1;
 }
 
+
 /* Eventos del Piloto */
+
 .events-list {
     margin-top: 0.5rem;
 }
+
 .event-card {
     background-color: #f8f5f0;
     color: var(--black);
@@ -669,27 +866,32 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 }
+
 .event-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
 }
+
 .event-card-info {
     flex-grow: 1;
     margin-right: 1rem;
 }
+
 .event-card .event-name {
     font-family: "Rubik", sans-serif;
     font-weight: 600;
     font-size: 1.2rem;
     color: var(--black);
-    margin-bottom: 0; 
+    margin-bottom: 0;
 }
+
 .event-card-action {
     flex-shrink: 0;
 }
+
 .btn-view-event {
     background-color: var(--black);
     color: var(--white);
@@ -704,6 +906,7 @@ footer {
     display: inline-block;
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
 }
+
 .btn-view-event:hover,
 .btn-view-event:focus {
     background-color: var(--red);
@@ -731,36 +934,67 @@ footer {
         text-align: center;
     }
 }
+
+
 /* === ESTILOS PÁGINA GALERÍA === */
+
 .gallery-section {
-    padding-top: 1rem; /* Reducido de 3rem para que el título no esté tan separado si no hay mucho más contenido */
+    padding-top: 1rem;
+    /* Reducido de 3rem para que el título no esté tan separado si no hay mucho más contenido */
     padding-bottom: 3rem;
 }
 
 .gallery-title {
-    font-family: "Rubik Dirt", system-ui; /* Usando tu fuente única */
+    font-family: "Rubik Dirt", system-ui;
+    /* Usando tu fuente única */
     color: var(--red);
-    font-size: 2.5rem; /* Consistente con .section-title */
-    margin-bottom: 2rem; /* Espacio debajo del título, puedes ajustar Bootstrap mb-5 en el h2 si prefieres */
+    font-size: 2.5rem;
+    /* Consistente con .section-title */
+    margin-bottom: 2rem;
+    /* Espacio debajo del título, puedes ajustar Bootstrap mb-5 en el h2 si prefieres */
     text-align: center;
 }
 
+
 /* Estilos para el carrusel en sí */
+.event-block .carousel-item {
+    aspect-ratio: 16 / 9;
+    background-color: var(--black); /* Fondo por si la imagen tarda en cargar */
+}
+
+/*
+ * Hacemos que la imagen (<img>) ocupe el 100% del alto y ancho
+ * de su contenedor (.carousel-item) que AHORA tiene un tamaño fijo.
+*/
+.event-block .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esta es la magia: la imagen cubre todo el espacio sin deformarse (se recorta si es necesario). */
+    object-position: center; /* Centra la imagen antes de recortarla, para que se vea la parte más importante. */
+}
 #eventGalleryCarousel {
-    border-radius: 0.625rem; /* Similar a .hero-section */
-    overflow: hidden; /* Para que las imágenes internas respeten el border-radius del carrusel */
-    border: 2px solid var(--red-dark); /* Un borde sutil con tu color oscuro */
-    background-color: #2a2a2a; /* Un fondo oscuro por si las imágenes tardan o no cargan */
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    border-radius: 0.625rem;
+    /* Similar a .hero-section */
+    overflow: hidden;
+    /* Para que las imágenes internas respeten el border-radius del carrusel */
+    border: 2px solid var(--red-dark);
+    /* Un borde sutil con tu color oscuro */
+    background-color: #2a2a2a;
+    /* Un fondo oscuro por si las imágenes tardan o no cargan */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-item img {
-    max-height: 70vh; /* Limita la altura máxima de la imagen a un 70% de la altura de la ventana */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio, puede recortar un poco */
+    max-height: 70vh;
+    /* Limita la altura máxima de la imagen a un 70% de la altura de la ventana */
+    object-fit: cover;
+    /* Asegura que la imagen cubra el espacio, puede recortar un poco */
     /* No necesitas width: 100% aquí porque .d-block .w-100 ya lo hacen */
 }
 
+
 /* Personalización de los indicadores del carrusel para tema oscuro */
+
 .carousel-indicators [data-bs-target] {
     background-color: var(--silver);
     opacity: 0.6;
@@ -769,7 +1003,8 @@ footer {
     border-radius: 50%;
     margin-left: 5px;
     margin-right: 5px;
-    border-top: none; /* Quitar bordes default de bootstrap si los hay */
+    border-top: none;
+    /* Quitar bordes default de bootstrap si los hay */
     border-bottom: none;
 }
 
@@ -778,12 +1013,16 @@ footer {
     opacity: 1;
 }
 
+
 /* Personalización de los controles (flechas) del carrusel */
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para mejor contraste */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semi-transparente para mejor contraste */
     border-radius: 50%;
-    padding: 1.2rem; /* Aumentar el área del icono para que el fondo se vea más */
+    padding: 1.2rem;
+    /* Aumentar el área del icono para que el fondo se vea más */
     /* El color del SVG por defecto es blanco, que se verá bien */
 }
 
@@ -795,15 +1034,19 @@ footer {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
+
 /* Opcional: Caption styling si decides usarlo */
+
 .carousel-caption {
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente para el texto */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Fondo semi-transparente para el texto */
     border-radius: 0.25rem;
     padding: 1rem;
 }
 
 .carousel-caption h5 {
-    color: var(--yellow); /* Título del caption en amarillo */
+    color: var(--yellow);
+    /* Título del caption en amarillo */
     font-family: "Rubik", sans-serif;
 }
 
@@ -813,56 +1056,72 @@ footer {
     font-size: 0.9rem;
 }
 
+
 /* Media query para ajustar el tamaño de las flechas en pantallas pequeñas */
+
 @media (max-width: 767.98px) {
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
-        padding: 0.8rem; /* Más pequeñas en móviles */
+        padding: 0.8rem;
+        /* Más pequeñas en móviles */
     }
     .gallery-title {
-        font-size: 2rem; /* Título un poco más pequeño en móviles */
+        font-size: 2rem;
+        /* Título un poco más pequeño en móviles */
     }
     .carousel-item img {
-        max-height: 50vh; /* Imágenes un poco menos altas en móviles */
+        max-height: 50vh;
+        /* Imágenes un poco menos altas en móviles */
     }
 }
+
+
 /* === ESTILOS BOTONES PERSONALIZADOS (BUSCADOR PILOTOS) === */
 
-
 .btn-buscar-custom {
-    background-color: var(--yellow) !important; /* Usando tu variable CSS --yellow */
+    background-color: var(--yellow) !important;
+    /* Usando tu variable CSS --yellow */
     border-color: var(--yellow) !important;
-    color: var(--black) !important; /* Texto oscuro para contraste con amarillo */
+    color: var(--black) !important;
+    /* Texto oscuro para contraste con amarillo */
 }
 
 .btn-buscar-custom:hover,
 .btn-buscar-custom:focus,
 .btn-buscar-custom:active {
-    background-color: #e6c300 !important; /* Un amarillo un poco más oscuro para el hover/focus */
+    background-color: #e6c300 !important;
+    /* Un amarillo un poco más oscuro para el hover/focus */
     border-color: #e6c300 !important;
     color: var(--black) !important;
 }
 
 .btn-limpiar-custom {
-    background-color: var(--red) !important; /* Usando tu variable CSS --red */
+    background-color: var(--red) !important;
+    /* Usando tu variable CSS --red */
     border-color: var(--red) !important;
-    color: var(--white) !important; /* Texto blanco para contraste con rojo */
+    color: var(--white) !important;
+    /* Texto blanco para contraste con rojo */
 }
 
 .btn-limpiar-custom:hover,
 .btn-limpiar-custom:focus,
 .btn-limpiar-custom:active {
-    background-color: var(--red-dark) !important; /* Usando tu variable CSS --red-dark para el hover */
+    background-color: var(--red-dark) !important;
+    /* Usando tu variable CSS --red-dark para el hover */
     border-color: var(--red-dark) !important;
     color: var(--white) !important;
 }
 
+
 /* Si quieres una versión "outline" para el botón limpiar */
+
 .btn-outline-limpiar-custom {
     color: var(--red) !important;
     border-color: var(--red) !important;
-    background-color: transparent; /* Asegurar fondo transparente para outline */
+    background-color: transparent;
+    /* Asegurar fondo transparente para outline */
 }
+
 .btn-outline-limpiar-custom:hover,
 .btn-outline-limpiar-custom:focus,
 .btn-outline-limpiar-custom:active {
@@ -871,54 +1130,71 @@ footer {
     border-color: var(--red) !important;
 }
 
+
 /* === FIN ESTILOS BOTONES PERSONALIZADOS === */
+
+
 /* === ESTILOS PÁGINA GALERÍA GENERAL === */
 
 .gallery-title-general {
     font-family: "Rubik Dirt", system-ui;
     color: var(--red);
-    font-size: 2.5rem; /* Consistente con .section-title */
+    font-size: 2.5rem;
+    /* Consistente con .section-title */
     /* margin-bottom ya está con Bootstrap .mb-5 */
 }
 
 .gallery-card-general {
-    background-color: #2e2e2e; /* Un gris oscuro ligeramente más claro que el body */
-    border-radius: 0.5rem; /* Bordes redondeados suaves */
-    overflow: hidden; /* Asegura que la imagen respete el border-radius */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background-color: #2e2e2e;
+    /* Un gris oscuro ligeramente más claro que el body */
+    border-radius: 0.5rem;
+    /* Bordes redondeados suaves */
+    overflow: hidden;
+    /* Asegura que la imagen respete el border-radius */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex; /* Para estructura interna de imagen y caption */
+    display: flex;
+    /* Para estructura interna de imagen y caption */
     flex-direction: column;
-    height: 100%; /* Para que todas las tarjetas en una fila tengan la misma altura si el contenido varía */
+    height: 100%;
+    /* Para que todas las tarjetas en una fila tengan la misma altura si el contenido varía */
 }
 
 .gallery-card-general:hover {
-    transform: translateY(-8px) scale(1.02); /* Efecto de elevación sutil y zoom ligero */
-    box-shadow: 0 10px 25px rgba(213, 0, 0, 0.4); /* Sombra roja al hacer hover */
+    transform: translateY(-8px) scale(1.02);
+    /* Efecto de elevación sutil y zoom ligero */
+    box-shadow: 0 10px 25px rgba(213, 0, 0, 0.4);
+    /* Sombra roja al hacer hover */
 }
 
 .gallery-card-general a {
-    display: block; /* Para que el enlace ocupe el espacio de la imagen */
+    display: block;
+    /* Para que el enlace ocupe el espacio de la imagen */
     text-decoration: none;
 }
 
 .gallery-image-general {
     width: 100%;
-    aspect-ratio: 4 / 3; /* Mantiene una proporción consistente para las imágenes */
-    object-fit: cover; /* Asegura que la imagen cubra el área, recortando si es necesario */
+    aspect-ratio: 4 / 3;
+    /* Mantiene una proporción consistente para las imágenes */
+    object-fit: cover;
+    /* Asegura que la imagen cubra el área, recortando si es necesario */
     /* No necesita border-radius aquí si .gallery-card-general tiene overflow:hidden */
     transition: opacity 0.3s ease;
 }
-.gallery-card-general a:hover .gallery-image-general {
-    opacity: 0.85; /* Ligera transparencia en la imagen al pasar el mouse sobre el enlace */
-}
 
+.gallery-card-general a:hover .gallery-image-general {
+    opacity: 0.85;
+    /* Ligera transparencia en la imagen al pasar el mouse sobre el enlace */
+}
 
 .gallery-caption-general {
     padding: 1rem;
-    background-color: rgba(30,30,30,0.8); /* Fondo ligeramente transparente para el caption */
+    background-color: rgba(30, 30, 30, 0.8);
+    /* Fondo ligeramente transparente para el caption */
     color: var(--white);
-    flex-grow: 1; /* Permite que esta sección crezca si hay espacio extra */
+    flex-grow: 1;
+    /* Permite que esta sección crezca si hay espacio extra */
     display: flex;
     flex-direction: column;
 }
@@ -937,10 +1213,13 @@ footer {
     font-size: 0.85rem;
     line-height: 1.5;
     margin-bottom: 0;
-    flex-grow: 1; /* Asegura que el texto ocupe espacio y empuje elementos si es necesario */
+    flex-grow: 1;
+    /* Asegura que el texto ocupe espacio y empuje elementos si es necesario */
 }
 
+
 /* Ajustes para pantallas más pequeñas si es necesario, aunque Bootstrap ya ayuda mucho */
+
 @media (max-width: 575.98px) {
     .gallery-title-general {
         font-size: 2rem;
