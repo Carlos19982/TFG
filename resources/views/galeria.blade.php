@@ -37,8 +37,7 @@
                                             {{-- ================================================================ --}}
                                         @endif
                                         <div class="carousel-caption d-none d-md-block">
-                                            <h5>{{ $season->nombre }}</h5>
-                                            <p>Ver galería de esta temporada</p>
+                                            <h5>{{ $season->nombre }}</h5>   
                                         </div>
                                     </a>
                                 </div>
