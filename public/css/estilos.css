@@ -957,20 +957,27 @@ footer {
 
 
 /* Estilos para el carrusel en sí */
-.event-block .carousel-item {
-    aspect-ratio: 16 / 9;
-    background-color: var(--black); /* Fondo por si la imagen tarda en cargar */
-}
+@media (max-width: 991.98px) {
 
-/*
- * Hacemos que la imagen (<img>) ocupe el 100% del alto y ancho
- * de su contenedor (.carousel-item) que AHORA tiene un tamaño fijo.
-*/
-.event-block .carousel-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Esta es la magia: la imagen cubre todo el espacio sin deformarse (se recorta si es necesario). */
-    object-position: center; /* Centra la imagen antes de recortarla, para que se vea la parte más importante. */
+    /*
+     * Forzamos una relación de aspecto fija en el slide para evitar los "saltos" de altura.
+     * Esto solo se aplicará en tablets y móviles.
+    */
+    .event-block .carousel-item {
+        aspect-ratio: 16 / 9;
+        background-color: var(--black);
+    }
+
+    /*
+     * Hacemos que la imagen llene por completo el contenedor del slide.
+     * Esto también se aplicará solo en tablets y móviles.
+    */
+    .event-block .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
 }
 #eventGalleryCarousel {
     border-radius: 0.625rem;
