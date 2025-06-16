@@ -13,32 +13,38 @@ class GalleryController extends Controller
     /**
      * Muestra la página de lista 'galeria.blade.php'.
      */
-    public function index(Request $request): View
-    {
-        $searchTerm = $request->input('termino_busqueda');
-        $query = BaseEvent::query();
+   public function index(Request $request): View
+{
+    $searchTerm = $request->input('termino_busqueda');
+    $query = BaseEvent::query();
 
-        $query->whereHas('eventos.galleryImages');
+    // Esta línea ya la tienes y es correcta. Se asegura de que el evento base
+    // tenga al menos una temporada con imágenes.
+    $query->whereHas('eventos.galleryImages');
 
-        $query->with([
-            'eventos' => function ($seasonQuery) {
-                $seasonQuery->with(['galleryImages' => function ($imageQuery) {
-                    $imageQuery->orderBy('sort_order', 'asc')->orderBy('id', 'asc');
-                }])->orderBy('season_id', 'desc');
-            }
-        ]);
-
-        if ($searchTerm) {
-            $query->where('name', 'LIKE', "%{$searchTerm}%");
+    // AQUÍ ESTÁ LA MODIFICACIÓN IMPORTANTE
+    // Añadimos un filtro dentro de la carga de relaciones para que SOLO
+    // se carguen las temporadas que tienen imágenes.
+    $query->with([
+        'eventos' => function ($seasonQuery) {
+            $seasonQuery->whereHas('galleryImages') // <-- AÑADE ESTA LÍNEA
+                        ->with(['galleryImages' => function ($imageQuery) {
+                            $imageQuery->orderBy('sort_order', 'asc')->orderBy('id', 'asc');
+                        }])->orderBy('season_id', 'desc');
         }
+    ]);
 
-        $baseEventsList = $query->orderBy('name', 'asc')->paginate(10);
-
-        return view('galeria', [
-            'baseEventsList' => $baseEventsList,
-            'searchTerm' => $searchTerm
-        ]);
+    if ($searchTerm) {
+        $query->where('name', 'LIKE', "%{$searchTerm}%");
     }
+
+    $baseEventsList = $query->orderBy('name', 'asc')->paginate(10);
+
+    return view('galeria', [
+        'baseEventsList' => $baseEventsList,
+        'searchTerm' => $searchTerm
+    ]);
+}
 
     /**
      * Muestra la galería de imágenes para una temporada (Eventos) específica,
