@@ -376,7 +376,165 @@ footer {
 /* HOME */
 
 
-/* Corrección para el desbordamiento de texto en párrafos de secciones */
+/* === ESTILOS REDISEÑO HOME (V3 - CORREGIDO) === */
+
+/* --- Hero Section (Limpio, sin superposición) --- */
+.hero-section {
+    padding: 5rem 0;
+    background-color: var(--black); /* Fondo sólido */
+}
+
+.hero-text-column .section-title {
+    color: var(--white);
+    text-shadow: 2px 2px 8px rgba(213, 0, 0, 0.4);
+}
+
+.hero-text-column .lead {
+    color: var(--silver);
+    font-size: 1.25rem;
+}
+
+.hero-text-column p {
+    color: var(--white);
+}
+
+.hero-image-column {
+    text-align: center; /* Centra la imagen si la columna es más ancha */
+}
+
+.hero-image-column .img-fluid {
+    max-width: 100%; /* Asegura que la imagen no se salga de su columna */
+    height: auto;
+}
+
+.hero-logo-small {
+    max-height: 10rem; /* Controla el tamaño del logo pequeño */
+    width: auto;
+    margin-top: -1rem;
+    margin-left: 6rem;
+}
+
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding: 3rem 0;
+        text-align: center;
+    }
+    .hero-text-column {
+        order: 2; /* El texto va después de la imagen en móvil */
+        margin-top: 2rem;
+    }
+    .hero-image-column {
+        order: 1; /* La imagen va primero */
+    }
+    .hero-logo-small {
+        margin-left: 4rem;
+    }
+}
+
+
+/* --- Sección Unificada (Join & Features) - SIN CAMBIOS --- */
+.join-features-section {
+    padding: 5rem 0;
+    background-color: #121212; /* Un gris muy oscuro para separar de negro puro */
+}
+
+.join-features-section .section-title {
+    font-family: "Rubik Dirt", system-ui;
+}
+
+
+/* --- Tarjetas de Características --- */
+.feature-card {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--red);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--red);
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+.feature-title {
+    font-family: "Rubik", sans-serif;
+    font-weight: 600;
+    color: var(--yellow);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.feature-text {
+    color: var(--silver);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* --- Tarjeta de CTA para Discord --- */
+.discord-cta-card {
+    background: linear-gradient(135deg, #282b30, #1e2124);
+    border-radius: 0.75rem;
+    padding: 2.5rem;
+    border: 1px solid #444;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.discord-icon-link .svg-discord {
+    transition: transform 0.3s ease;
+}
+
+.discord-icon-link:hover .svg-discord {
+    transform: scale(1.1);
+}
+
+.discord-cta-title {
+    font-family: "Rubik", sans-serif;
+    font-weight: 600;
+    color: var(--white);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.discord-cta-text {
+    color: var(--silver);
+    margin-bottom: 1.5rem;
+}
+
+.btn-discord {
+    background-color: #5865F2; /* Color oficial de Discord */
+    border-color: #5865F2;
+    color: var(--white);
+    font-weight: 600;
+    padding: 0.7rem 1.8rem;
+    transition: all 0.3s ease;
+}
+
+.btn-discord:hover {
+    background-color: #4a56d1;
+    border-color: #4a56d1;
+    color: var(--white);
+    transform: scale(1.05);
+}
+
+@media (max-width: 767.98px) {
+    .discord-cta-card {
+        text-align: center;
+    }
+}
+
+/* === FIN ESTILOS REDISEÑO HOME (V3) === */
 
 
 /* FIN DE HOME */
