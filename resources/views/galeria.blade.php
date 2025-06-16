@@ -8,6 +8,7 @@
     
     @if($baseEventsList->count() > 0)
         @foreach($baseEventsList as $baseEvent)
+            {{-- Solo se mostrará este bloque si el evento base tiene temporadas con imágenes, gracias al filtro del controlador --}}
             <div class="event-block mb-5">
                 <h2 class="unique-font">{{ $baseEvent->name }}</h2>
                 
@@ -27,15 +28,13 @@
                                 <div class="carousel-item @if($loop->first) active @endif">
                                     <a href="{{ route('gallery.season', ['eventoInstancia' => $season->id]) }}">
                                         @php $coverImage = $season->galleryImages->first(); @endphp
+                                        
+                                        {{-- CÓDIGO MODIFICADO: Se ha eliminado el @else --}}
+                                        {{-- Ahora solo se renderiza la imagen si existe, y no hay caso alternativo --}}
                                         @if($coverImage)
                                             <img src="{{ Storage::url($coverImage->file_path) }}" class="d-block w-100" alt="Portada de {{ $season->nombre }}">
-                                        @else
-                                            {{-- ================================================================ --}}
-                                            {{-- CAMBIO REALIZADO AQUÍ --}}
-                                            {{-- Se usa la misma imagen y método que en la página de pilotos --}}
-                                            <img src="{{ Storage::url('imagenes-defecto/EventoBase16-9.png') }}" class="d-block w-100" alt="Sin portada">
-                                            {{-- ================================================================ --}}
                                         @endif
+
                                         <div class="carousel-caption d-none d-md-block">
                                             <h5>{{ $season->nombre }}</h5>   
                                         </div>
@@ -57,6 +56,7 @@
 
                     </div>
                 @else
+                    {{-- Este párrafo teóricamente ya no se mostrará si el filtro del controlador funciona bien --}}
                     <p>Este evento no tiene temporadas con galerías.</p>
                 @endif
             </div>
